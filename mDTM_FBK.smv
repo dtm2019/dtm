@@ -1,0 +1,641 @@
+-- ******************************************************--
+-- 	 main   									    	 --
+-- ******************************************************--
+MODULE main
+VAR 
+PV : array 0..9 of integer; 
+
+migrate_out : array 1..9 of boolean;
+migrate_in  : array 1..9 of boolean;
+
+CU_AT_migrate_in  : array 1..9 of boolean;
+CU_AT_migrate_out : array 1..9 of boolean;
+CU_AB_migrate_in  : array 1..9 of boolean;
+CU_AB_migrate_out : array 1..9 of boolean;
+--WQ : array 1..9 of array 1..2 of integer; 
+--Load : 4..10; 
+--Pstate : 0..1;
+
+c1 : core(avg.n_avg, temp_min, Tth, 1, N, 10, 50, 1, 3, c1_nbr.nbrP, CU_AT.Rat_g[1], migrate_out[1], migrate_in[1]);
+c2 : core(avg.n_avg, temp_min, Tth, 2, N, 10, 50, 1, 4, c2_nbr.nbrP, CU_AT.Rat_g[2], migrate_out[2], migrate_in[2]);
+c3 : core(avg.n_avg, temp_min, Tth, 3, N, 10, 50, 1, 5, c3_nbr.nbrP, CU_AT.Rat_g[3], migrate_out[3], migrate_in[3]);
+c4 : core(avg.n_avg, temp_min, Tth, 4, N, 10, 50, 1, 6, c4_nbr.nbrP, CU_AT.Rat_g[4], migrate_out[4], migrate_in[4]);
+c5 : core(avg.n_avg, temp_min, Tth, 5, N, 10, 50, 1, 7, c5_nbr.nbrP, CU_AT.Rat_g[5], migrate_out[5], migrate_in[5]);
+c6 : core(avg.n_avg, temp_min, Tth, 6, N, 10, 50, 1, 8, c6_nbr.nbrP, CU_AT.Rat_g[6], migrate_out[6], migrate_in[6]);
+c7 : core(avg.n_avg, temp_min, Tth, 7, N, 10, 50, 1, 9, c7_nbr.nbrP, CU_AT.Rat_g[7], migrate_out[7], migrate_in[7]);
+c8 : core(avg.n_avg, temp_min, Tth, 8, N, 10, 50, 1, 10, c8_nbr.nbrP, CU_AT.Rat_g[8], migrate_out[8], migrate_in[8]);
+c9 : core(avg.n_avg, temp_min, Tth, 9, N, 10, 50, 1, 11, c9_nbr.nbrP, CU_AT.Rat_g[9], migrate_out[9], migrate_in[9]);
+
+c1_nbr : nbrPower(1, N, PV);
+c2_nbr : nbrPower(2, N, PV);
+c3_nbr : nbrPower(3, N, PV);
+c4_nbr : nbrPower(4, N, PV);
+c5_nbr : nbrPower(5, N, PV);
+c6_nbr : nbrPower(6, N, PV);
+c7_nbr : nbrPower(7, N, PV);
+c8_nbr : nbrPower(8, N, PV);
+c9_nbr : nbrPower(9, N, PV);
+
+CU_AT : CU_AT(Pro_Tth, A_par, c1.ATP.Rat, c2.ATP.Rat, c3.ATP.Rat, c4.ATP.Rat, c5.ATP.Rat, c6.ATP.Rat, c7.ATP.Rat, c8.ATP.Rat, c9.ATP.Rat, PV[1], PV[2], PV[3], PV[4], PV[5], PV[6], PV[7], PV[8], PV[9]);
+
+CU_AB : CU_AB(DyBal, c1.ABP.Rab, c2.ABP.Rab, c3.ABP.Rab, c4.ABP.Rab, c5.ABP.Rab, c6.ABP.Rab, c7.ABP.Rab, c8.ABP.Rab, c9.ABP.Rab, PV[1], PV[2], PV[3], PV[4], PV[5], PV[6], PV[7], PV[8], PV[9]);
+
+avg  : avg_grid (c1.ctask.currenttemp, c2.ctask.currenttemp, c3.ctask.currenttemp, c4.ctask.currenttemp, c5.ctask.currenttemp, c6.ctask.currenttemp, c7.ctask.currenttemp, c8.ctask.currenttemp, c9.ctask.currenttemp);
+
+ASSIGN  PV[0] := 0;
+        PV[1] := c1.ctask.corePower;
+		PV[2] := c2.ctask.corePower;
+		PV[3] := c3.ctask.corePower;
+		PV[4] := c4.ctask.corePower;
+		PV[5] := c5.ctask.corePower;
+		PV[6] := c6.ctask.corePower;
+		PV[7] := c7.ctask.corePower;
+		PV[8] := c8.ctask.corePower;
+		PV[9] := c9.ctask.corePower; 	
+
+		
+
+ASSIGN CU_AB_migrate_out[1] := (CU_AB.migrate_out = 1) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[2] := (CU_AB.migrate_out = 2) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[3] := (CU_AB.migrate_out = 3) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[4] := (CU_AB.migrate_out = 4) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[5] := (CU_AB.migrate_out = 5) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[6] := (CU_AB.migrate_out = 6) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[7] := (CU_AB.migrate_out = 7) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[8] := (CU_AB.migrate_out = 8) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_out[9] := (CU_AB.migrate_out = 9) ? TRUE : FALSE;		
+       
+ASSIGN CU_AB_migrate_in[1] := (CU_AB.migrate_in = 1) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[2] := (CU_AB.migrate_in = 2) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[3] := (CU_AB.migrate_in = 3) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[4] := (CU_AB.migrate_in = 4) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[5] := (CU_AB.migrate_in = 5) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[6] := (CU_AB.migrate_in = 6) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[7] := (CU_AB.migrate_in = 7) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[8] := (CU_AB.migrate_in = 8) ? TRUE : FALSE;
+ASSIGN CU_AB_migrate_in[9] := (CU_AB.migrate_in = 9) ? TRUE : FALSE;	
+
+--ASSIGN migrate_out := CU_AT.migrate.mt ? CU_AT_migrate_out : CU_AB.mt ? CU_AB_migrate_out : CONSTARRAY(typeof(migrate_out), 0);
+--ASSIGN migrate_in  := CU_AT.migrate.mt ? CU_AT_migrate_in  : CU_AB.mt ?  CU_AB_migrate_in : CONSTARRAY(typeof(migrate_in), 0);
+
+ASSIGN migrate_out :=  CU_AT_migrate_out ;
+ASSIGN migrate_in  :=  CU_AT_migrate_in  ;
+
+DEFINE c1_pth := c1.ctask.currenttemp < Tth;
+DEFINE c2_pth := c2.ctask.currenttemp < Tth;
+DEFINE c3_pth := c3.ctask.currenttemp < Tth;
+DEFINE c4_pth := c4.ctask.currenttemp < Tth;
+DEFINE c5_pth := c5.ctask.currenttemp < Tth;
+DEFINE c6_pth := c6.ctask.currenttemp < Tth;
+DEFINE c7_pth := c7.ctask.currenttemp < Tth;
+DEFINE c8_pth := c8.ctask.currenttemp < Tth;
+DEFINE c9_pth := c9.ctask.currenttemp < Tth;
+
+
+
+--ASSIGN migrate_out := CU_AT.migrate.mt ? CU_AT_migrate_out :  CONSTARRAY(typeof(migrate_out), 0);
+--ASSIGN migrate_in  := CU_AT.migrate.mt ? CU_AT_migrate_in  :  CONSTARRAY(typeof(migrate_in), 0);
+
+DEFINE N := 3;
+DEFINE Tth := 55;
+DEFINE temp_min := 25; 
+DEFINE DyBal := 5;
+DEFINE Pro_Tth	:= 39;
+DEFINE A_par	:= 33;
+--JUSTICE  TRUE;
+FAIRNESS TRUE;
+--CTLSPEC NAME P1 := EG(task1.taskstate = finished & temp1 > temp_min)
+--LTLSPEC NAME P2 := G(c1.ctask.taskstate = finished -> F(c1.ctemp.temp = temp_min))  
+--LTLSPEC NAME P3 := G((c1.ctask.taskstate = stopped) -> (c1.ctask.corePower = 0))
+--LTLSPEC NAME P3 := G(F(c1.temp < Tth) & (c2.temp < Tth) & (c3.temp < Tth))
+LTLSPEC NAME P3 := G(F(c1_pth  & c2_pth & c3_pth& c4_pth & c5_pth & c6_pth & c7_pth & c8_pth & c9_pth))
+--LTLSPEC NAME P3 := G((c1.ctask.taskstate = stopped) -> (c1.ctask.corePower = 0))
+--LTLSPEC NAME P3 := G(c1.iDTM = TRUE -> F(c1.ctask.currenttemp < Tth))
+--INVARSPEC NAME P4 := c1.ATP.Rat < c1.ctask.currenttemp
+--INVARSPEC NAME P4 := c1.ctask.taskstate = running -> c1.ctask.currenttemp < Tth;
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 core   									    	 --
+-- ******************************************************--
+MODULE core(avg, temp_min, Tth, id, N, Pmin, Pmax, Pstate, Duration, nbrPV, iDTM, migrate_out, migrate_in)
+DEFINE Duration1 := 10;
+DEFINE Duration2 := 5;
+VAR
+ctask   		: task(temp_min, Tth, id, Pmin, Pmax, Pstate, Duration1, Duration2, nbrPV, iDTM, migrate_out, migrate_in);
+core_history 	: I_history(ctask.currenttemp, avg);
+ATP 		    : ATP(ctask.currenttemp, core_history.temp_avg, core_history.temp_diff); 
+ABP	 	        : ABP(core_history.ek, core_history.ek_avg, core_history.ek_diff);
+--dispatcher		: dispatcher(isfinihsed, migratedtask);
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 tempcalc 									    	 --
+-- ******************************************************--
+MODULE tempcalc(temp_min, nbrPV)
+VAR 
+temp : real;
+INVAR temp < 80
+ASSIGN 
+                 --temp := case
+				  temp := temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
+				 --TRUE : temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
+/--ENDMODULE--/  
+
+-- ******************************************************--
+-- 	 nbrPower									    	 --
+-- ******************************************************--
+MODULE nbrPower(id, N, PV)
+VAR
+ cnbrs: findnbr(id, N);
+ nbrP : array 1..9 of integer;
+ASSIGN nbrP[1] := PV[cnbrs.n1];
+ASSIGN nbrP[2] := PV[cnbrs.n2]; 
+ASSIGN nbrP[3] := PV[cnbrs.n3]; 
+ASSIGN nbrP[4] := PV[cnbrs.n4]; 
+ASSIGN nbrP[5] := PV[cnbrs.n5]; 
+ASSIGN nbrP[6] := PV[cnbrs.n6]; 
+ASSIGN nbrP[7] := PV[cnbrs.n7]; 
+ASSIGN nbrP[8] := PV[cnbrs.n8]; 
+ASSIGN nbrP[9] := PV[cnbrs.n9];  
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 existn 									    	 --
+-- ******************************************************--
+MODULE existn(id, N)
+DEFINE div := floor(id / N);
+DEFINE modu := id - (div * N);  
+DEFINE n1 := case 
+			(id <= N) | (modu = 1) : 0;
+             TRUE : 1;	
+			esac;			 
+DEFINE n2 := case 
+			(id <= N)  : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n3 := case 
+			(id <= N) | (modu = 0) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n4 := case 
+			(id = 1) | (modu  = 1) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n6 := case 
+			(id >= N) & (modu  = 0) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n7 := case 
+			(id = 1) | (modu = 1) | (id > N * (N - 1)) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n8 := case 
+			(id > N * (N - 1)): 0;
+             TRUE : 1;
+			 esac;
+DEFINE n9 := case 
+			 (id > N * (N - 1 )) | (modu = 0) : 0;
+             TRUE : 1;
+			 esac;
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 findnbr									    	 --
+-- ******************************************************--
+MODULE findnbr(id, N)
+DEFINE div := floor(id / N);
+DEFINE modu := id - (div * N);  
+DEFINE n1 := case 
+			(id <= N) | (modu = 1) : 0;
+             TRUE : id - N -1;	
+			esac;			 
+DEFINE n2 := case 
+			(id <= N)  : 0;
+             TRUE : id - N;
+			 esac;
+DEFINE n3 := case 
+			(id <= N) | (modu = 0) : 0;
+             TRUE : id - N + 1;
+			 esac;
+DEFINE n4 := case 
+			(id = 1) | (modu = 1) : 0;
+             TRUE : id - 1;
+			 esac;
+DEFINE n5 := id;
+DEFINE n6 := case 
+			(id >= N) & (modu = 0) : 0;
+             TRUE : id + 1;
+			 esac;
+DEFINE n7 := case 
+			(id = 1) | (modu = 1) | (id > N * (N - 1)) : 0;
+             TRUE : id + N - 1;
+			 esac;
+DEFINE n8 := case 
+			(id > N * (N - 1)): 0;
+             TRUE : id + N ;
+			 esac;
+DEFINE n9 := case 
+			 (id > N * (N - 1)) | (modu = 0) : 0;
+             TRUE : id + N + 1;
+			 esac;			 
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 task   									    	 --
+-- ******************************************************--
+MODULE task(temp_min, Tth, id, Pmin, Pmax, Pstate, Duration1, Duration2, nbrPV, iDTM, migrate_out, migrate_in)
+VAR
+taskstate : {running, stopped, finished};
+P1 : integer;
+P2 : integer;
+--Power     : integer;
+taskPower  : integer;
+corePower : integer;
+tasktime  : integer;
+migratein : boolean;
+DTM : boolean; 
+DTMsignal : boolean;
+currenttemp : real;
+ctemp : tempcalc(temp_min, nbrPV);
+INVAR corePower <= P2
+--reqPower  : Pmin..Pmax ;
+--TaskLoad  : integer;
+ASSIGN P1 := 5;
+ASSIGN P2 := 10;
+ASSIGN  init(taskstate) := 	stopped;
+		next(taskstate) := 	case
+							iDTM = FALSE & tasktime >= 1 : running;
+							iDTM = TRUE &  tasktime >= 1 : stopped;
+							tasktime <= 0 : finished;					
+					--DTM = FALSE & tasktime >= 2 : running;    
+                    --DTM = TRUE  & tasktime >= 1 : stopped;
+					--DTM = FALSE & tasktime >= 1 : finished;
+					--tasktime <= 0 : finished;		
+							TRUE : taskstate;
+							esac;
+ASSIGN  init(taskPower) := 	0;
+        next(taskPower) := 	case 
+							migratein = TRUE :  P1;
+							migratein = FALSE : P2;
+							TRUE : P1;
+							esac;
+ASSIGN  init(corePower) := 	0;
+        next(corePower) := 	case 
+							(Pstate = 0) & iDTM = FALSE & tasktime >= 1   	: taskPower;
+							(Pstate = 1) & iDTM = FALSE & tasktime >= 1   	: taskPower / 2;
+							iDTM = TRUE &  tasktime >= 1 					: 0;  
+							tasktime <= 0 									: 0;
+							TRUE     										: corePower;
+							esac;				 
+ASSIGN init(tasktime)  	:= 	migratein = TRUE ? Duration1 : Duration2;
+	   next(tasktime)  	:= 	case 
+							Pstate = 0 & iDTM = FALSE & tasktime >= 1 : tasktime - 2;
+							Pstate = 1 & iDTM = FALSE & tasktime >= 1 : tasktime - 1; 
+						  --Pstate = 1 & taskstate = running & tasktime >= 1 : tasktime - 1;
+						  --Pstate = 0 & taskstate = running & tasktime >= 1 : tasktime - 2;
+						    taskstate = finished & tasktime = 0 : migratein = TRUE ? Duration1 : Duration2;
+							tasktime <=0 : 0; 
+							TRUE : tasktime;
+							esac;  
+ASSIGN init(migratein) := FALSE;
+       next(migratein) := TRUE union FALSE; 
+ASSIGN init(DTM) := FALSE;	
+       next(DTM) := iDTM;
+ASSIGN DTMsignal := iDTM;
+  	   currenttemp := ctemp.temp;					  
+/--ENDMODULE--/ 
+
+-- ******************************************************--
+-- 		Average Calculation (for Grid size)			 	 --
+-- ******************************************************--
+MODULE avg_grid(n1, n2, n3, n4, n5, n6, n7, n8, n9)
+DEFINE
+	n_avg	:= (n1+n2+n3+n4+n5+n6+n7+n8+n9)/9;
+/--ENDMODULE--/	
+
+-- ******************************************************--
+-- 		Average Calculation (for 10 elements)			 --
+-- ******************************************************--
+MODULE avg_history(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10)
+DEFINE
+	n_avg	:= (n1+n2+n3+n4+n5+n6+n7+n8+n9+n10)/10;
+/--ENDMODULE--/	
+			
+-- ******************************************************--
+-- 		History			 		 						 --
+-- ******************************************************--
+MODULE history(temp)
+VAR
+	 t : array 0 .. 10 of real;
+	 tavg : avg_history(t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10]);
+DEFINE
+	T_ambient := 25;
+	T_avg 	:= tavg.n_avg;
+	diff	:= t[0]-t[1];
+ASSIGN
+-- Initialization of Temperature History Buffer    
+    init(t[0]) 	:= T_ambient;
+    init(t[1]) 	:= T_ambient;
+    init(t[2]) 	:= T_ambient;
+    init(t[3]) 	:= T_ambient;
+    init(t[4]) 	:= T_ambient;
+    init(t[5]) 	:= T_ambient;
+    init(t[6]) 	:= T_ambient;
+    init(t[7]) 	:= T_ambient;
+    init(t[8]) 	:= T_ambient;
+    init(t[9]) 	:= T_ambient;
+	init(t[10])	:= T_ambient;
+-- next state of Temperature History Buffer 
+	next(t[0])	:= temp; 
+	next(t[1])	:= t[0]; 
+	next(t[2])	:= t[1];
+	next(t[3])	:= t[2]; 
+	next(t[4])	:= t[3];
+	next(t[5])	:= t[4]; 
+	next(t[6])	:= t[5];
+	next(t[7])	:= t[6]; 
+	next(t[8])	:= t[7];
+	next(t[9])	:= t[8];
+	next(t[10])	:= t[9];
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 				History instantiation					 --
+-- ******************************************************--
+MODULE I_history(temp, t_avg)
+VAR
+	temp_History : history(temp);
+	e_history 	 : history(ek);
+DEFINE
+	temp_avg	:= temp_History.T_avg;
+	temp_diff	:= temp_History.diff;
+	ek_avg		:= e_history.T_avg;
+	ek_diff		:= e_history.diff;
+	ek			:= temp - t_avg;
+/--ENDMODULE--/	
+
+-- ******************************************************--
+-- 		ATP												 --
+-- ******************************************************--
+MODULE ATP(temp, temp_avg, temp_diff)
+DEFINE
+	H_par	:= 38;
+	theta 	:= 0.5;
+	Rat 	:= (temp + temp_avg - H_par)+ (theta*(temp_diff));
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 		ABP												 --
+-- ******************************************************--
+MODULE ABP(ek, ek_avg, ek_diff)
+DEFINE
+	theta 	:= 0.5;
+	Rab 	:= (ek + ek_avg) + (theta * (ek_diff));
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 		CU_AT											 --
+-- ******************************************************--
+MODULE CU_AT(Pro_Tth, A_par, Rat1, Rat2, Rat3, Rat4, Rat5, Rat6, Rat7, Rat8, Rat9, p1, p2, p3, p4, p5, p6, p7, p8, p9)
+VAR
+	   Rat : array 1..9 of real;
+	   Rat_g  : array 1..9 of boolean;
+	   Rat_l  : array 1..9 of boolean;
+	   migrate_in  : array 1..9 of boolean;
+	   migrate_out : array 1..9 of boolean;
+	   migrate : migrate(Rat, A_par, Pro_Tth);
+ASSIGN	
+		Rat[1] := Rat1; 
+		Rat[2] := Rat2;
+		Rat[3] := Rat3;
+		Rat[4] := Rat4;
+		Rat[5] := Rat5;
+		Rat[6] := Rat6;
+		Rat[7] := Rat7;
+		Rat[8] := Rat8;
+		Rat[9] := Rat9;
+
+ASSIGN	
+		--Rat_g[0] := FALSE;
+		Rat_g[1] := Rat1 >= Pro_Tth;
+		Rat_g[2] := Rat2 >= Pro_Tth;
+		Rat_g[3] := Rat3 >= Pro_Tth;
+		Rat_g[4] := Rat4 >= Pro_Tth;
+		Rat_g[5] := Rat5 >= Pro_Tth;
+		Rat_g[6] := Rat6 >= Pro_Tth;
+		Rat_g[7] := Rat7 >= Pro_Tth;
+		Rat_g[8] := Rat8 >= Pro_Tth;
+		Rat_g[9] := Rat9 >= Pro_Tth;
+
+ASSIGN  
+		--Rat_l[0] := FALSE;
+		Rat_l[1] := Rat1 < A_par;
+		Rat_l[2] := Rat2 < A_par;
+		Rat_l[3] := Rat3 < A_par;
+		Rat_l[4] := Rat4 < A_par;
+		Rat_l[5] := Rat5 < A_par;
+		Rat_l[6] := Rat6 < A_par;
+		Rat_l[7] := Rat7 < A_par;
+		Rat_l[8] := Rat8 < A_par;
+		Rat_l[9] := Rat9 < A_par;			
+		
+		
+ASSIGN migrate_out[1] := (migrate.migrate_out = 1) ? TRUE : FALSE;
+ASSIGN migrate_out[2] := (migrate.migrate_out = 2) ? TRUE : FALSE;
+ASSIGN migrate_out[3] := (migrate.migrate_out = 3) ? TRUE : FALSE;
+ASSIGN migrate_out[4] := (migrate.migrate_out = 4) ? TRUE : FALSE;
+ASSIGN migrate_out[5] := (migrate.migrate_out = 5) ? TRUE : FALSE;
+ASSIGN migrate_out[6] := (migrate.migrate_out = 6) ? TRUE : FALSE;
+ASSIGN migrate_out[7] := (migrate.migrate_out = 7) ? TRUE : FALSE;
+ASSIGN migrate_out[8] := (migrate.migrate_out = 8) ? TRUE : FALSE;
+ASSIGN migrate_out[9] := (migrate.migrate_out = 9) ? TRUE : FALSE;		
+       
+ASSIGN migrate_in[1] := (migrate.migrate_in = 1) ? TRUE : FALSE;
+ASSIGN migrate_in[2] := (migrate.migrate_in = 2) ? TRUE : FALSE;
+ASSIGN migrate_in[3] := (migrate.migrate_in = 3) ? TRUE : FALSE;
+ASSIGN migrate_in[4] := (migrate.migrate_in = 4) ? TRUE : FALSE;
+ASSIGN migrate_in[5] := (migrate.migrate_in = 5) ? TRUE : FALSE;
+ASSIGN migrate_in[6] := (migrate.migrate_in = 6) ? TRUE : FALSE;
+ASSIGN migrate_in[7] := (migrate.migrate_in = 7) ? TRUE : FALSE;
+ASSIGN migrate_in[8] := (migrate.migrate_in = 8) ? TRUE : FALSE;
+ASSIGN migrate_in[9] := (migrate.migrate_in = 9) ? TRUE : FALSE;
+		
+		
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 CU-AB												 --
+-- ******************************************************--
+MODULE CU_AB(DyBal, Rab1, Rab2, Rab3, Rab4, Rab5, Rab6, Rab7, Rab8, Rab9, p1, p2, p3, p4, p5, p6, p7, p8, p9)
+ VAR
+	 -- Rab_less : real;
+	 -- Rab_large: real;
+	-- Rab_large_c  : integer;
+	-- Rab_less_c   : integer;
+	 -- migrate_bal : boolean;
+	
+	--migrate_bal_from_c : integer;
+	--migrate_bal_to_c : integer;
+	
+	 --comp_grid1 : comp_grid(Rab1, Rab2, Rab3, Rab4, Rab5, Rab6, Rab7, Rab8, Rab9, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+
+DEFINE max1 := max(Rab1,Rab2); 
+DEFINE max2 := max(max1,Rab3);
+DEFINE max3 := max(max2,Rab4);
+DEFINE max4 := max(max3,Rab5);
+DEFINE max5 := max(max4,Rab6);
+DEFINE max6 := max(max5,Rab7);
+DEFINE max7 := max(max6,Rab8);
+DEFINE max8 := max(max7,Rab9);
+            
+DEFINE min1 := min(Rab1,Rab2);
+DEFINE min2 := min(min1,Rab3);
+DEFINE min3 := min(min2,Rab4);
+DEFINE min4 := min(min3,Rab5);
+DEFINE min5 := min(min4,Rab6);
+DEFINE min6 := min(min5,Rab7);
+DEFINE min7 := min(min6,Rab8);
+DEFINE min8 := min(min7,Rab9);
+	        
+DEFINE Rab_large := max8;
+DEFINE Rab_less  := min8; 
+
+DEFINE migrate_out := case 
+                     Rab_large = Rab1 : 1;
+					 Rab_large = Rab2 : 2;
+					 Rab_large = Rab3 : 3;
+					 Rab_large = Rab4 : 4;
+					 Rab_large = Rab5 : 5;
+					 Rab_large = Rab6 : 6;
+					 Rab_large = Rab7 : 7;
+					 Rab_large = Rab8 : 8;
+					 Rab_large = Rab9 : 9;
+					 TRUE : 0;
+					 esac;
+
+DEFINE migrate_in := case 
+                     Rab_less = Rab1 : 1;
+					 Rab_less = Rab2 : 2;
+					 Rab_less = Rab3 : 3;
+					 Rab_less = Rab4 : 4;
+					 Rab_less = Rab5 : 5;
+					 Rab_less = Rab6 : 6;
+					 Rab_less = Rab7 : 7;
+					 Rab_less = Rab8 : 8;
+					 Rab_less = Rab9 : 9;
+					 TRUE : 0;
+					 esac;
+ 
+ DEFINE mt := migrate_in > 0 & migrate_out > 0;
+					 
+	-- Rab_large    := comp_grid1.nlar;  
+	-- Rab_less     := comp_grid1.nless;
+	-- Rab_large_c  := comp_grid1.clar;  
+	-- Rab_less_c   := comp_grid1.cless;
+ --ASSIGN	
+     
+	  
+	  -- migrate_bal := Rab_large > DyBal; 
+	 
+    -- migrate_bal_from_c := 	case
+							-- Rab_large = Rab1 : 1;
+							-- Rab_large = Rab2 : 2;
+							-- Rab_large = Rab3 : 3;
+							-- Rab_large = Rab4 : 4;
+							-- Rab_large = Rab5 : 5;
+							-- Rab_large = Rab6 : 6;
+							-- Rab_large = Rab7 : 7;
+							-- Rab_large = Rab8 : 8;
+							-- Rab_large = Rab9 : 9;
+							-- TRUE : 1;
+						-- esac;
+    -- migrate_bal_to_c  :=	case
+							-- Rab_less = Rab1 : 1;
+							-- Rab_less = Rab2 : 2;
+							-- Rab_less = Rab3 : 3;
+							-- Rab_less = Rab4 : 4;
+							-- Rab_less = Rab5 : 5;
+							-- Rab_less = Rab6 : 6;
+							-- Rab_less = Rab7 : 7;
+							-- Rab_less = Rab8 : 8;
+							-- Rab_less = Rab9 : 9;
+							-- TRUE : 9;
+						-- esac;
+/--ENDMODULE--/
+
+
+-- ******************************************************--
+-- 	 migrate									    	 --
+-- ******************************************************--
+MODULE migrate(in1, A_Par, Pro_Tth)
+VAR
+nc : array 1..9 of real;
+nb : array 1..9 of real;
+nc_index : array 1..9 of integer;
+nb_index : array 1..9 of integer;
+--arrayZ : array 1..9 of integer;
+
+i : integer;
+j : integer;
+k : integer;
+m : integer;
+mt : boolean;
+migrate_out : integer;
+migrate_in  : integer;
+
+INIT nc = CONSTARRAY(typeof(nc), 0);
+INIT nb = CONSTARRAY(typeof(nb), 0);
+INIT nc_index = CONSTARRAY(typeof(nc_index), 0);
+INIT nb_index = CONSTARRAY(typeof(nc_index), 0);
+
+DEFINE limit  := Pro_Tth; 
+DEFINE limit2 := A_Par;
+
+INVAR i < 10;
+INVAR j < 10;
+INVAR k < 10;
+INVAR m < 10;
+
+ASSIGN init(i) := 1;
+       next(i) := toint(unsigned word[4](i) mod unsigned word[4](9)) + 1;
+
+ASSIGN init(j) := 1;
+       next(j) := in1[i] > limit & i < 10 ? toint(unsigned word[4](j) mod unsigned word[4](9)) + 1 : j;
+	   
+ASSIGN next(nc_index) := in1[i] > limit & i < 10 ? WRITE (nc_index, j, i) : nc_index ;
+	
+ASSIGN next(nc) := case 
+             (in1[i] > limit) & (i < 10) : WRITE (nc, j, in1[i]);
+			 TRUE : nc;
+			 esac;
+
+ASSIGN init(k) := 1;
+       next(k) := in1[i] < limit2 & i < 10 ? toint(unsigned word[4](k) mod unsigned word[4](9)) + 1 : k;
+	
+ASSIGN next(nb_index) := in1[i] < limit2 & i < 10 ? WRITE (nb_index, k, i) : nb_index ;
+	   	   
+ASSIGN next(nb) := case 
+             (in1[i] < limit2) & (i < 10) : WRITE (nb, k, in1[i]);
+			 TRUE : nb;
+			 esac;			 
+
+ASSIGN init(m) := 1;
+ASSIGN next(m) := case 
+	              nb[m] > 0 & (nc[m]) > 0 : toint(unsigned word[4](m) mod unsigned word[4](9)) + 1;
+                  TRUE : m;
+                  esac;				  
+			 
+ASSIGN init(mt) := FALSE;
+ASSIGN next(mt) := case
+                 (nb[m]) > 0 & (nc[m]) > 0 : TRUE;
+				 TRUE : FALSE;
+				  esac;
+ 
+ASSIGN init(migrate_out) := 0;
+ASSIGN next(migrate_out) := next(mt) ? nc_index[m] : 0;
+
+ASSIGN init(migrate_in)  := 0; 
+ASSIGN next(migrate_in)  := next(mt) ? nb_index[m] : 0; 					  
+				  
+/--ENDMODULE--/

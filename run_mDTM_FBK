@@ -1,0 +1,5 @@
+reset
+read_model -i mDTM_FBK.smv
+go_msat
+set msat_dump_frac_as_float 1
+msat_check_ltlspec_bmc -P P3 -k 100
