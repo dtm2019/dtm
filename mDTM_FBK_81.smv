@@ -1,0 +1,1436 @@
+-- ******************************************************--
+-- 	 main   									    	 --
+-- ******************************************************--
+MODULE main
+/--fold_begin--/
+DEFINE grid_size := 81;
+VAR 
+
+c1 : core(avg.n_avg, temp_min, Tth, 1, N, 10, 50, 1, 3, c1_nbr.nbrP, CU_AT.Rat_g[1], migrate_out[1], migrate_in[1]);
+/--fold_begin--/
+c2 : core(avg.n_avg, temp_min, Tth, 2, N, 10, 50, 1, 4, c2_nbr.nbrP, CU_AT.Rat_g[2], migrate_out[2], migrate_in[2]);
+c3 : core(avg.n_avg, temp_min, Tth, 3, N, 10, 50, 1, 5, c3_nbr.nbrP, CU_AT.Rat_g[3], migrate_out[3], migrate_in[3]);
+c4 : core(avg.n_avg, temp_min, Tth, 4, N, 10, 50, 1, 6, c4_nbr.nbrP, CU_AT.Rat_g[4], migrate_out[4], migrate_in[4]);
+c5 : core(avg.n_avg, temp_min, Tth, 5, N, 10, 50, 1, 7, c5_nbr.nbrP, CU_AT.Rat_g[5], migrate_out[5], migrate_in[5]);
+c6 : core(avg.n_avg, temp_min, Tth, 6, N, 10, 50, 1, 8, c6_nbr.nbrP, CU_AT.Rat_g[6], migrate_out[6], migrate_in[6]);
+c7 : core(avg.n_avg, temp_min, Tth, 7, N, 10, 50, 1, 9, c7_nbr.nbrP, CU_AT.Rat_g[7], migrate_out[7], migrate_in[7]);
+c8 : core(avg.n_avg, temp_min, Tth, 8, N, 10, 50, 1, 10, c8_nbr.nbrP, CU_AT.Rat_g[8], migrate_out[8], migrate_in[8]);
+c9 : core(avg.n_avg, temp_min, Tth, 9, N, 10, 50, 1, 11, c9_nbr.nbrP, CU_AT.Rat_g[9], migrate_out[9], migrate_in[9]);
+c10 : core(avg.n_avg, temp_min, Tth, 10, N, 10, 50, 1, 11, c10_nbr.nbrP, CU_AT.Rat_g[10], migrate_out[10], migrate_in[10]);
+c11 : core(avg.n_avg, temp_min, Tth, 11, N, 10, 50, 1, 11, c11_nbr.nbrP, CU_AT.Rat_g[11], migrate_out[11], migrate_in[11]);
+c12 : core(avg.n_avg, temp_min, Tth, 12, N, 10, 50, 1, 11, c12_nbr.nbrP, CU_AT.Rat_g[12], migrate_out[12], migrate_in[12]);
+c13 : core(avg.n_avg, temp_min, Tth, 13, N, 10, 50, 1, 11, c13_nbr.nbrP, CU_AT.Rat_g[13], migrate_out[13], migrate_in[13]);
+c14 : core(avg.n_avg, temp_min, Tth, 14, N, 10, 50, 1, 11, c14_nbr.nbrP, CU_AT.Rat_g[14], migrate_out[14], migrate_in[14]);
+c15 : core(avg.n_avg, temp_min, Tth, 15, N, 10, 50, 1, 11, c15_nbr.nbrP, CU_AT.Rat_g[15], migrate_out[15], migrate_in[15]);
+c16 : core(avg.n_avg, temp_min, Tth, 16, N, 10, 50, 1, 11, c16_nbr.nbrP, CU_AT.Rat_g[16], migrate_out[16], migrate_in[16]);
+c17 : core(avg.n_avg, temp_min, Tth, 17, N, 10, 50, 1, 11, c17_nbr.nbrP, CU_AT.Rat_g[17], migrate_out[17], migrate_in[17]);
+c18 : core(avg.n_avg, temp_min, Tth, 18, N, 10, 50, 1, 11, c18_nbr.nbrP, CU_AT.Rat_g[18], migrate_out[18], migrate_in[18]);
+c19 : core(avg.n_avg, temp_min, Tth, 19, N, 10, 50, 1, 11, c19_nbr.nbrP, CU_AT.Rat_g[19], migrate_out[19], migrate_in[19]);
+c20 : core(avg.n_avg, temp_min, Tth, 20, N, 10, 50, 1, 11, c20_nbr.nbrP, CU_AT.Rat_g[20], migrate_out[20], migrate_in[20]);
+c21 : core(avg.n_avg, temp_min, Tth, 21, N, 10, 50, 1, 11, c21_nbr.nbrP, CU_AT.Rat_g[21], migrate_out[21], migrate_in[21]);
+c22 : core(avg.n_avg, temp_min, Tth, 22, N, 10, 50, 1, 11, c22_nbr.nbrP, CU_AT.Rat_g[22], migrate_out[22], migrate_in[22]);
+c23 : core(avg.n_avg, temp_min, Tth, 23, N, 10, 50, 1, 11, c23_nbr.nbrP, CU_AT.Rat_g[23], migrate_out[23], migrate_in[23]);
+c24 : core(avg.n_avg, temp_min, Tth, 24, N, 10, 50, 1, 11, c24_nbr.nbrP, CU_AT.Rat_g[24], migrate_out[24], migrate_in[24]);
+c25 : core(avg.n_avg, temp_min, Tth, 25, N, 10, 50, 1, 11, c25_nbr.nbrP, CU_AT.Rat_g[25], migrate_out[25], migrate_in[25]);
+c26 : core(avg.n_avg, temp_min, Tth, 26, N, 10, 50, 1, 11, c26_nbr.nbrP, CU_AT.Rat_g[26], migrate_out[26], migrate_in[26]);
+c27 : core(avg.n_avg, temp_min, Tth, 27, N, 10, 50, 1, 11, c27_nbr.nbrP, CU_AT.Rat_g[27], migrate_out[27], migrate_in[27]);
+c28 : core(avg.n_avg, temp_min, Tth, 28, N, 10, 50, 1, 11, c28_nbr.nbrP, CU_AT.Rat_g[28], migrate_out[28], migrate_in[28]);
+c29 : core(avg.n_avg, temp_min, Tth, 29, N, 10, 50, 1, 11, c29_nbr.nbrP, CU_AT.Rat_g[29], migrate_out[29], migrate_in[29]);
+c30 : core(avg.n_avg, temp_min, Tth, 30, N, 10, 50, 1, 11, c30_nbr.nbrP, CU_AT.Rat_g[30], migrate_out[30], migrate_in[30]);
+c31 : core(avg.n_avg, temp_min, Tth, 31, N, 10, 50, 1, 11, c31_nbr.nbrP, CU_AT.Rat_g[31], migrate_out[31], migrate_in[31]);
+c32 : core(avg.n_avg, temp_min, Tth, 32, N, 10, 50, 1, 11, c32_nbr.nbrP, CU_AT.Rat_g[32], migrate_out[32], migrate_in[32]);
+c33 : core(avg.n_avg, temp_min, Tth, 33, N, 10, 50, 1, 11, c33_nbr.nbrP, CU_AT.Rat_g[33], migrate_out[33], migrate_in[33]);
+c34 : core(avg.n_avg, temp_min, Tth, 34, N, 10, 50, 1, 11, c34_nbr.nbrP, CU_AT.Rat_g[34], migrate_out[34], migrate_in[34]);
+c35 : core(avg.n_avg, temp_min, Tth, 35, N, 10, 50, 1, 11, c35_nbr.nbrP, CU_AT.Rat_g[35], migrate_out[35], migrate_in[35]);
+c36 : core(avg.n_avg, temp_min, Tth, 36, N, 10, 50, 1, 11, c36_nbr.nbrP, CU_AT.Rat_g[36], migrate_out[36], migrate_in[36]);
+c37 : core(avg.n_avg, temp_min, Tth, 37, N, 10, 50, 1, 11, c37_nbr.nbrP, CU_AT.Rat_g[37], migrate_out[37], migrate_in[37]);
+c38 : core(avg.n_avg, temp_min, Tth, 38, N, 10, 50, 1, 11, c38_nbr.nbrP, CU_AT.Rat_g[38], migrate_out[38], migrate_in[38]);
+c39 : core(avg.n_avg, temp_min, Tth, 39, N, 10, 50, 1, 11, c39_nbr.nbrP, CU_AT.Rat_g[39], migrate_out[39], migrate_in[39]);
+c40 : core(avg.n_avg, temp_min, Tth, 40, N, 10, 50, 1, 11, c40_nbr.nbrP, CU_AT.Rat_g[40], migrate_out[40], migrate_in[40]);
+c41 : core(avg.n_avg, temp_min, Tth, 41, N, 10, 50, 1, 11, c41_nbr.nbrP, CU_AT.Rat_g[41], migrate_out[41], migrate_in[41]);
+c42 : core(avg.n_avg, temp_min, Tth, 42, N, 10, 50, 1, 11, c42_nbr.nbrP, CU_AT.Rat_g[42], migrate_out[42], migrate_in[42]);
+c43 : core(avg.n_avg, temp_min, Tth, 43, N, 10, 50, 1, 11, c43_nbr.nbrP, CU_AT.Rat_g[43], migrate_out[43], migrate_in[43]);
+c44 : core(avg.n_avg, temp_min, Tth, 44, N, 10, 50, 1, 11, c44_nbr.nbrP, CU_AT.Rat_g[44], migrate_out[44], migrate_in[44]);
+c45 : core(avg.n_avg, temp_min, Tth, 45, N, 10, 50, 1, 11, c45_nbr.nbrP, CU_AT.Rat_g[45], migrate_out[45], migrate_in[45]);
+c46 : core(avg.n_avg, temp_min, Tth, 46, N, 10, 50, 1, 11, c46_nbr.nbrP, CU_AT.Rat_g[46], migrate_out[46], migrate_in[46]);
+c47 : core(avg.n_avg, temp_min, Tth, 47, N, 10, 50, 1, 11, c47_nbr.nbrP, CU_AT.Rat_g[47], migrate_out[47], migrate_in[47]);
+c48 : core(avg.n_avg, temp_min, Tth, 48, N, 10, 50, 1, 11, c48_nbr.nbrP, CU_AT.Rat_g[48], migrate_out[48], migrate_in[48]);
+c49 : core(avg.n_avg, temp_min, Tth, 49, N, 10, 50, 1, 11, c49_nbr.nbrP, CU_AT.Rat_g[49], migrate_out[49], migrate_in[49]);
+c50 : core(avg.n_avg, temp_min, Tth, 50, N, 10, 50, 1, 11, c50_nbr.nbrP, CU_AT.Rat_g[50], migrate_out[50], migrate_in[50]);
+c51 : core(avg.n_avg, temp_min, Tth, 51, N, 10, 50, 1, 11, c51_nbr.nbrP, CU_AT.Rat_g[51], migrate_out[51], migrate_in[51]);
+c52 : core(avg.n_avg, temp_min, Tth, 52, N, 10, 50, 1, 11, c52_nbr.nbrP, CU_AT.Rat_g[52], migrate_out[52], migrate_in[52]);
+c53 : core(avg.n_avg, temp_min, Tth, 53, N, 10, 50, 1, 11, c53_nbr.nbrP, CU_AT.Rat_g[53], migrate_out[53], migrate_in[53]);
+c54 : core(avg.n_avg, temp_min, Tth, 54, N, 10, 50, 1, 11, c54_nbr.nbrP, CU_AT.Rat_g[54], migrate_out[54], migrate_in[54]);
+c55 : core(avg.n_avg, temp_min, Tth, 55, N, 10, 50, 1, 11, c55_nbr.nbrP, CU_AT.Rat_g[55], migrate_out[55], migrate_in[55]);
+c56 : core(avg.n_avg, temp_min, Tth, 56, N, 10, 50, 1, 11, c56_nbr.nbrP, CU_AT.Rat_g[56], migrate_out[56], migrate_in[56]);
+c57 : core(avg.n_avg, temp_min, Tth, 57, N, 10, 50, 1, 11, c57_nbr.nbrP, CU_AT.Rat_g[57], migrate_out[57], migrate_in[57]);
+c58 : core(avg.n_avg, temp_min, Tth, 58, N, 10, 50, 1, 11, c58_nbr.nbrP, CU_AT.Rat_g[58], migrate_out[58], migrate_in[58]);
+c59 : core(avg.n_avg, temp_min, Tth, 59, N, 10, 50, 1, 11, c59_nbr.nbrP, CU_AT.Rat_g[59], migrate_out[59], migrate_in[59]);
+c60 : core(avg.n_avg, temp_min, Tth, 60, N, 10, 50, 1, 11, c60_nbr.nbrP, CU_AT.Rat_g[60], migrate_out[60], migrate_in[60]);
+c61 : core(avg.n_avg, temp_min, Tth, 61, N, 10, 50, 1, 11, c61_nbr.nbrP, CU_AT.Rat_g[61], migrate_out[61], migrate_in[61]);
+c62 : core(avg.n_avg, temp_min, Tth, 62, N, 10, 50, 1, 11, c62_nbr.nbrP, CU_AT.Rat_g[62], migrate_out[62], migrate_in[62]);
+c63 : core(avg.n_avg, temp_min, Tth, 63, N, 10, 50, 1, 11, c63_nbr.nbrP, CU_AT.Rat_g[63], migrate_out[63], migrate_in[63]);
+c64 : core(avg.n_avg, temp_min, Tth, 64, N, 10, 50, 1, 11, c64_nbr.nbrP, CU_AT.Rat_g[64], migrate_out[64], migrate_in[64]);
+c65 : core(avg.n_avg, temp_min, Tth, 65, N, 10, 50, 1, 11, c65_nbr.nbrP, CU_AT.Rat_g[65], migrate_out[65], migrate_in[65]);
+c66 : core(avg.n_avg, temp_min, Tth, 66, N, 10, 50, 1, 11, c66_nbr.nbrP, CU_AT.Rat_g[66], migrate_out[66], migrate_in[66]);
+c67 : core(avg.n_avg, temp_min, Tth, 67, N, 10, 50, 1, 11, c67_nbr.nbrP, CU_AT.Rat_g[67], migrate_out[67], migrate_in[67]);
+c68 : core(avg.n_avg, temp_min, Tth, 68, N, 10, 50, 1, 11, c68_nbr.nbrP, CU_AT.Rat_g[68], migrate_out[68], migrate_in[68]);
+c69 : core(avg.n_avg, temp_min, Tth, 69, N, 10, 50, 1, 11, c69_nbr.nbrP, CU_AT.Rat_g[69], migrate_out[69], migrate_in[69]);
+c70 : core(avg.n_avg, temp_min, Tth, 70, N, 10, 50, 1, 11, c70_nbr.nbrP, CU_AT.Rat_g[70], migrate_out[70], migrate_in[70]);
+c71 : core(avg.n_avg, temp_min, Tth, 71, N, 10, 50, 1, 11, c71_nbr.nbrP, CU_AT.Rat_g[71], migrate_out[71], migrate_in[71]);
+c72 : core(avg.n_avg, temp_min, Tth, 72, N, 10, 50, 1, 11, c72_nbr.nbrP, CU_AT.Rat_g[72], migrate_out[72], migrate_in[72]);
+c73 : core(avg.n_avg, temp_min, Tth, 73, N, 10, 50, 1, 11, c73_nbr.nbrP, CU_AT.Rat_g[73], migrate_out[73], migrate_in[73]);
+c74 : core(avg.n_avg, temp_min, Tth, 74, N, 10, 50, 1, 11, c74_nbr.nbrP, CU_AT.Rat_g[74], migrate_out[74], migrate_in[74]);
+c75 : core(avg.n_avg, temp_min, Tth, 75, N, 10, 50, 1, 11, c75_nbr.nbrP, CU_AT.Rat_g[75], migrate_out[75], migrate_in[75]);
+c76 : core(avg.n_avg, temp_min, Tth, 76, N, 10, 50, 1, 11, c76_nbr.nbrP, CU_AT.Rat_g[76], migrate_out[76], migrate_in[76]);
+c77 : core(avg.n_avg, temp_min, Tth, 77, N, 10, 50, 1, 11, c77_nbr.nbrP, CU_AT.Rat_g[77], migrate_out[77], migrate_in[77]);
+c78 : core(avg.n_avg, temp_min, Tth, 78, N, 10, 50, 1, 11, c78_nbr.nbrP, CU_AT.Rat_g[78], migrate_out[78], migrate_in[78]);
+c79 : core(avg.n_avg, temp_min, Tth, 79, N, 10, 50, 1, 11, c79_nbr.nbrP, CU_AT.Rat_g[79], migrate_out[79], migrate_in[79]);
+c80 : core(avg.n_avg, temp_min, Tth, 80, N, 10, 50, 1, 11, c80_nbr.nbrP, CU_AT.Rat_g[80], migrate_out[80], migrate_in[80]);
+c81 : core(avg.n_avg, temp_min, Tth, 81, N, 10, 50, 1, 11, c81_nbr.nbrP, CU_AT.Rat_g[81], migrate_out[81], migrate_in[81]);
+/--fold_end--/
+
+
+VAR
+c1_nbr : nbrPower(1, N, PV);
+/--fold_begin--/
+c2_nbr : nbrPower(2, N, PV);
+c3_nbr : nbrPower(3, N, PV);
+c4_nbr : nbrPower(4, N, PV);
+c5_nbr : nbrPower(5, N, PV);
+c6_nbr : nbrPower(6, N, PV);
+c7_nbr : nbrPower(7, N, PV);
+c8_nbr : nbrPower(8, N, PV);
+c9_nbr : nbrPower(9, N, PV);
+c10_nbr : nbrPower(10, N, PV);
+c11_nbr : nbrPower(11, N, PV);
+c12_nbr : nbrPower(12, N, PV);
+c13_nbr : nbrPower(13, N, PV);
+c14_nbr : nbrPower(14, N, PV);
+c15_nbr : nbrPower(15, N, PV);
+c16_nbr : nbrPower(16, N, PV);
+c17_nbr : nbrPower(17, N, PV);
+c18_nbr : nbrPower(18, N, PV);
+c19_nbr : nbrPower(19, N, PV);
+c20_nbr : nbrPower(20, N, PV);
+c21_nbr : nbrPower(21, N, PV);
+c22_nbr : nbrPower(22, N, PV);
+c23_nbr : nbrPower(23, N, PV);
+c24_nbr : nbrPower(24, N, PV);
+c25_nbr : nbrPower(25, N, PV);
+c26_nbr : nbrPower(26, N, PV);
+c27_nbr : nbrPower(27, N, PV);
+c28_nbr : nbrPower(28, N, PV);
+c29_nbr : nbrPower(29, N, PV);
+c30_nbr : nbrPower(30, N, PV);
+c31_nbr : nbrPower(31, N, PV);
+c32_nbr : nbrPower(32, N, PV);
+c33_nbr : nbrPower(33, N, PV);
+c34_nbr : nbrPower(34, N, PV);
+c35_nbr : nbrPower(35, N, PV);
+c36_nbr : nbrPower(36, N, PV);
+c37_nbr : nbrPower(37, N, PV);
+c38_nbr : nbrPower(38, N, PV);
+c39_nbr : nbrPower(39, N, PV);
+c40_nbr : nbrPower(40, N, PV);
+c41_nbr : nbrPower(41, N, PV);
+c42_nbr : nbrPower(42, N, PV);
+c43_nbr : nbrPower(43, N, PV);
+c44_nbr : nbrPower(44, N, PV);
+c45_nbr : nbrPower(45, N, PV);
+c46_nbr : nbrPower(46, N, PV);
+c47_nbr : nbrPower(47, N, PV);
+c48_nbr : nbrPower(48, N, PV);
+c49_nbr : nbrPower(49, N, PV);
+c50_nbr : nbrPower(50, N, PV);
+c51_nbr : nbrPower(51, N, PV);
+c52_nbr : nbrPower(52, N, PV);
+c53_nbr : nbrPower(53, N, PV);
+c54_nbr : nbrPower(54, N, PV);
+c55_nbr : nbrPower(55, N, PV);
+c56_nbr : nbrPower(56, N, PV);
+c57_nbr : nbrPower(57, N, PV);
+c58_nbr : nbrPower(58, N, PV);
+c59_nbr : nbrPower(59, N, PV);
+c60_nbr : nbrPower(60, N, PV);
+c61_nbr : nbrPower(61, N, PV);
+c62_nbr : nbrPower(62, N, PV);
+c63_nbr : nbrPower(63, N, PV);
+c64_nbr : nbrPower(64, N, PV);
+c65_nbr : nbrPower(65, N, PV);
+c66_nbr : nbrPower(66, N, PV);
+c67_nbr : nbrPower(67, N, PV);
+c68_nbr : nbrPower(68, N, PV);
+c69_nbr : nbrPower(69, N, PV);
+c70_nbr : nbrPower(70, N, PV);
+c71_nbr : nbrPower(71, N, PV);
+c72_nbr : nbrPower(72, N, PV);
+c73_nbr : nbrPower(73, N, PV);
+c74_nbr : nbrPower(74, N, PV);
+c75_nbr : nbrPower(75, N, PV);
+c76_nbr : nbrPower(76, N, PV);
+c77_nbr : nbrPower(77, N, PV);
+c78_nbr : nbrPower(78, N, PV);
+c79_nbr : nbrPower(79, N, PV);
+c80_nbr : nbrPower(80, N, PV);
+c81_nbr : nbrPower(81, N, PV);
+/--fold_end--/
+
+
+--the call of CU_AT is given below in the fold
+/--fold_begin--/
+CU_AT : CU_AT(Pro_Tth, A_par, c1.ATP.Rat, c2.ATP.Rat, c3.ATP.Rat, c4.ATP.Rat, c5.ATP.Rat, c6.ATP.Rat, c7.ATP.Rat, c8.ATP.Rat, c9.ATP.Rat, c10.ATP.Rat, c11.ATP.Rat, c12.ATP.Rat, c13.ATP.Rat, c14.ATP.Rat, c15.ATP.Rat, c16.ATP.Rat, c17.ATP.Rat, c18.ATP.Rat, c19.ATP.Rat, c20.ATP.Rat, c21.ATP.Rat, c22.ATP.Rat, c23.ATP.Rat, c24.ATP.Rat, c25.ATP.Rat, c26.ATP.Rat, c27.ATP.Rat, c28.ATP.Rat, c29.ATP.Rat, c30.ATP.Rat, c31.ATP.Rat, c32.ATP.Rat, c33.ATP.Rat, c34.ATP.Rat, c35.ATP.Rat, c36.ATP.Rat, c37.ATP.Rat, c38.ATP.Rat, c39.ATP.Rat, c40.ATP.Rat, c41.ATP.Rat, c42.ATP.Rat, c43.ATP.Rat, c44.ATP.Rat, c45.ATP.Rat, c46.ATP.Rat, c47.ATP.Rat, c48.ATP.Rat, c49.ATP.Rat, c50.ATP.Rat, c51.ATP.Rat, c52.ATP.Rat, c53.ATP.Rat, c54.ATP.Rat, c55.ATP.Rat, c56.ATP.Rat, c57.ATP.Rat, c58.ATP.Rat, c59.ATP.Rat, c60.ATP.Rat, c61.ATP.Rat, c62.ATP.Rat, c63.ATP.Rat, c64.ATP.Rat, c65.ATP.Rat, c66.ATP.Rat, c67.ATP.Rat, c68.ATP.Rat, c69.ATP.Rat, c70.ATP.Rat, c71.ATP.Rat, c72.ATP.Rat, c73.ATP.Rat, c74.ATP.Rat, c75.ATP.Rat, c76.ATP.Rat, c77.ATP.Rat, c78.ATP.Rat, c79.ATP.Rat, c80.ATP.Rat, c81.ATP.Rat, PV[1], PV[2], PV[3], PV[4], PV[5], PV[6], PV[7], PV[8], PV[9], PV[10], PV[11], PV[12], PV[13], PV[14], PV[15], PV[16], PV[17], PV[18], PV[19], PV[20], PV[21], PV[22], PV[23], PV[24], PV[25], PV[26], PV[27], PV[28], PV[29], PV[30], PV[31], PV[32], PV[33], PV[34], PV[35], PV[36], PV[37], PV[38], PV[39], PV[40], PV[41], PV[42], PV[43], PV[44], PV[45], PV[46], PV[47], PV[48], PV[49], PV[50], PV[51], PV[52], PV[53], PV[54], PV[55], PV[56], PV[57], PV[58], PV[59], PV[60], PV[61], PV[62], PV[63], PV[64], PV[65], PV[66], PV[67], PV[68], PV[69], PV[70], PV[71], PV[72], PV[73], PV[74], PV[75], PV[76], PV[77], PV[78], PV[79], PV[80], PV[81]);
+/--fold_end--/
+
+--the call of CU_AB is given in the fold
+/--fold_begin--/
+CU_AB : CU_AB(DyBal, c1.ABP.Rab, c2.ABP.Rab, c3.ABP.Rab, c4.ABP.Rab, c5.ABP.Rab, c6.ABP.Rab, c7.ABP.Rab, c8.ABP.Rab, c9.ABP.Rab, c10.ABP.Rab, c11.ABP.Rab, c12.ABP.Rab, c13.ABP.Rab, c14.ABP.Rab, c15.ABP.Rab, c16.ABP.Rab, c17.ABP.Rab, c18.ABP.Rab, c19.ABP.Rab, c20.ABP.Rab, c21.ABP.Rab, c22.ABP.Rab, c23.ABP.Rab, c24.ABP.Rab, c25.ABP.Rab, c26.ABP.Rab, c27.ABP.Rab, c28.ABP.Rab, c29.ABP.Rab, c30.ABP.Rab, c31.ABP.Rab, c32.ABP.Rab, c33.ABP.Rab, c34.ABP.Rab, c35.ABP.Rab, c36.ABP.Rab, c37.ABP.Rab, c38.ABP.Rab, c39.ABP.Rab, c40.ABP.Rab, c41.ABP.Rab, c42.ABP.Rab, c43.ABP.Rab, c44.ABP.Rab, c45.ABP.Rab, c46.ABP.Rab, c47.ABP.Rab, c48.ABP.Rab, c49.ABP.Rab, c50.ABP.Rab, c51.ABP.Rab, c52.ABP.Rab, c53.ABP.Rab, c54.ABP.Rab, c55.ABP.Rab, c56.ABP.Rab, c57.ABP.Rab, c58.ABP.Rab, c59.ABP.Rab, c60.ABP.Rab, c61.ABP.Rab, c62.ABP.Rab, c63.ABP.Rab, c64.ABP.Rab, c65.ABP.Rab, c66.ABP.Rab, c67.ABP.Rab, c68.ABP.Rab, c69.ABP.Rab, c70.ABP.Rab, c71.ABP.Rab, c72.ABP.Rab, c73.ABP.Rab, c74.ABP.Rab, c75.ABP.Rab, c76.ABP.Rab, c77.ABP.Rab, c78.ABP.Rab, c79.ABP.Rab, c80.ABP.Rab, c81.ABP.Rab, PV[1], PV[2], PV[3], PV[4], PV[5], PV[6], PV[7], PV[8], PV[9], PV[10], PV[11], PV[12], PV[13], PV[14], PV[15], PV[16], PV[17], PV[18], PV[19], PV[20], PV[21], PV[22], PV[23], PV[24], PV[25], PV[26], PV[27], PV[28], PV[29], PV[30], PV[31], PV[32], PV[33], PV[34], PV[35], PV[36], PV[37], PV[38], PV[39], PV[40], PV[41], PV[42], PV[43], PV[44], PV[45], PV[46], PV[47], PV[48], PV[49], PV[50], PV[51], PV[52], PV[53], PV[54], PV[55], PV[56], PV[57], PV[58], PV[59], PV[60], PV[61], PV[62], PV[63], PV[64], PV[65], PV[66], PV[67], PV[68], PV[69], PV[70], PV[71], PV[72], PV[73], PV[74], PV[75], PV[76], PV[77], PV[78], PV[79], PV[80], PV[81]);
+/--fold_end--/
+
+--grid average is given below in the fold 
+/--fold_begin--/
+avg  : avg_grid (c1.ctask.currenttemp, c2.ctask.currenttemp, c3.ctask.currenttemp, c4.ctask.currenttemp, c5.ctask.currenttemp, c6.ctask.currenttemp, c7.ctask.currenttemp, c8.ctask.currenttemp, c9.ctask.currenttemp, c10.ctask.currenttemp, c11.ctask.currenttemp, c12.ctask.currenttemp, c13.ctask.currenttemp, c14.ctask.currenttemp, c15.ctask.currenttemp, c16.ctask.currenttemp, c17.ctask.currenttemp, c18.ctask.currenttemp, c19.ctask.currenttemp, c20.ctask.currenttemp, c21.ctask.currenttemp, c22.ctask.currenttemp, c23.ctask.currenttemp, c24.ctask.currenttemp, c25.ctask.currenttemp, c26.ctask.currenttemp, c27.ctask.currenttemp, c28.ctask.currenttemp, c29.ctask.currenttemp, c30.ctask.currenttemp, c31.ctask.currenttemp, c32.ctask.currenttemp, c33.ctask.currenttemp, c34.ctask.currenttemp, c35.ctask.currenttemp, c36.ctask.currenttemp, c37.ctask.currenttemp, c38.ctask.currenttemp, c39.ctask.currenttemp, c40.ctask.currenttemp, c41.ctask.currenttemp, c42.ctask.currenttemp, c43.ctask.currenttemp, c44.ctask.currenttemp, c45.ctask.currenttemp, c46.ctask.currenttemp, c47.ctask.currenttemp, c48.ctask.currenttemp, c49.ctask.currenttemp, c50.ctask.currenttemp, c51.ctask.currenttemp, c52.ctask.currenttemp, c53.ctask.currenttemp, c54.ctask.currenttemp, c55.ctask.currenttemp, c56.ctask.currenttemp, c57.ctask.currenttemp, c58.ctask.currenttemp, c59.ctask.currenttemp, c60.ctask.currenttemp, c61.ctask.currenttemp, c62.ctask.currenttemp, c63.ctask.currenttemp, c64.ctask.currenttemp, c65.ctask.currenttemp, c66.ctask.currenttemp, c67.ctask.currenttemp, c68.ctask.currenttemp, c69.ctask.currenttemp, c70.ctask.currenttemp, c71.ctask.currenttemp, c72.ctask.currenttemp, c73.ctask.currenttemp, c74.ctask.currenttemp, c75.ctask.currenttemp, c76.ctask.currenttemp, c77.ctask.currenttemp, c78.ctask.currenttemp, c79.ctask.currenttemp, c80.ctask.currenttemp, c81.ctask.currenttemp);
+/--fold_end--/
+
+--PV DEFINE is given in the fold below
+/--fold_begin--/
+DEFINE PV := [0, c1.ctask.corePower, c2.ctask.corePower, c3.ctask.corePower, c4.ctask.corePower, c5.ctask.corePower, c6.ctask.corePower, c7.ctask.corePower, c8.ctask.corePower, c9.ctask.corePower, c10.ctask.corePower, c11.ctask.corePower, c12.ctask.corePower, c13.ctask.corePower, c14.ctask.corePower, c15.ctask.corePower, c16.ctask.corePower, c17.ctask.corePower, c18.ctask.corePower, c19.ctask.corePower, c20.ctask.corePower, c21.ctask.corePower, c22.ctask.corePower, c23.ctask.corePower, c24.ctask.corePower, c25.ctask.corePower, c26.ctask.corePower, c27.ctask.corePower, c28.ctask.corePower, c29.ctask.corePower, c30.ctask.corePower, c31.ctask.corePower, c32.ctask.corePower, c33.ctask.corePower, c34.ctask.corePower, c35.ctask.corePower, c36.ctask.corePower, c37.ctask.corePower, c38.ctask.corePower, c39.ctask.corePower, c40.ctask.corePower, c41.ctask.corePower, c42.ctask.corePower, c43.ctask.corePower, c44.ctask.corePower, c45.ctask.corePower, c46.ctask.corePower, c47.ctask.corePower, c48.ctask.corePower, c49.ctask.corePower, c50.ctask.corePower, c51.ctask.corePower, c52.ctask.corePower, c53.ctask.corePower, c54.ctask.corePower, c55.ctask.corePower, c56.ctask.corePower, c57.ctask.corePower, c58.ctask.corePower, c59.ctask.corePower, c60.ctask.corePower, c61.ctask.corePower, c62.ctask.corePower, c63.ctask.corePower, c64.ctask.corePower, c65.ctask.corePower, c66.ctask.corePower, c67.ctask.corePower, c68.ctask.corePower, c69.ctask.corePower, c70.ctask.corePower, c71.ctask.corePower, c72.ctask.corePower, c73.ctask.corePower, c74.ctask.corePower, c75.ctask.corePower, c76.ctask.corePower, c77.ctask.corePower, c78.ctask.corePower, c79.ctask.corePower, c80.ctask.corePower, c81.ctask.corePower];
+/--fold_end--/
+
+--CU_AB_migrate_in DEFINE is given in the fold below
+/--fold_begin--/
+DEFINE CU_AB_migrate_in := [ TRUE , (CU_AB.migrate_in = 1) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 2) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 3) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 4) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 5) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 6) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 7) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 8) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 9) ? TRUE : FALSE   ,
+(CU_AB.migrate_in = 10) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 11) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 12) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 13) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 14) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 15) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 16) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 17) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 18) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 19) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 20) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 21) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 22) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 23) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 24) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 25) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 26) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 27) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 28) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 29) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 30) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 31) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 32) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 33) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 34) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 35) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 36) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 37) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 38) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 39) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 40) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 41) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 42) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 43) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 44) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 45) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 46) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 47) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 48) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 49) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 50) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 51) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 52) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 53) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 54) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 55) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 56) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 57) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 58) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 59) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 60) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 61) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 62) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 63) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 64) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 65) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 66) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 67) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 68) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 69) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 70) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 71) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 72) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 73) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 74) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 75) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 76) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 77) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 78) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 79) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 80) ? TRUE : FALSE  ,
+(CU_AB.migrate_in = 81) ? TRUE : FALSE  ];
+/--fold_end--/
+
+--CU_AB_migrate_out DEFINE is given in the fold below
+/--fold_begin--/
+DEFINE CU_AB_migrate_out := [ TRUE , (CU_AB.migrate_out = 1) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 2) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 3) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 4) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 5) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 6) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 7) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 8) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 9) ? TRUE : FALSE   ,
+(CU_AB.migrate_out = 10) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 11) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 12) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 13) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 14) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 15) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 16) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 17) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 18) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 19) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 20) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 21) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 22) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 23) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 24) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 25) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 26) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 27) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 28) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 29) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 30) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 31) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 32) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 33) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 34) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 35) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 36) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 37) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 38) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 39) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 40) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 41) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 42) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 43) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 44) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 45) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 46) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 47) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 48) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 49) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 50) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 51) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 52) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 53) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 54) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 55) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 56) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 57) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 58) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 59) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 60) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 61) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 62) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 63) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 64) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 65) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 66) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 67) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 68) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 69) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 70) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 71) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 72) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 73) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 74) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 75) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 76) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 77) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 78) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 79) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 80) ? TRUE : FALSE  ,
+(CU_AB.migrate_out = 81) ? TRUE : FALSE  ];
+/--fold_end--/
+
+
+DEFINE c1_pth := c1.ctask.currenttemp < Tth;
+/--fold_begin--/
+c2_pth := c2.ctask.currenttemp < Tth;
+c3_pth := c3.ctask.currenttemp < Tth;
+c4_pth := c4.ctask.currenttemp < Tth;
+c5_pth := c5.ctask.currenttemp < Tth;
+c6_pth := c6.ctask.currenttemp < Tth;
+c7_pth := c7.ctask.currenttemp < Tth;
+c8_pth := c8.ctask.currenttemp < Tth;
+c9_pth := c9.ctask.currenttemp < Tth;
+c10_pth := c10.ctask.currenttemp < Tth;
+c11_pth := c11.ctask.currenttemp < Tth;
+c12_pth := c12.ctask.currenttemp < Tth;
+c13_pth := c13.ctask.currenttemp < Tth;
+c14_pth := c14.ctask.currenttemp < Tth;
+c15_pth := c15.ctask.currenttemp < Tth;
+c16_pth := c16.ctask.currenttemp < Tth;
+c17_pth := c17.ctask.currenttemp < Tth;
+c18_pth := c18.ctask.currenttemp < Tth;
+c19_pth := c19.ctask.currenttemp < Tth;
+c20_pth := c20.ctask.currenttemp < Tth;
+c21_pth := c21.ctask.currenttemp < Tth;
+c22_pth := c22.ctask.currenttemp < Tth;
+c23_pth := c23.ctask.currenttemp < Tth;
+c24_pth := c24.ctask.currenttemp < Tth;
+c25_pth := c25.ctask.currenttemp < Tth;
+c26_pth := c26.ctask.currenttemp < Tth;
+c27_pth := c27.ctask.currenttemp < Tth;
+c28_pth := c28.ctask.currenttemp < Tth;
+c29_pth := c29.ctask.currenttemp < Tth;
+c30_pth := c30.ctask.currenttemp < Tth;
+c31_pth := c31.ctask.currenttemp < Tth;
+c32_pth := c32.ctask.currenttemp < Tth;
+c33_pth := c33.ctask.currenttemp < Tth;
+c34_pth := c34.ctask.currenttemp < Tth;
+c35_pth := c35.ctask.currenttemp < Tth;
+c36_pth := c36.ctask.currenttemp < Tth;
+c37_pth := c37.ctask.currenttemp < Tth;
+c38_pth := c38.ctask.currenttemp < Tth;
+c39_pth := c39.ctask.currenttemp < Tth;
+c40_pth := c40.ctask.currenttemp < Tth;
+c41_pth := c41.ctask.currenttemp < Tth;
+c42_pth := c42.ctask.currenttemp < Tth;
+c43_pth := c43.ctask.currenttemp < Tth;
+c44_pth := c44.ctask.currenttemp < Tth;
+c45_pth := c45.ctask.currenttemp < Tth;
+c46_pth := c46.ctask.currenttemp < Tth;
+c47_pth := c47.ctask.currenttemp < Tth;
+c48_pth := c48.ctask.currenttemp < Tth;
+c49_pth := c49.ctask.currenttemp < Tth;
+c50_pth := c50.ctask.currenttemp < Tth;
+c51_pth := c51.ctask.currenttemp < Tth;
+c52_pth := c52.ctask.currenttemp < Tth;
+c53_pth := c53.ctask.currenttemp < Tth;
+c54_pth := c54.ctask.currenttemp < Tth;
+c55_pth := c55.ctask.currenttemp < Tth;
+c56_pth := c56.ctask.currenttemp < Tth;
+c57_pth := c57.ctask.currenttemp < Tth;
+c58_pth := c58.ctask.currenttemp < Tth;
+c59_pth := c59.ctask.currenttemp < Tth;
+c60_pth := c60.ctask.currenttemp < Tth;
+c61_pth := c61.ctask.currenttemp < Tth;
+c62_pth := c62.ctask.currenttemp < Tth;
+c63_pth := c63.ctask.currenttemp < Tth;
+c64_pth := c64.ctask.currenttemp < Tth;
+c65_pth := c65.ctask.currenttemp < Tth;
+c66_pth := c66.ctask.currenttemp < Tth;
+c67_pth := c67.ctask.currenttemp < Tth;
+c68_pth := c68.ctask.currenttemp < Tth;
+c69_pth := c69.ctask.currenttemp < Tth;
+c70_pth := c70.ctask.currenttemp < Tth;
+c71_pth := c71.ctask.currenttemp < Tth;
+c72_pth := c72.ctask.currenttemp < Tth;
+c73_pth := c73.ctask.currenttemp < Tth;
+c74_pth := c74.ctask.currenttemp < Tth;
+c75_pth := c75.ctask.currenttemp < Tth;
+c76_pth := c76.ctask.currenttemp < Tth;
+c77_pth := c77.ctask.currenttemp < Tth;
+c78_pth := c78.ctask.currenttemp < Tth;
+c79_pth := c79.ctask.currenttemp < Tth;
+c80_pth := c80.ctask.currenttemp < Tth;
+c81_pth := c81.ctask.currenttemp < Tth;
+/--fold_end--/
+
+
+
+
+DEFINE N := 9;
+DEFINE Tth := 55;
+DEFINE Tth2 := 56;
+DEFINE temp_min := 25; 
+DEFINE DyBal := 5;
+DEFINE Pro_Tth	:= 39;
+DEFINE A_par	:= 33;
+--JUSTICE  TRUE;
+FAIRNESS TRUE;
+--CTLSPEC NAME P1 := EG(task1.taskstate = finished & temp1 > temp_min)
+--LTLSPEC NAME P2 := G(c1.ctask.taskstate = finished -> F(c1.ctemp.temp = temp_min))  
+--LTLSPEC NAME P3 := G((c1.ctask.taskstate = stopped) -> (c1.ctask.corePower = 0))
+--LTLSPEC NAME P3 := G(F(c1.temp < Tth) & (c2.temp < Tth) & (c3.temp < Tth))
+--LTLSPEC NAME P3 := G(F(c1_pth  & c2_pth & c3_pth& c4_pth & c5_pth & c6_pth & c7_pth & c8_pth & c9_pth))
+--LTLSPEC NAME P3 := G((c1.ctask.taskstate = stopped) -> (c1.ctask.corePower = 0))
+--LTLSPEC NAME P3 := G(c1.iDTM = TRUE -> F(c1.ctask.currenttemp < Tth))
+--INVARSPEC NAME P4 := c1.ctask.currenttemp < Tth2;
+INVARSPEC NAME P5 := c1_pth  & c2_pth & c3_pth& c4_pth & c5_pth & c6_pth & c7_pth & c8_pth & c9_pth & c10_pth & c11_pth & c12_pth & c13_pth & c14_pth & c15_pth & c16_pth & c17_pth & c18_pth & c19_pth & c20_pth & c21_pth & c22_pth & c23_pth & c24_pth & c25_pth & c26_pth & c27_pth & c28_pth & c29_pth & c30_pth & c31_pth & c32_pth & c33_pth & c34_pth & c35_pth & c36_pth & c37_pth & c38_pth & c39_pth & c40_pth & c41_pth & c42_pth & c43_pth & c44_pth & c45_pth & c46_pth & c47_pth & c48_pth & c49_pth & c50_pth & c51_pth & c52_pth & c53_pth & c54_pth & c55_pth & c56_pth & c57_pth & c58_pth & c59_pth & c60_pth & c61_pth & c62_pth & c63_pth & c64_pth & c65_pth & c66_pth & c67_pth & c68_pth & c69_pth & c70_pth & c71_pth & c72_pth & c73_pth & c74_pth & c75_pth & c76_pth & c77_pth & c78_pth & c79_pth & c80_pth & c81_pth
+--INVARSPEC NAME P4 := c1.ctask.taskstate = running -> c1.ctask.currenttemp < Tth;
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 core   									    	 --
+-- ******************************************************--
+MODULE core(avg, temp_min, Tth, id, N, Pmin, Pmax, Pstate, Duration, nbrPV, iDTM, migrate_out, migrate_in)
+/--fold_begin--/
+DEFINE Duration1 := 10;
+DEFINE Duration2 := 5;
+VAR
+ctask   		: task(temp_min, Tth, id, Pmin, Pmax, Pstate, Duration1, Duration2, nbrPV, iDTM, migrate_out, migrate_in);
+core_history 	: I_history(ctask.currenttemp, avg);
+ATP 		    : ATP(ctask.currenttemp, core_history.temp_avg, core_history.temp_diff); 
+ABP	 	        : ABP(core_history.ek, core_history.ek_avg, core_history.ek_diff);
+--dispatcher		: dispatcher(isfinihsed, migratedtask);
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 tempcalc 									    	 --
+-- ******************************************************--
+MODULE tempcalc(temp_min, nbrPV)
+/--fold_begin--/
+VAR 
+temp : real;
+INVAR temp < 80
+ASSIGN 
+                 --temp := case
+				  temp := temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
+				 --TRUE : temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
+/--fold_end--/
+/--ENDMODULE--/  
+
+-- ******************************************************--
+-- 	 nbrPower									    	 --
+-- ******************************************************--
+MODULE nbrPower(id, N, PV)
+/--fold_begin--/
+VAR
+ cnbrs: findnbr(id, N);
+ nbrP : array 1..9 of integer;
+ASSIGN nbrP[1] := PV[cnbrs.n1];
+ASSIGN nbrP[2] := PV[cnbrs.n2]; 
+ASSIGN nbrP[3] := PV[cnbrs.n3]; 
+ASSIGN nbrP[4] := PV[cnbrs.n4]; 
+ASSIGN nbrP[5] := PV[cnbrs.n5]; 
+ASSIGN nbrP[6] := PV[cnbrs.n6]; 
+ASSIGN nbrP[7] := PV[cnbrs.n7]; 
+ASSIGN nbrP[8] := PV[cnbrs.n8]; 
+ASSIGN nbrP[9] := PV[cnbrs.n9];  
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 existn 									    	 --
+-- ******************************************************--
+MODULE existn(id, N)
+/--fold_begin--/
+DEFINE div := floor(id / N);
+DEFINE modu := id - (div * N);  
+DEFINE n1 := case 
+			(id <= N) | (modu = 1) : 0;
+             TRUE : 1;	
+			esac;			 
+DEFINE n2 := case 
+			(id <= N)  : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n3 := case 
+			(id <= N) | (modu = 0) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n4 := case 
+			(id = 1) | (modu  = 1) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n6 := case 
+			(id >= N) & (modu  = 0) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n7 := case 
+			(id = 1) | (modu = 1) | (id > N * (N - 1)) : 0;
+             TRUE : 1;
+			 esac;
+DEFINE n8 := case 
+			(id > N * (N - 1)): 0;
+             TRUE : 1;
+			 esac;
+DEFINE n9 := case 
+			 (id > N * (N - 1 )) | (modu = 0) : 0;
+             TRUE : 1;
+			 esac;
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 findnbr									    	 --
+-- ******************************************************--
+MODULE findnbr(id, N)
+/--fold_begin--/
+DEFINE div := floor(id / N);
+DEFINE modu := id - (div * N);  
+DEFINE n1 := case 
+			(id <= N) | (modu = 1) : 0;
+             TRUE : id - N -1;	
+			esac;			 
+DEFINE n2 := case 
+			(id <= N)  : 0;
+             TRUE : id - N;
+			 esac;
+DEFINE n3 := case 
+			(id <= N) | (modu = 0) : 0;
+             TRUE : id - N + 1;
+			 esac;
+DEFINE n4 := case 
+			(id = 1) | (modu = 1) : 0;
+             TRUE : id - 1;
+			 esac;
+DEFINE n5 := id;
+DEFINE n6 := case 
+			(id >= N) & (modu = 0) : 0;
+             TRUE : id + 1;
+			 esac;
+DEFINE n7 := case 
+			(id = 1) | (modu = 1) | (id > N * (N - 1)) : 0;
+             TRUE : id + N - 1;
+			 esac;
+DEFINE n8 := case 
+			(id > N * (N - 1)): 0;
+             TRUE : id + N ;
+			 esac;
+DEFINE n9 := case 
+			 (id > N * (N - 1)) | (modu = 0) : 0;
+             TRUE : id + N + 1;
+			 esac;			 
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 task   									    	 --
+-- ******************************************************--
+MODULE task(temp_min, Tth, id, Pmin, Pmax, Pstate, Duration1, Duration2, nbrPV, iDTM, migrate_out, migrate_in)
+/--fold_begin--/
+VAR
+taskstate : {running, stopped, finished};
+P1 : integer;
+P2 : integer;
+--Power     : integer;
+taskPower  : integer;
+corePower : integer;
+tasktime  : integer;
+migratein : boolean;
+DTM : boolean; 
+DTMsignal : boolean;
+currenttemp : real;
+ctemp : tempcalc(temp_min, nbrPV);
+INVAR corePower <= P2
+--reqPower  : Pmin..Pmax ;
+--TaskLoad  : integer;
+ASSIGN P1 := 5;
+ASSIGN P2 := 10;
+ASSIGN  init(taskstate) := 	stopped;
+		next(taskstate) := 	case
+							iDTM = FALSE & tasktime >= 1 : running;
+							iDTM = TRUE &  tasktime >= 1 : stopped;
+							tasktime <= 0 : finished;					
+					--DTM = FALSE & tasktime >= 2 : running;    
+                    --DTM = TRUE  & tasktime >= 1 : stopped;
+					--DTM = FALSE & tasktime >= 1 : finished;
+					--tasktime <= 0 : finished;		
+							TRUE : taskstate;
+							esac;
+ASSIGN  init(taskPower) := 	0;
+        next(taskPower) := 	case 
+							migratein = TRUE :  P1;
+							migratein = FALSE : P2;
+							TRUE : P1;
+							esac;
+ASSIGN  init(corePower) := 	0;
+        next(corePower) := 	case 
+							(Pstate = 0) & iDTM = FALSE & tasktime >= 1   	: taskPower;
+							(Pstate = 1) & iDTM = FALSE & tasktime >= 1   	: taskPower / 2;
+							iDTM = TRUE &  tasktime >= 1 					: 0;  
+							tasktime <= 0 									: 0;
+							TRUE     										: corePower;
+							esac;				 
+ASSIGN init(tasktime)  	:= 	migratein = TRUE ? Duration1 : Duration2;
+	   next(tasktime)  	:= 	case 
+							Pstate = 0 & iDTM = FALSE & tasktime >= 1 : tasktime - 2;
+							Pstate = 1 & iDTM = FALSE & tasktime >= 1 : tasktime - 1; 
+						  --Pstate = 1 & taskstate = running & tasktime >= 1 : tasktime - 1;
+						  --Pstate = 0 & taskstate = running & tasktime >= 1 : tasktime - 2;
+						    taskstate = finished & tasktime = 0 : migratein = TRUE ? Duration1 : Duration2;
+							tasktime <=0 : 0; 
+							TRUE : tasktime;
+							esac;  
+ASSIGN init(migratein) := FALSE;
+       next(migratein) := TRUE union FALSE; 
+ASSIGN init(DTM) := FALSE;	
+       next(DTM) := iDTM;
+ASSIGN DTMsignal := iDTM;
+  	   currenttemp := ctemp.temp;					  
+/--fold_end--/
+/--ENDMODULE--/ 
+
+-- ******************************************************--
+-- 		Average Calculation (for Grid size)			 	 --
+-- ******************************************************--
+/--fold_begin--/
+MODULE avg_grid(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21, n22, n23, n24, n25, n26, n27, n28, n29, n30, n31, n32, n33, n34, n35, n36, n37, n38, n39, n40, n41, n42, n43, n44, n45, n46, n47, n48, n49, n50, n51, n52, n53, n54, n55, n56, n57, n58, n59, n60, n61, n62, n63, n64, n65, n66, n67, n68, n69, n70, n71, n72, n73, n74, n75, n76, n77, n78, n79, n80, n81)
+/--fold_end--/
+
+/--fold_begin--/
+DEFINE
+	n_avg	:= (n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+n13+n14+n15+n16+n17+n18+n19+n20+n21+n22+n23+n24+n25+n26+n27+n28+n29+n30+n31+n32+n33+n34+n35+n36+n37+n38+n39+n40+n41+n42+n43+n44+n45+n46+n47+n48+n49+n50+n51+n52+n53+n54+n55+n56+n57+n58+n59+n60+n61+n62+n63+n64+n65+n66+n67+n68+n69+n70+n71+n72+n73+n74+n75+n76+n77+n78+n79+n80+n81)/81;
+/--fold_end--/
+/--ENDMODULE--/	
+
+-- ******************************************************--
+-- 		Average Calculation (for 10 elements)			 --
+-- ******************************************************--
+MODULE avg_history(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10)
+/--fold_begin--/
+DEFINE
+	n_avg	:= (n1+n2+n3+n4+n5+n6+n7+n8+n9+n10)/10;
+/--fold_end--/
+/--ENDMODULE--/	
+			
+-- ******************************************************--
+-- 		History			 		 						 --
+-- ******************************************************--
+MODULE history(temp)
+/--fold_begin--/
+VAR
+	 t : array 0 .. 10 of real;
+	 tavg : avg_history(t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10]);
+DEFINE
+	T_ambient := 25;
+	T_avg 	:= tavg.n_avg;
+	diff	:= t[0]-t[1];
+ASSIGN
+-- Initialization of Temperature History Buffer    
+    init(t[0]) 	:= T_ambient;
+    init(t[1]) 	:= T_ambient;
+    init(t[2]) 	:= T_ambient;
+    init(t[3]) 	:= T_ambient;
+    init(t[4]) 	:= T_ambient;
+    init(t[5]) 	:= T_ambient;
+    init(t[6]) 	:= T_ambient;
+    init(t[7]) 	:= T_ambient;
+    init(t[8]) 	:= T_ambient;
+    init(t[9]) 	:= T_ambient;
+	init(t[10])	:= T_ambient;
+-- next state of Temperature History Buffer 
+	next(t[0])	:= temp; 
+	next(t[1])	:= t[0]; 
+	next(t[2])	:= t[1];
+	next(t[3])	:= t[2]; 
+	next(t[4])	:= t[3];
+	next(t[5])	:= t[4]; 
+	next(t[6])	:= t[5];
+	next(t[7])	:= t[6]; 
+	next(t[8])	:= t[7];
+	next(t[9])	:= t[8];
+	next(t[10])	:= t[9];
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 				History instantiation					 --
+-- ******************************************************--
+MODULE I_history(temp, t_avg)
+/--fold_begin--/
+VAR
+	temp_History : history(temp);
+	e_history 	 : history(ek);
+DEFINE
+	temp_avg	:= temp_History.T_avg;
+	temp_diff	:= temp_History.diff;
+	ek_avg		:= e_history.T_avg;
+	ek_diff		:= e_history.diff;
+	ek			:= temp - t_avg;
+/--fold_end--/
+/--ENDMODULE--/	
+
+-- ******************************************************--
+-- 		ATP												 --
+-- ******************************************************--
+MODULE ATP(temp, temp_avg, temp_diff)
+/--fold_begin--/
+DEFINE
+	H_par	:= 38;
+	theta 	:= 0.5;
+	Rat 	:= (temp + temp_avg - H_par)+ (theta*(temp_diff));
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 		ABP												 --
+-- ******************************************************--
+MODULE ABP(ek, ek_avg, ek_diff)
+/--fold_begin--/
+DEFINE
+	theta 	:= 0.5;
+	Rab 	:= (ek + ek_avg) + (theta * (ek_diff));
+/--fold_end--/
+
+-- ******************************************************--
+-- 		CU_AT											 --
+-- ******************************************************--
+-- the module begins below (the keyword MODULE is hidden)
+/--fold_begin--/
+MODULE CU_AT(Pro_Tth, A_par, Rat1, Rat2, Rat3, Rat4, Rat5, Rat6, Rat7, Rat8, Rat9, Rat10, Rat11, Rat12, Rat13, Rat14, Rat15, Rat16, Rat17, Rat18, Rat19, Rat20, Rat21, Rat22, Rat23, Rat24, Rat25, Rat26, Rat27, Rat28, Rat29, Rat30, Rat31, Rat32, Rat33, Rat34, Rat35, Rat36, Rat37, Rat38, Rat39, Rat40, Rat41, Rat42, Rat43, Rat44, Rat45, Rat46, Rat47, Rat48, Rat49, Rat50, Rat51, Rat52, Rat53, Rat54, Rat55, Rat56, Rat57, Rat58, Rat59, Rat60, Rat61, Rat62, Rat63, Rat64, Rat65, Rat66, Rat67, Rat68, Rat69, Rat70, Rat71, Rat72, Rat73, Rat74, Rat75, Rat76, Rat77, Rat78, Rat79, Rat80, Rat81, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50, p51, p52, p53, p54, p55, p56, p57, p58, p59, p60, p61, p62, p63, p64, p65, p66, p67, p68, p69, p70, p71, p72, p73, p74, p75, p76, p77, p78, p79, p80, p81)
+/--fold_end--/
+
+/--fold_begin--/
+
+DEFINE grid_size := 81;
+DEFINE grid_size_1 := grid_size + 1;
+DEFINE bits_grid_size := 7;
+VAR
+	 	   migrate : migrate(Rat, A_par, Pro_Tth);
+
+	--DEFINE for Rat is given below in the fold
+	/--fold_begin--/
+	DEFINE Rat := [ 1 , Rat1, Rat2, Rat3, Rat4, Rat5, Rat6, Rat7, Rat8, Rat9, Rat10, Rat11, Rat12, Rat13, Rat14, Rat15, Rat16, Rat17, Rat18, Rat19, Rat20, Rat21, Rat22, Rat23, Rat24, Rat25, Rat26, Rat27, Rat28, Rat29, Rat30, Rat31, Rat32, Rat33, Rat34, Rat35, Rat36, Rat37, Rat38, Rat39, Rat40, Rat41, Rat42, Rat43, Rat44, Rat45, Rat46, Rat47, Rat48, Rat49, Rat50, Rat51, Rat52, Rat53, Rat54, Rat55, Rat56, Rat57, Rat58, Rat59, Rat60, Rat61, Rat62, Rat63, Rat64, Rat65, Rat66, Rat67, Rat68, Rat69, Rat70, Rat71, Rat72, Rat73, Rat74, Rat75, Rat76, Rat77, Rat78, Rat79, Rat80, Rat81];
+	/--fold_end--/	
+	
+	--DEFINE for Rat_g is given in the fold below
+	/--fold_begin--/
+	DEFINE Rat_g := [ TRUE, Rat1 >= Pro_Tth, Rat2 >= Pro_Tth, Rat3 >= Pro_Tth, Rat4 >= Pro_Tth, Rat5 >= Pro_Tth, Rat6 >= Pro_Tth, Rat7 >= Pro_Tth, Rat8 >= Pro_Tth, Rat9 >= Pro_Tth, Rat10 >= Pro_Tth, Rat11 >= Pro_Tth, Rat12 >= Pro_Tth, Rat13 >= Pro_Tth, Rat14 >= Pro_Tth, Rat15 >= Pro_Tth, Rat16 >= Pro_Tth, Rat17 >= Pro_Tth, Rat18 >= Pro_Tth, Rat19 >= Pro_Tth, Rat20 >= Pro_Tth, Rat21 >= Pro_Tth, Rat22 >= Pro_Tth, Rat23 >= Pro_Tth, Rat24 >= Pro_Tth, Rat25 >= Pro_Tth, Rat26 >= Pro_Tth, Rat27 >= Pro_Tth, Rat28 >= Pro_Tth, Rat29 >= Pro_Tth, Rat30 >= Pro_Tth, Rat31 >= Pro_Tth, Rat32 >= Pro_Tth, Rat33 >= Pro_Tth, Rat34 >= Pro_Tth, Rat35 >= Pro_Tth, Rat36 >= Pro_Tth, Rat37 >= Pro_Tth, Rat38 >= Pro_Tth, Rat39 >= Pro_Tth, Rat40 >= Pro_Tth, Rat41 >= Pro_Tth, Rat42 >= Pro_Tth, Rat43 >= Pro_Tth, Rat44 >= Pro_Tth, Rat45 >= Pro_Tth, Rat46 >= Pro_Tth, Rat47 >= Pro_Tth, Rat48 >= Pro_Tth, Rat49 >= Pro_Tth, Rat50 >= Pro_Tth, Rat51 >= Pro_Tth, Rat52 >= Pro_Tth, Rat53 >= Pro_Tth, Rat54 >= Pro_Tth, Rat55 >= Pro_Tth, Rat56 >= Pro_Tth, Rat57 >= Pro_Tth, Rat58 >= Pro_Tth, Rat59 >= Pro_Tth, Rat60 >= Pro_Tth, Rat61 >= Pro_Tth, Rat62 >= Pro_Tth, Rat63 >= Pro_Tth, Rat64 >= Pro_Tth, Rat65 >= Pro_Tth, Rat66 >= Pro_Tth, Rat67 >= Pro_Tth, Rat68 >= Pro_Tth, Rat69 >= Pro_Tth, Rat70 >= Pro_Tth, Rat71 >= Pro_Tth, Rat72 >= Pro_Tth, Rat73 >= Pro_Tth, Rat74 >= Pro_Tth, Rat75 >= Pro_Tth, Rat76 >= Pro_Tth, Rat77 >= Pro_Tth, Rat78 >= Pro_Tth, Rat79 >= Pro_Tth, Rat80 >= Pro_Tth, Rat81 >= Pro_Tth];
+	/--fold_end--/
+	
+--DEFINE Rat_l[] is given in the fold below
+/--fold_begin--/
+DEFINE Rat_l := [ TRUE , Rat1 < A_par, Rat2 < A_par, Rat3 < A_par, Rat4 < A_par, Rat5 < A_par, Rat6 < A_par, Rat7 < A_par, Rat8 < A_par, Rat9 < A_par,  Rat10 < A_par, Rat11 < A_par, Rat12 < A_par, Rat13 < A_par, Rat14 < A_par, Rat15 < A_par, Rat16 < A_par, Rat17 < A_par, Rat18 < A_par, Rat19 < A_par, Rat20 < A_par, Rat21 < A_par, Rat22 < A_par, Rat23 < A_par, Rat24 < A_par, Rat25 < A_par, Rat26 < A_par, Rat27 < A_par, Rat28 < A_par, Rat29 < A_par, Rat30 < A_par, Rat31 < A_par, Rat32 < A_par, Rat33 < A_par, Rat34 < A_par, Rat35 < A_par, Rat36 < A_par, Rat37 < A_par, Rat38 < A_par, Rat39 < A_par, Rat40 < A_par, Rat41 < A_par, Rat42 < A_par, Rat43 < A_par, Rat44 < A_par, Rat45 < A_par, Rat46 < A_par, Rat47 < A_par, Rat48 < A_par, Rat49 < A_par, Rat50 < A_par, Rat51 < A_par, Rat52 < A_par, Rat53 < A_par, Rat54 < A_par, Rat55 < A_par, Rat56 < A_par, Rat57 < A_par, Rat58 < A_par, Rat59 < A_par, Rat60 < A_par, Rat61 < A_par, Rat62 < A_par, Rat63 < A_par, Rat64 < A_par, Rat65 < A_par, Rat66 < A_par, Rat67 < A_par, Rat68 < A_par, Rat69 < A_par, Rat70 < A_par, Rat71 < A_par, Rat72 < A_par, Rat73 < A_par, Rat74 < A_par, Rat75 < A_par, Rat76 < A_par, Rat77 < A_par, Rat78 < A_par, Rat79 < A_par, Rat80 < A_par, Rat81 < A_par];
+/--fold_end--/
+		
+--DEFINE migrate_out[] is given in the fold below
+/--fold_begin--/
+DEFINE migrate_out := [ TRUE ,
+(migrate.migrate_out = 1) ? TRUE : FALSE   ,
+(migrate.migrate_out = 2) ? TRUE : FALSE   ,
+(migrate.migrate_out = 3) ? TRUE : FALSE   ,
+(migrate.migrate_out = 4) ? TRUE : FALSE   ,
+(migrate.migrate_out = 5) ? TRUE : FALSE   ,
+(migrate.migrate_out = 6) ? TRUE : FALSE   ,
+(migrate.migrate_out = 7) ? TRUE : FALSE   ,
+(migrate.migrate_out = 8) ? TRUE : FALSE   ,
+(migrate.migrate_out = 9) ? TRUE : FALSE   ,
+(migrate.migrate_out = 10) ? TRUE : FALSE  ,
+(migrate.migrate_out = 11) ? TRUE : FALSE  ,
+(migrate.migrate_out = 12) ? TRUE : FALSE  ,
+(migrate.migrate_out = 13) ? TRUE : FALSE  ,
+(migrate.migrate_out = 14) ? TRUE : FALSE  ,
+(migrate.migrate_out = 15) ? TRUE : FALSE  ,
+(migrate.migrate_out = 16) ? TRUE : FALSE  ,
+(migrate.migrate_out = 17) ? TRUE : FALSE  ,
+(migrate.migrate_out = 18) ? TRUE : FALSE  ,
+(migrate.migrate_out = 19) ? TRUE : FALSE  ,
+(migrate.migrate_out = 20) ? TRUE : FALSE  ,
+(migrate.migrate_out = 21) ? TRUE : FALSE  ,
+(migrate.migrate_out = 22) ? TRUE : FALSE  ,
+(migrate.migrate_out = 23) ? TRUE : FALSE  ,
+(migrate.migrate_out = 24) ? TRUE : FALSE  ,
+(migrate.migrate_out = 25) ? TRUE : FALSE  ,
+(migrate.migrate_out = 26) ? TRUE : FALSE  ,
+(migrate.migrate_out = 27) ? TRUE : FALSE  ,
+(migrate.migrate_out = 28) ? TRUE : FALSE  ,
+(migrate.migrate_out = 29) ? TRUE : FALSE  ,
+(migrate.migrate_out = 30) ? TRUE : FALSE  ,
+(migrate.migrate_out = 31) ? TRUE : FALSE  ,
+(migrate.migrate_out = 32) ? TRUE : FALSE  ,
+(migrate.migrate_out = 33) ? TRUE : FALSE  ,
+(migrate.migrate_out = 34) ? TRUE : FALSE  ,
+(migrate.migrate_out = 35) ? TRUE : FALSE  ,
+(migrate.migrate_out = 36) ? TRUE : FALSE  ,
+(migrate.migrate_out = 37) ? TRUE : FALSE  ,
+(migrate.migrate_out = 38) ? TRUE : FALSE  ,
+(migrate.migrate_out = 39) ? TRUE : FALSE  ,
+(migrate.migrate_out = 40) ? TRUE : FALSE  ,
+(migrate.migrate_out = 41) ? TRUE : FALSE  ,
+(migrate.migrate_out = 42) ? TRUE : FALSE  ,
+(migrate.migrate_out = 43) ? TRUE : FALSE  ,
+(migrate.migrate_out = 44) ? TRUE : FALSE  ,
+(migrate.migrate_out = 45) ? TRUE : FALSE  ,
+(migrate.migrate_out = 46) ? TRUE : FALSE  ,
+(migrate.migrate_out = 47) ? TRUE : FALSE  ,
+(migrate.migrate_out = 48) ? TRUE : FALSE  ,
+(migrate.migrate_out = 49) ? TRUE : FALSE  ,
+(migrate.migrate_out = 50) ? TRUE : FALSE  ,
+(migrate.migrate_out = 51) ? TRUE : FALSE  ,
+(migrate.migrate_out = 52) ? TRUE : FALSE  ,
+(migrate.migrate_out = 53) ? TRUE : FALSE  ,
+(migrate.migrate_out = 54) ? TRUE : FALSE  ,
+(migrate.migrate_out = 55) ? TRUE : FALSE  ,
+(migrate.migrate_out = 56) ? TRUE : FALSE  ,
+(migrate.migrate_out = 57) ? TRUE : FALSE  ,
+(migrate.migrate_out = 58) ? TRUE : FALSE  ,
+(migrate.migrate_out = 59) ? TRUE : FALSE  ,
+(migrate.migrate_out = 60) ? TRUE : FALSE  ,
+(migrate.migrate_out = 61) ? TRUE : FALSE  ,
+(migrate.migrate_out = 62) ? TRUE : FALSE  ,
+(migrate.migrate_out = 63) ? TRUE : FALSE  ,
+(migrate.migrate_out = 64) ? TRUE : FALSE  ,
+(migrate.migrate_out = 65) ? TRUE : FALSE  ,
+(migrate.migrate_out = 66) ? TRUE : FALSE  ,
+(migrate.migrate_out = 67) ? TRUE : FALSE  ,
+(migrate.migrate_out = 68) ? TRUE : FALSE  ,
+(migrate.migrate_out = 69) ? TRUE : FALSE  ,
+(migrate.migrate_out = 70) ? TRUE : FALSE  ,
+(migrate.migrate_out = 71) ? TRUE : FALSE  ,
+(migrate.migrate_out = 72) ? TRUE : FALSE  ,
+(migrate.migrate_out = 73) ? TRUE : FALSE  ,
+(migrate.migrate_out = 74) ? TRUE : FALSE  ,
+(migrate.migrate_out = 75) ? TRUE : FALSE  ,
+(migrate.migrate_out = 76) ? TRUE : FALSE  ,
+(migrate.migrate_out = 77) ? TRUE : FALSE  ,
+(migrate.migrate_out = 78) ? TRUE : FALSE  ,
+(migrate.migrate_out = 79) ? TRUE : FALSE  ,
+(migrate.migrate_out = 80) ? TRUE : FALSE  ,
+(migrate.migrate_out = 81) ? TRUE : FALSE  ];
+/--fold_end--/
+	
+--DEFINE migrate_in[] is given below in the fold
+/--fold_begin--/
+DEFINE migrate_in := [TRUE , (migrate.migrate_in = 1) ? TRUE : FALSE   ,
+(migrate.migrate_in = 2) ? TRUE : FALSE   ,
+(migrate.migrate_in = 3) ? TRUE : FALSE   ,
+(migrate.migrate_in = 4) ? TRUE : FALSE   ,
+(migrate.migrate_in = 5) ? TRUE : FALSE   ,
+(migrate.migrate_in = 6) ? TRUE : FALSE   ,
+(migrate.migrate_in = 7) ? TRUE : FALSE   ,
+(migrate.migrate_in = 8) ? TRUE : FALSE   ,
+(migrate.migrate_in = 9) ? TRUE : FALSE   ,
+(migrate.migrate_in = 10) ? TRUE : FALSE  ,
+(migrate.migrate_in = 11) ? TRUE : FALSE  ,
+(migrate.migrate_in = 12) ? TRUE : FALSE  ,
+(migrate.migrate_in = 13) ? TRUE : FALSE  ,
+(migrate.migrate_in = 14) ? TRUE : FALSE  ,
+(migrate.migrate_in = 15) ? TRUE : FALSE  ,
+(migrate.migrate_in = 16) ? TRUE : FALSE  ,
+(migrate.migrate_in = 17) ? TRUE : FALSE  ,
+(migrate.migrate_in = 18) ? TRUE : FALSE  ,
+(migrate.migrate_in = 19) ? TRUE : FALSE  ,
+(migrate.migrate_in = 20) ? TRUE : FALSE  ,
+(migrate.migrate_in = 21) ? TRUE : FALSE  ,
+(migrate.migrate_in = 22) ? TRUE : FALSE  ,
+(migrate.migrate_in = 23) ? TRUE : FALSE  ,
+(migrate.migrate_in = 24) ? TRUE : FALSE  ,
+(migrate.migrate_in = 25) ? TRUE : FALSE  ,
+(migrate.migrate_in = 26) ? TRUE : FALSE  ,
+(migrate.migrate_in = 27) ? TRUE : FALSE  ,
+(migrate.migrate_in = 28) ? TRUE : FALSE  ,
+(migrate.migrate_in = 29) ? TRUE : FALSE  ,
+(migrate.migrate_in = 30) ? TRUE : FALSE  ,
+(migrate.migrate_in = 31) ? TRUE : FALSE  ,
+(migrate.migrate_in = 32) ? TRUE : FALSE  ,
+(migrate.migrate_in = 33) ? TRUE : FALSE  ,
+(migrate.migrate_in = 34) ? TRUE : FALSE  ,
+(migrate.migrate_in = 35) ? TRUE : FALSE  ,
+(migrate.migrate_in = 36) ? TRUE : FALSE  ,
+(migrate.migrate_in = 37) ? TRUE : FALSE  ,
+(migrate.migrate_in = 38) ? TRUE : FALSE  ,
+(migrate.migrate_in = 39) ? TRUE : FALSE  ,
+(migrate.migrate_in = 40) ? TRUE : FALSE  ,
+(migrate.migrate_in = 41) ? TRUE : FALSE  ,
+(migrate.migrate_in = 42) ? TRUE : FALSE  ,
+(migrate.migrate_in = 43) ? TRUE : FALSE  ,
+(migrate.migrate_in = 44) ? TRUE : FALSE  ,
+(migrate.migrate_in = 45) ? TRUE : FALSE  ,
+(migrate.migrate_in = 46) ? TRUE : FALSE  ,
+(migrate.migrate_in = 47) ? TRUE : FALSE  ,
+(migrate.migrate_in = 48) ? TRUE : FALSE  ,
+(migrate.migrate_in = 49) ? TRUE : FALSE  ,
+(migrate.migrate_in = 50) ? TRUE : FALSE  ,
+(migrate.migrate_in = 51) ? TRUE : FALSE  ,
+(migrate.migrate_in = 52) ? TRUE : FALSE  ,
+(migrate.migrate_in = 53) ? TRUE : FALSE  ,
+(migrate.migrate_in = 54) ? TRUE : FALSE  ,
+(migrate.migrate_in = 55) ? TRUE : FALSE  ,
+(migrate.migrate_in = 56) ? TRUE : FALSE  ,
+(migrate.migrate_in = 57) ? TRUE : FALSE  ,
+(migrate.migrate_in = 58) ? TRUE : FALSE  ,
+(migrate.migrate_in = 59) ? TRUE : FALSE  ,
+(migrate.migrate_in = 60) ? TRUE : FALSE  ,
+(migrate.migrate_in = 61) ? TRUE : FALSE  ,
+(migrate.migrate_in = 62) ? TRUE : FALSE  ,
+(migrate.migrate_in = 63) ? TRUE : FALSE  ,
+(migrate.migrate_in = 64) ? TRUE : FALSE  ,
+(migrate.migrate_in = 65) ? TRUE : FALSE  ,
+(migrate.migrate_in = 66) ? TRUE : FALSE  ,
+(migrate.migrate_in = 67) ? TRUE : FALSE  ,
+(migrate.migrate_in = 68) ? TRUE : FALSE  ,
+(migrate.migrate_in = 69) ? TRUE : FALSE  ,
+(migrate.migrate_in = 70) ? TRUE : FALSE  ,
+(migrate.migrate_in = 71) ? TRUE : FALSE  ,
+(migrate.migrate_in = 72) ? TRUE : FALSE  ,
+(migrate.migrate_in = 73) ? TRUE : FALSE  ,
+(migrate.migrate_in = 74) ? TRUE : FALSE  ,
+(migrate.migrate_in = 75) ? TRUE : FALSE  ,
+(migrate.migrate_in = 76) ? TRUE : FALSE  ,
+(migrate.migrate_in = 77) ? TRUE : FALSE  ,
+(migrate.migrate_in = 78) ? TRUE : FALSE  ,
+(migrate.migrate_in = 79) ? TRUE : FALSE  ,
+(migrate.migrate_in = 80) ? TRUE : FALSE  ,
+(migrate.migrate_in = 81) ? TRUE : FALSE  ];
+/--fold_end--/
+
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 CU-AB												 --
+-- ******************************************************--
+-- the module begins below (the keyword  MODULE is hidden)
+/--fold_begin--/
+MODULE CU_AB(DyBal, Rab1, Rab2, Rab3, Rab4, Rab5, Rab6, Rab7, Rab8, Rab9, Rab10, Rab11, Rab12, Rab13, Rab14, Rab15, Rab16, Rab17, Rab18, Rab19, Rab20, Rab21, Rab22, Rab23, Rab24, Rab25, Rab26, Rab27, Rab28, Rab29, Rab30, Rab31, Rab32, Rab33, Rab34, Rab35, Rab36, Rab37, Rab38, Rab39, Rab40, Rab41, Rab42, Rab43, Rab44, Rab45, Rab46, Rab47, Rab48, Rab49, Rab50, Rab51, Rab52, Rab53, Rab54, Rab55, Rab56, Rab57, Rab58, Rab59, Rab60, Rab61, Rab62, Rab63, Rab64, Rab65, Rab66, Rab67, Rab68, Rab69, Rab70, Rab71, Rab72, Rab73, Rab74, Rab75, Rab76, Rab77, Rab78, Rab79, Rab80, Rab81, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50, p51, p52, p53, p54, p55, p56, p57, p58, p59, p60, p61, p62, p63, p64, p65, p66, p67, p68, p69, p70, p71, p72, p73, p74, p75, p76, p77, p78, p79, p80, p81)
+ /--fold_end--/
+ 
+ /--fold_begin--/
+
+DEFINE max1 := max(Rab1,Rab2); 
+/--fold_begin--/
+DEFINE max2 := max(max1,Rab3);
+--DEFINE max2 := max(max1,Rab3);
+DEFINE max3 := max(max2,Rab4);
+DEFINE max4 := max(max3,Rab5);
+DEFINE max5 := max(max4,Rab6);
+DEFINE max6 := max(max5,Rab7);
+DEFINE max7 := max(max6,Rab8);
+DEFINE max8 := max(max7,Rab9);
+DEFINE max9 := max(max8,Rab10);
+DEFINE max10 := max(max9,Rab11);
+DEFINE max11 := max(max10,Rab12);
+DEFINE max12 := max(max11,Rab13);
+DEFINE max13 := max(max12,Rab14);
+DEFINE max14 := max(max13,Rab15);
+DEFINE max15 := max(max14,Rab16);
+DEFINE max16 := max(max15,Rab17);
+DEFINE max17 := max(max16,Rab18);
+DEFINE max18 := max(max17,Rab19);
+DEFINE max19 := max(max18,Rab20);
+DEFINE max20 := max(max19,Rab21);
+DEFINE max21 := max(max20,Rab22);
+DEFINE max22 := max(max21,Rab23);
+DEFINE max23 := max(max22,Rab24);
+DEFINE max24 := max(max23,Rab25);
+DEFINE max25 := max(max24,Rab26);
+DEFINE max26 := max(max25,Rab27);
+DEFINE max27 := max(max26,Rab28);
+DEFINE max28 := max(max27,Rab29);
+DEFINE max29 := max(max28,Rab30);
+DEFINE max30 := max(max29,Rab31);
+DEFINE max31 := max(max30,Rab32);
+DEFINE max32 := max(max31,Rab33);
+DEFINE max33 := max(max32,Rab34);
+DEFINE max34 := max(max33,Rab35);
+DEFINE max35 := max(max34,Rab36);
+DEFINE max36 := max(max35,Rab37);
+DEFINE max37 := max(max36,Rab38);
+DEFINE max38 := max(max37,Rab39);
+DEFINE max39 := max(max38,Rab40);
+DEFINE max40 := max(max39,Rab41);
+DEFINE max41 := max(max40,Rab42);
+DEFINE max42 := max(max41,Rab43);
+DEFINE max43 := max(max42,Rab44);
+DEFINE max44 := max(max43,Rab45);
+DEFINE max45 := max(max44,Rab46);
+DEFINE max46 := max(max45,Rab47);
+DEFINE max47 := max(max46,Rab48);
+DEFINE max48 := max(max47,Rab49);
+DEFINE max49 := max(max48,Rab50);
+DEFINE max50 := max(max49,Rab51);
+DEFINE max51 := max(max50,Rab52);
+DEFINE max52 := max(max51,Rab53);
+DEFINE max53 := max(max52,Rab54);
+DEFINE max54 := max(max53,Rab55);
+DEFINE max55 := max(max54,Rab56);
+DEFINE max56 := max(max55,Rab57);
+DEFINE max57 := max(max56,Rab58);
+DEFINE max58 := max(max57,Rab59);
+DEFINE max59 := max(max58,Rab60);
+DEFINE max60 := max(max59,Rab61);
+DEFINE max61 := max(max60,Rab62);
+DEFINE max62 := max(max61,Rab63);
+DEFINE max63 := max(max62,Rab64);
+DEFINE max64 := max(max63,Rab65);
+DEFINE max65 := max(max64,Rab66);
+DEFINE max66 := max(max65,Rab67);
+DEFINE max67 := max(max66,Rab68);
+DEFINE max68 := max(max67,Rab69);
+DEFINE max69 := max(max68,Rab70);
+DEFINE max70 := max(max69,Rab71);
+DEFINE max71 := max(max70,Rab72);
+DEFINE max72 := max(max71,Rab73);
+DEFINE max73 := max(max72,Rab74);
+DEFINE max74 := max(max73,Rab75);
+DEFINE max75 := max(max74,Rab76);
+DEFINE max76 := max(max75,Rab77);
+DEFINE max77 := max(max76,Rab78);
+DEFINE max78 := max(max77,Rab79);
+DEFINE max79 := max(max78,Rab80);
+DEFINE max80 := max(max79,Rab81);
+/--fold_end--/
+
+
+DEFINE min1 := min(Rab1,Rab2);
+/--fold_begin--/
+DEFINE min2 := min(min1,Rab3);
+DEFINE min3 := min(min2,Rab4);
+DEFINE min4 := min(min3,Rab5);
+DEFINE min5 := min(min4,Rab6);
+DEFINE min6 := min(min5,Rab7);
+DEFINE min7 := min(min6,Rab8);
+DEFINE min8 := min(min7,Rab9);
+DEFINE min9 := min(min8,Rab10);
+DEFINE min10 := min(min9,Rab11);
+DEFINE min11 := min(min10,Rab12);
+DEFINE min12 := min(min11,Rab13);
+DEFINE min13 := min(min12,Rab14);
+DEFINE min14 := min(min13,Rab15);
+DEFINE min15 := min(min14,Rab16);
+DEFINE min16 := min(min15,Rab17);
+DEFINE min17 := min(min16,Rab18);
+DEFINE min18 := min(min17,Rab19);
+DEFINE min19 := min(min18,Rab20);
+DEFINE min20 := min(min19,Rab21);
+DEFINE min21 := min(min20,Rab22);
+DEFINE min22 := min(min21,Rab23);
+DEFINE min23 := min(min22,Rab24);
+DEFINE min24 := min(min23,Rab25);
+DEFINE min25 := min(min24,Rab26);
+DEFINE min26 := min(min25,Rab27);
+DEFINE min27 := min(min26,Rab28);
+DEFINE min28 := min(min27,Rab29);
+DEFINE min29 := min(min28,Rab30);
+DEFINE min30 := min(min29,Rab31);
+DEFINE min31 := min(min30,Rab32);
+DEFINE min32 := min(min31,Rab33);
+DEFINE min33 := min(min32,Rab34);
+DEFINE min34 := min(min33,Rab35);
+DEFINE min35 := min(min34,Rab36);
+DEFINE min36 := min(min35,Rab37);
+DEFINE min37 := min(min36,Rab38);
+DEFINE min38 := min(min37,Rab39);
+DEFINE min39 := min(min38,Rab40);
+DEFINE min40 := min(min39,Rab41);
+DEFINE min41 := min(min40,Rab42);
+DEFINE min42 := min(min41,Rab43);
+DEFINE min43 := min(min42,Rab44);
+DEFINE min44 := min(min43,Rab45);
+DEFINE min45 := min(min44,Rab46);
+DEFINE min46 := min(min45,Rab47);
+DEFINE min47 := min(min46,Rab48);
+DEFINE min48 := min(min47,Rab49);
+DEFINE min49 := min(min48,Rab50);
+DEFINE min50 := min(min49,Rab51);
+DEFINE min51 := min(min50,Rab52);
+DEFINE min52 := min(min51,Rab53);
+DEFINE min53 := min(min52,Rab54);
+DEFINE min54 := min(min53,Rab55);
+DEFINE min55 := min(min54,Rab56);
+DEFINE min56 := min(min55,Rab57);
+DEFINE min57 := min(min56,Rab58);
+DEFINE min58 := min(min57,Rab59);
+DEFINE min59 := min(min58,Rab60);
+DEFINE min60 := min(min59,Rab61);
+DEFINE min61 := min(min60,Rab62);
+DEFINE min62 := min(min61,Rab63);
+DEFINE min63 := min(min62,Rab64);
+DEFINE min64 := min(min63,Rab65);
+DEFINE min65 := min(min64,Rab66);
+DEFINE min66 := min(min65,Rab67);
+DEFINE min67 := min(min66,Rab68);
+DEFINE min68 := min(min67,Rab69);
+DEFINE min69 := min(min68,Rab70);
+DEFINE min70 := min(min69,Rab71);
+DEFINE min71 := min(min70,Rab72);
+DEFINE min72 := min(min71,Rab73);
+DEFINE min73 := min(min72,Rab74);
+DEFINE min74 := min(min73,Rab75);
+DEFINE min75 := min(min74,Rab76);
+DEFINE min76 := min(min75,Rab77);
+DEFINE min77 := min(min76,Rab78);
+DEFINE min78 := min(min77,Rab79);
+DEFINE min79 := min(min78,Rab80);
+DEFINE min80 := min(min79,Rab81);
+/--fold_end--/
+
+	        
+DEFINE Rab_large := max80;
+DEFINE Rab_less  := min80; 
+
+DEFINE migrate_out := case 
+                     Rab_large = Rab1 : 1;
+					 /--fold_begin--/
+					 Rab_large = Rab2  : 2;
+					 Rab_large = Rab3  : 3;
+						 Rab_large = Rab4  : 4;
+						 Rab_large = Rab5  : 5;
+						Rab_large = Rab6  : 6;
+						Rab_large = Rab7  : 7;
+						Rab_large = Rab8  : 8;
+						Rab_large = Rab9  : 9;
+						Rab_large = Rab10  : 10;
+						Rab_large = Rab11  : 11;
+						Rab_large = Rab12  : 12;
+						Rab_large = Rab13  : 13;
+						Rab_large = Rab14  : 14;
+						Rab_large = Rab15  : 15;
+						Rab_large = Rab16  : 16;
+						Rab_large = Rab17  : 17;
+						Rab_large = Rab18  : 18;
+						Rab_large = Rab19  : 19;
+						Rab_large = Rab20  : 20;
+						Rab_large = Rab21  : 21;
+						Rab_large = Rab22  : 22;
+						Rab_large = Rab23  : 23;
+						Rab_large = Rab24  : 24;
+						Rab_large = Rab25  : 25;
+						Rab_large = Rab26  : 26;
+						Rab_large = Rab27  : 27;
+						Rab_large = Rab28  : 28;
+						Rab_large = Rab29  : 29;
+						Rab_large = Rab30  : 30;
+						Rab_large = Rab31  : 31;
+						Rab_large = Rab32  : 32;
+						Rab_large = Rab33  : 33;
+						Rab_large = Rab34  : 34;
+						Rab_large = Rab35  : 35;
+						Rab_large = Rab36  : 36;
+						Rab_large = Rab37  : 37;
+						Rab_large = Rab38  : 38;
+						Rab_large = Rab39  : 39;
+						Rab_large = Rab40  : 40;
+						Rab_large = Rab41  : 41;
+						Rab_large = Rab42  : 42;
+						Rab_large = Rab43  : 43;
+						Rab_large = Rab44  : 44;
+						Rab_large = Rab45  : 45;
+						Rab_large = Rab46  : 46;
+						Rab_large = Rab47  : 47;
+						Rab_large = Rab48  : 48;
+						Rab_large = Rab49  : 49;
+						Rab_large = Rab50  : 50;
+						Rab_large = Rab51  : 51;
+						Rab_large = Rab52  : 52;
+						Rab_large = Rab53  : 53;
+						Rab_large = Rab54  : 54;
+						Rab_large = Rab55  : 55;
+						Rab_large = Rab56  : 56;
+						Rab_large = Rab57  : 57;
+						Rab_large = Rab58  : 58;
+						Rab_large = Rab59  : 59;
+						Rab_large = Rab60  : 60;
+						Rab_large = Rab61  : 61;
+						Rab_large = Rab62  : 62;
+						Rab_large = Rab63  : 63;
+						Rab_large = Rab64  : 64;
+						Rab_large = Rab65  : 65;
+						Rab_large = Rab66  : 66;
+						Rab_large = Rab67  : 67;
+						Rab_large = Rab68  : 68;
+						Rab_large = Rab69  : 69;
+						Rab_large = Rab70  : 70;
+						Rab_large = Rab71  : 71;
+						Rab_large = Rab72  : 72;
+						Rab_large = Rab73  : 73;
+						Rab_large = Rab74  : 74;
+						Rab_large = Rab75  : 75;
+						Rab_large = Rab76  : 76;
+						Rab_large = Rab77  : 77;
+						Rab_large = Rab78  : 78;
+						Rab_large = Rab79  : 79;
+						Rab_large = Rab80  : 80;
+						Rab_large = Rab81  : 81;
+						/--fold_end--/
+					 TRUE : 0;
+					 esac;
+
+DEFINE migrate_in := case 
+                     Rab_less = Rab1 : 1;
+					 /--fold_begin--/
+					 Rab_less = Rab2  : 2;
+Rab_less = Rab3  : 3;
+Rab_less = Rab4  : 4;
+Rab_less = Rab5  : 5;
+Rab_less = Rab6  : 6;
+Rab_less = Rab7  : 7;
+Rab_less = Rab8  : 8;
+Rab_less = Rab9  : 9;
+Rab_less = Rab10  : 10;
+Rab_less = Rab11  : 11;
+Rab_less = Rab12  : 12;
+Rab_less = Rab13  : 13;
+Rab_less = Rab14  : 14;
+Rab_less = Rab15  : 15;
+Rab_less = Rab16  : 16;
+Rab_less = Rab17  : 17;
+Rab_less = Rab18  : 18;
+Rab_less = Rab19  : 19;
+Rab_less = Rab20  : 20;
+Rab_less = Rab21  : 21;
+Rab_less = Rab22  : 22;
+Rab_less = Rab23  : 23;
+Rab_less = Rab24  : 24;
+Rab_less = Rab25  : 25;
+Rab_less = Rab26  : 26;
+Rab_less = Rab27  : 27;
+Rab_less = Rab28  : 28;
+Rab_less = Rab29  : 29;
+Rab_less = Rab30  : 30;
+Rab_less = Rab31  : 31;
+Rab_less = Rab32  : 32;
+Rab_less = Rab33  : 33;
+Rab_less = Rab34  : 34;
+Rab_less = Rab35  : 35;
+Rab_less = Rab36  : 36;
+Rab_less = Rab37  : 37;
+Rab_less = Rab38  : 38;
+Rab_less = Rab39  : 39;
+Rab_less = Rab40  : 40;
+Rab_less = Rab41  : 41;
+Rab_less = Rab42  : 42;
+Rab_less = Rab43  : 43;
+Rab_less = Rab44  : 44;
+Rab_less = Rab45  : 45;
+Rab_less = Rab46  : 46;
+Rab_less = Rab47  : 47;
+Rab_less = Rab48  : 48;
+Rab_less = Rab49  : 49;
+Rab_less = Rab50  : 50;
+Rab_less = Rab51  : 51;
+Rab_less = Rab52  : 52;
+Rab_less = Rab53  : 53;
+Rab_less = Rab54  : 54;
+Rab_less = Rab55  : 55;
+Rab_less = Rab56  : 56;
+Rab_less = Rab57  : 57;
+Rab_less = Rab58  : 58;
+Rab_less = Rab59  : 59;
+Rab_less = Rab60  : 60;
+Rab_less = Rab61  : 61;
+Rab_less = Rab62  : 62;
+Rab_less = Rab63  : 63;
+Rab_less = Rab64  : 64;
+Rab_less = Rab65  : 65;
+Rab_less = Rab66  : 66;
+Rab_less = Rab67  : 67;
+Rab_less = Rab68  : 68;
+Rab_less = Rab69  : 69;
+Rab_less = Rab70  : 70;
+Rab_less = Rab71  : 71;
+Rab_less = Rab72  : 72;
+Rab_less = Rab73  : 73;
+Rab_less = Rab74  : 74;
+Rab_less = Rab75  : 75;
+Rab_less = Rab76  : 76;
+Rab_less = Rab77  : 77;
+Rab_less = Rab78  : 78;
+Rab_less = Rab79  : 79;
+Rab_less = Rab80  : 80;
+Rab_less = Rab81  : 81;
+/--fold_end--/
+                   	 TRUE : 0;
+					 esac;
+ 
+ DEFINE mt := migrate_in > 0 & migrate_out > 0;
+/--fold_end--/
+/--ENDMODULE--/
+
+-- ******************************************************--
+-- 	 migrate									    	 --
+-- ******************************************************--
+MODULE migrate(in1, A_Par, Pro_Tth)
+/--fold_begin--/
+DEFINE grid_size := 81;
+DEFINE grid_size_1 := grid_size + 1;
+DEFINE bits_grid_size := 7;
+
+VAR
+nc : array 1..grid_size of real;
+nb : array 1..grid_size of real;
+nc_index : array 1..grid_size of integer;
+nb_index : array 1..grid_size of integer;
+--arrayZ : array 1..9 of integer;
+
+i : integer;
+j : integer;
+k : integer;
+m : integer;
+mt : boolean;
+migrate_out : integer;
+migrate_in  : integer;
+
+--INIT nc = CONSTARRAY(typeof(nc), 0);
+--INIT nb = CONSTARRAY(typeof(nb), 0);
+--INIT nc_index = CONSTARRAY(typeof(nc_index), 0);
+INIT nb_index = CONSTARRAY(typeof(nc_index), 0);
+
+DEFINE limit  := Pro_Tth; 
+DEFINE limit2 := A_Par;
+
+INVAR i < grid_size_1;
+INVAR j < grid_size_1;
+INVAR k < grid_size_1;
+INVAR m < grid_size_1;
+
+ASSIGN init(i) := 1;
+       next(i) := toint(unsigned word[bits_grid_size](i) mod unsigned word[bits_grid_size](grid_size)) + 1;
+
+ASSIGN init(j) := 1;
+       next(j) := in1[i] > limit & i < grid_size_1 ? toint(unsigned word[bits_grid_size](j) mod unsigned word[bits_grid_size](grid_size)) + 1 : j;
+	   
+ASSIGN init(nc_index) := CONSTARRAY(typeof(nc_index), 0);
+ASSIGN next(nc_index) := in1[i] > limit & i < grid_size_1 ? WRITE (nc_index, j, i) : nc_index ;
+	
+ASSIGN init(nc) := CONSTARRAY(typeof(nc), 0);
+ASSIGN next(nc) := case 
+             (in1[i] > limit) & (i < grid_size_1) : WRITE (nc, j, in1[i]);
+			 TRUE : nc;
+			 esac;
+
+ASSIGN init(k) := 1;
+       next(k) := in1[i] < limit2 & i < grid_size_1 ? toint(unsigned word[bits_grid_size](k) mod unsigned word[bits_grid_size](grid_size)) + 1 : k;
+	
+ASSIGN init(nb_index) := CONSTARRAY(typeof(nc_index), 0);
+ASSIGN next(nb_index) := in1[i] < limit2 & i < grid_size_1 ? WRITE (nb_index, k, i) : nb_index ;
+	   	   
+ASSIGN init(nb) := CONSTARRAY(typeof(nb), 0);
+ASSIGN next(nb) := case 
+             (in1[i] < limit2) & (i < grid_size_1) : WRITE (nb, k, in1[i]);
+			 TRUE : nb;
+			 esac;			 
+
+ASSIGN init(m) := 1;
+ASSIGN next(m) := case 
+	              nb[m] > 0 & (nc[m]) > 0 : toint(unsigned word[bits_grid_size](m) mod unsigned word[bits_grid_size](grid_size)) + 1;
+                  TRUE : m;
+                  esac;				  
+			 
+ASSIGN init(mt) := FALSE;
+ASSIGN next(mt) := case
+                 (nb[m]) > 0 & (nc[m]) > 0 : TRUE;
+				 TRUE : FALSE;
+				  esac;
+ 
+ASSIGN init(migrate_out) := 0;
+ASSIGN next(migrate_out) := next(mt) ? nc_index[m] : 0;
+
+ASSIGN init(migrate_in)  := 0; 
+ASSIGN next(migrate_in)  := case next(mt) : nb_index[m]; 
+							     next(mt = FALSE ) : 0;
+							TRUE : migrate_in ; 
+							esac;					  
+/--fold_end--/				  
+/--ENDMODULE--/
+
