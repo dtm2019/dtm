@@ -8320,10 +8320,10 @@ ABP	 	        : ABP(core_history.ek, core_history.ek_avg, core_history.ek_diff);
 -- ******************************************************--
 MODULE tempcalc(temp_min, nbrPV)
 /--fold_begin--/
-VAR 
-temp : real;
+--VAR 
+--temp : real;
 INVAR temp < 80
-ASSIGN 
+DEFINE
                  --temp := case
 				  temp := temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
 				 --TRUE : temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
@@ -8442,8 +8442,8 @@ MODULE task(temp_min, Tth, id, Pmin, Pmax, Pstate, Duration1, Duration2, nbrPV, 
 /--fold_begin--/
 VAR
 taskstate : {running, stopped, finished};
-P1 : integer;
-P2 : integer;
+--P1 : integer;
+--P2 : integer;
 --Power     : integer;
 taskPower  : integer;
 corePower : integer;
@@ -8456,8 +8456,8 @@ ctemp : tempcalc(temp_min, nbrPV);
 INVAR corePower <= P2
 --reqPower  : Pmin..Pmax ;
 --TaskLoad  : integer;
-ASSIGN P1 := 5;
-ASSIGN P2 := 10;
+DEFINE P1 := 5;
+DEFINE P2 := 10;
 ASSIGN  init(taskstate) := 	stopped;
 		next(taskstate) := 	case
 							iDTM = FALSE & tasktime >= 1 : running;
