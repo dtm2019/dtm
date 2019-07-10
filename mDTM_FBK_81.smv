@@ -499,9 +499,9 @@ ABP	 	        : ABP(core_history.ek, core_history.ek_avg, core_history.ek_diff);
 MODULE tempcalc(temp_min, nbrPV)
 /--fold_begin--/
 VAR 
-temp : real;
+--temp : real;
 INVAR temp < 80
-ASSIGN 
+DEFINE 
                  --temp := case
 				  temp := temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
 				 --TRUE : temp_min + nbrPV[1] * 0.131 + nbrPV[2] * 0.156 + nbrPV[3] * 0.131 + nbrPV[4] * 0.156 + nbrPV[5] * 0.366 + nbrPV[6] * 0.156 + nbrPV[7] * 0.131 + nbrPV[8] * 0.156 + nbrPV[9] * 0.131;
