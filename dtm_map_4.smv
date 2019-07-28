@@ -1,0 +1,233 @@
+MODULE main
+
+VAR 
+   --Task_ID[1] shows task_id or the current task for core1. task_id[2] for core2 and so on, so the coreid is basically the index of the task_id. the possible value of zero 0 is added for some decision purpose, that you might appreciate later in the code, the value zero 0 would be filtered out by invar constraints. 
+   Task_ID: array 1..4 of {0, 1, 2, 3, 4};
+   --migr is the list of cores that are requesting migration, these cores are identified based on the criterion defined by given dtm scheme. usually cores with temperature greater than threshold temperatured tth defined by dtm, are the ones that are requesting migrating. the dtm scheme may define a more complex criterion, but essentialy it is evaluated quantitatively and the cores requesting migration are identifed. a value true in the array shows the core at that index is requesting migration. e.g., migr[1] = true means core1 is requesting migration.
+   migr : array 1..4 of boolean;
+     --avail is the list of cores that are available for migration, these cores are identified based on the criterion defined by given dtm scheme. usually cores with temperature lessthan threshold temperatured ath defined by dtm, are the ones that are available for migrating. the dtm scheme may define a more complex criterion, but essentialy it is evaluated quantitatively and the cores available for migration are identifed. a value of True in the array shows that the core at that index is available for migration. e.g., avail[1] = true means core1 is available for migration. remeber that a core cannot be requesting and migrating at the same time.
+   avail : array 1..4 of boolean;
+  
+  
+--these (below) are given just in case you want to decrlare defines as state variables for some reason.
+  
+ -- VAR  
+  -- Migrate_ID : array 1..4 of {0, 1, 2, 3, 4};
+  -- Available_ID : array 1..4 of {0, 1, 2, 3, 4};
+  -- Exchange_ID : array 1..4 of {0, 1, 2, 3, 4};
+  -- Migrate_Count : {0, 1, 2, 3, 4};
+  -- Available_Count : {0, 1, 2, 3, 4}; 
+   
+   
+   -- ASSIGN 
+-- Migrate_ID[1] := migr[1] = TRUE ? Task_ID[1] : 0;
+-- Migrate_ID[2] := migr[2] = TRUE ? Task_ID[2] : 0;
+-- Migrate_ID[3] := migr[3] = TRUE ? Task_ID[3] : 0;
+-- Migrate_ID[4] := migr[4] = TRUE ? Task_ID[4] : 0;
+
+
+-- ASSIGN 
+-- Available_ID[1] := avail[1] | migr[1] = TRUE ? Task_ID[1] : 0;
+-- Available_ID[2] := avail[2] | migr[2] = TRUE ? Task_ID[2] : 0;
+-- Available_ID[3] := avail[3] | migr[3] = TRUE ? Task_ID[3] : 0;
+-- Available_ID[4] := avail[4] | migr[4] = TRUE ? Task_ID[4] : 0;
+
+-- ASSIGN 
+-- Exchange_ID[1] := avail[1] = TRUE ? Task_ID[1] : 0;
+-- Exchange_ID[2] := avail[2] = TRUE ? Task_ID[2] : 0;
+-- Exchange_ID[3] := avail[3] = TRUE ? Task_ID[3] : 0;
+-- Exchange_ID[4] := avail[4] = TRUE ? Task_ID[4] : 0;
+
+
+-- ASSIGN Migrate_Count := count(migr[1], migr[2], migr[3], migr[4]);
+-- ASSIGN Available_Count := count(avail[1], avail[2], avail[3], avail[4]);
+   
+   
+   --DTM scheme ensures that migr and avail for a core cannot be both true at the same time
+   --however since we are just testing the mapping or migrating or swapping, therefore, we
+   --are manually giving the values or if we dont give values then even for non deterministic values, theses constraints must hold.
+   INVAR !(avail[1] & migr[1]); 
+   INVAR !(avail[2] & migr[2]);
+   INVAR !(avail[3] & migr[3]);
+   INVAR !(avail[4] & migr[4]);
+   
+--task_id has to be one of the {1, 2, 3, 4}. if the values zero 0 is assigned it would be filtered out by these constraints and eliminate some of the possible assignments or next states. i hope it is all good practice to do like this.   
+INVAR Task_ID[1] > 0 & Task_ID[1] < 5;
+INVAR Task_ID[2] > 0 & Task_ID[2] < 5;
+INVAR Task_ID[3] > 0 & Task_ID[3] < 5;
+INVAR Task_ID[4] > 0 & Task_ID[4] < 5;
+
+--no two cores can have the same task_id assigned to them in any state. some of the belwo constraints are identical, however, the are just given to provide an exhuastive list. it does not hurt to mention them all. 
+INVAR Task_ID[1] != Task_ID[2] & Task_ID[1] != Task_ID[3] & Task_ID[1] != Task_ID[4];
+INVAR Task_ID[2] != Task_ID[1] & Task_ID[2] != Task_ID[3] & Task_ID[2] != Task_ID[4];
+INVAR Task_ID[3] != Task_ID[1] & Task_ID[3] != Task_ID[2] & Task_ID[3] != Task_ID[4];
+INVAR Task_ID[4] != Task_ID[1] & Task_ID[4] != Task_ID[2] & Task_ID[4] != Task_ID[3];
+		
+--intital values for task assignments. core1 is assigned task1 and so on.
+ASSIGN init(Task_ID[1]) := 1;
+	   init(Task_ID[2]) := 2;
+	   init(Task_ID[3]) := 3;
+       init(Task_ID[4]) := 4;
+	   
+ASSIGN next(Task_ID[1]) := case 
+						--have tried this logic to decide next states by differentiating when migr cores are more than avail cores or vice versa.....
+						--Migrate_Count <= Available_Count : case
+														-- both migr and avail are off, do not migrate, i.e., retain task_id, 
+														migr[1] = FALSE & avail[1] = FALSE : Task_ID[1];
+														-- migr is true and avail is false (remember migr is true always requires that avail is false.) so assign one of the available ids to the next of migr. available_id shows the task_id if it is available otherwise it is zero. so if a core is not available for migration, it would have its available_id equal to zero. since in invar, wr have applied the constraints that core id cannot be zero 0 so, if an available_id requal to zero is assigned, non determinsitically, so it would be thrown out of the possible states.
+														migr[1] = TRUE & avail[1] = FALSE :  {Available_ID[2], Available_ID[3], Available_ID[4]};
+														--if avail[1] = true, the assign one of the cores requesting migration. it doesnot work and is commented.
+														--migr[1] = FALSE & avail[1] = TRUE : {Migrate_ID[2], Migrate_ID[3], Migrate_ID[4]};
+														-- otherwise reatain task_id., does not work, leads to deadlock, therfore commented.
+														--TRUE : Task_ID[1];
+														--otherwise assign any of the cores that are either requesting to migrate or available for migration. this allows tasks to be swapped as constrained by the swapping trans constraints given at the end of code, or it allows the core to retain its task id.
+														TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														--esac;
+						--Migrate_Count > Available_Count : case
+														--migr[1] = FALSE & avail[1] = FALSE : Task_ID[1];
+														--migr[1] = FALSE & avail[1] = TRUE :  {Migrate_ID[2], Migrate_ID[3], Migrate_ID[4]};
+														--TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														--esac;	
+						esac;
+
+ASSIGN next(Task_ID[2]) := case 
+						-- Migrate_Count <= Available_Count : case
+														migr[2] = FALSE & avail[2] = FALSE : Task_ID[2];
+														migr[2] = TRUE & avail[2] = FALSE :  {Available_ID[1], Available_ID[3], Available_ID[4]};
+														--migr[2] = FALSE & avail[2] = TRUE :  {Migrate_ID[1], Migrate_ID[3], Migrate_ID[4]};
+														--TRUE : Task_ID[2];
+														 TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;
+						-- Migrate_Count > Available_Count : case
+														-- migr[2] = FALSE & avail[2] = FALSE : Task_ID[2];
+														-- migr[2] = FALSE & avail[2] = TRUE :  {Migrate_ID[1], Migrate_ID[3], Migrate_ID[4]};
+														-- TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;	
+						esac;						
+
+ASSIGN next(Task_ID[3]) := case 
+						--Migrate_Count <= Available_Count : case
+														migr[3] = FALSE & avail[3] = FALSE : Task_ID[3];
+														migr[3] = TRUE & avail[3] = FALSE :  {Available_ID[1], Available_ID[2], Available_ID[4]};
+														--migr[3] = FALSE & avail[3] = TRUE :  {Migrate_ID[1], Migrate_ID[2], Migrate_ID[4]};
+														--TRUE : Task_ID[3];
+														 TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;
+						-- Migrate_Count > Available_Count : case
+														-- migr[3] = FALSE & avail[3] = FALSE : Task_ID[3];
+														-- migr[3] = FALSE & avail[3] = TRUE :  {Migrate_ID[1], Migrate_ID[2], Migrate_ID[4]};
+														-- TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;	
+						esac;							
+
+ASSIGN next(Task_ID[4]) := case 
+						-- Migrate_Count <= Available_Count : case
+														migr[4] = FALSE & avail[4] = FALSE : Task_ID[4];
+														migr[4] = TRUE & avail[4] = FALSE :  {Available_ID[1], Available_ID[2], Available_ID[3]};
+														--migr[4] = FALSE & avail[4] = TRUE :  {Migrate_ID[1], Migrate_ID[2], Migrate_ID[3]};
+														--TRUE : Task_ID[4];
+														 TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;
+						-- Migrate_Count > Available_Count : case
+														-- migr[4] = FALSE & avail[4] = FALSE : Task_ID[4];
+														-- migr[4] = FALSE & avail[4] = TRUE :  {Migrate_ID[1], Migrate_ID[2], Migrate_ID[3]};
+														-- TRUE : {Exchange_ID[1], Exchange_ID[2], Exchange_ID[3], Exchange_ID[4]};
+														-- esac;	
+						esac;
+		
+-- just some values for migr and avail.		
+	     avail[1] := TRUE;
+	     avail[2] := TRUE;
+	     avail[3] := FALSE;
+	     avail[4] := FALSE;
+	   
+	     migr[1] := FALSE;
+	     migr[2] := FALSE;
+	     migr[3] := TRUE;
+	     migr[4] := TRUE;
+
+
+-- migrate_id[1] = 1 means core1 is requesting migration. migrate_id[1] = 0 means core1 is not reqursting migration. remember, if a core is not requesting migration, it might or might not be available for migration. if migrating request is not true it does not mean that the core would be available as well. it might or might not be. however, if core migr is true then its avail must be false. (this is ensured by dtm, we are not bothered about it or we ensure it using invar). also note the difference b/w migr_id and migrate_id. Moreover, since define arrays start with index 0 zero, therefore a valye of 0 is assigned to the first element of the define array. practically, in our model, the first element of all such arrays is a dummy one, since, that element with zero index is never used. it just helps to allow our desirable elements of the array to be referred to from index 1 rather zero. migrate_id[1]  refers to core1, otherwise migrate_id[0] would have referred to core1.
+ DEFINE Migrate_ID := [ 0 , migr[1] = TRUE ? Task_ID[1] : 0, migr[2] = TRUE ? Task_ID[2] :0, migr[3] = TRUE ? Task_ID[3] :0, migr[4] = TRUE ? Task_ID[4] : 0];
+
+-- similar explanation as migrate_id. 
+DEFINE Available_ID := [ 0 , avail[1] = TRUE ? Task_ID[1] : 0, avail[2] = TRUE ? Task_ID[2] :0, avail[3] = TRUE ? Task_ID[3] :0, avail[4] = TRUE ? Task_ID[4] : 0];
+
+--cores that are either requsting migration or are either available for migration.
+DEFINE Exchange_ID := [ 0 , avail[1]| migr[1] = TRUE  ? Task_ID[1] : 0, avail[2] | migr[2] = TRUE ? Task_ID[2] :0, avail[3] | migr[3] = TRUE ? Task_ID[3] :0, avail[4] | migr[4] = TRUE ? Task_ID[4] : 0];
+
+--total number of cores requsting migration
+DEFINE Migrate_Count := count(migr[1], migr[2], migr[3], migr[4]);
+
+--total number of cores available for migration.
+DEFINE Available_Count := count(avail[1], avail[2], avail[3], avail[4]);
+
+
+-- trans constraining that the core with migr equal to true cannot exchange tasks with some other cores whp also have their respective migr equal to true. prevents unnessary/non-required migration of tasks.
+ TRANS (migr[1] = TRUE ) -> next(Task_ID[1]) != Migrate_ID[2] & next(Task_ID[1]) != Migrate_ID[3] & next(Task_ID[1]) != Migrate_ID[4]; 
+
+ TRANS (migr[2] = TRUE ) -> next(Task_ID[2]) != Migrate_ID[1] & next(Task_ID[2]) != Migrate_ID[3] & next(Task_ID[2]) != Migrate_ID[4];
+
+ TRANS (migr[3] = TRUE ) -> next(Task_ID[3]) != Migrate_ID[1] & next(Task_ID[3]) != Migrate_ID[2] & next(Task_ID[3]) != Migrate_ID[4];
+
+ TRANS (migr[4] = TRUE ) -> next(Task_ID[4]) != Migrate_ID[1] & next(Task_ID[4]) != Migrate_ID[2] &  next(Task_ID[4]) != Migrate_ID[3];
+
+-- trans constraining that the core with avail equal to true cannot exchange tasks with some other cores whp also have their respective avail equal to true. prevents unnessary/non-required migration of tasks.
+TRANS (avail[1] = TRUE ) -> next(Task_ID[1]) != Available_ID[2] & next(Task_ID[1]) != Available_ID[3] & next(Task_ID[1]) != Available_ID[4]; 
+
+ TRANS (avail[2] = TRUE ) -> next(Task_ID[2]) != Available_ID[1] & next(Task_ID[2]) != Available_ID[3] & next(Task_ID[2]) != Available_ID[4];
+
+ TRANS (avail[3] = TRUE ) -> next(Task_ID[3]) != Available_ID[1] & next(Task_ID[3]) != Available_ID[2] & next(Task_ID[3]) != Available_ID[4];
+
+ TRANS (avail[4] = TRUE ) -> next(Task_ID[4]) != Available_ID[1] & next(Task_ID[4]) != Available_ID[2] &  next(Task_ID[4]) != Available_ID[3];
+
+
+-- trans for swapping ids.
+TRANS (next(Task_ID[1]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[1]; 
+TRANS (next(Task_ID[1]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[1]; 
+TRANS (next(Task_ID[1]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[1];
+ 
+TRANS (next(Task_ID[2]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[2];
+TRANS (next(Task_ID[2]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[2];
+TRANS (next(Task_ID[2]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[2];
+
+TRANS (next(Task_ID[3]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[3];
+TRANS (next(Task_ID[3]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[3];
+TRANS (next(Task_ID[3]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[3];
+
+TRANS (next(Task_ID[4]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[4];
+TRANS (next(Task_ID[4]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[4];
+TRANS (next(Task_ID[4]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[4];
+
+
+--just some invariants to be checked.	
+INVARSPEC NAME P1 := migr[1] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[1]) != Task_ID[1];	
+
+DEFINE  p1 := migr[1] = FALSE & avail[1] = FALSE -> next(Task_ID[1]) = Task_ID[1];
+DEFINE  p2 := migr[2] = FALSE & avail[2] = FALSE -> next(Task_ID[2]) = Task_ID[2];
+DEFINE  p3 := migr[3] = FALSE & avail[3] = FALSE -> next(Task_ID[3]) = Task_ID[3];
+DEFINE  p4 := migr[4] = FALSE & avail[4] = FALSE -> next(Task_ID[4]) = Task_ID[4];
+
+DEFINE  p5 := migr[1] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[1]) != Task_ID[1];	
+DEFINE  p6 := migr[2] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[2]) != Task_ID[2];	
+DEFINE  p7 := migr[3] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[3]) != Task_ID[3];	
+DEFINE  p8 := migr[4] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[4]) != Task_ID[4];	
+
+INVARSPEC NAME P2 := p1 & p2 & p3 & p4;
+INVARSPEC NAME P3 := p5 & p6 & p7 & p8;
+
+
+-- Some Commands
+
+-- reset
+-- read_model -i dtm_map_4.smv
+-- go
+-- check_invar
+
+-- reset
+-- read_model -i dtm_map_4.smv
+-- go_msat
+-- check_invar_ic3
+
+
+/--ENDMODULE--/	   
