@@ -108,10 +108,10 @@ INVAR Task_ID[4] != Task_ID[1] & Task_ID[4] != Task_ID[2] & Task_ID[4] != Task_I
 		
 -- intital values for task assignments. core1 is assigned task1 and so
 -- on.
-ASSIGN init(Task_ID[1]) := 1;
-	   init(Task_ID[2]) := 2;
-	   init(Task_ID[3]) := 3;
-       init(Task_ID[4]) := 4;
+-- ASSIGN init(Task_ID[1]) := 1;
+-- 	   init(Task_ID[2]) := 2;
+-- 	   init(Task_ID[3]) := 3;
+--        init(Task_ID[4]) := 4;
 	   
 ASSIGN next(Task_ID[1]) := case
     -- have tried this logic to decide next states by differentiating
@@ -211,15 +211,15 @@ ASSIGN next(Task_ID[4]) := case
    esac;
 		
 -- just some values for migr and avail.		
-	     avail[1] := TRUE;
-	     avail[2] := TRUE;
-	     avail[3] := FALSE;
-	     avail[4] := FALSE;
+	     -- avail[1] := TRUE;
+	     -- avail[2] := TRUE;
+	     -- avail[3] := FALSE;
+	     -- avail[4] := FALSE;
 	   
-	     migr[1] := FALSE;
-	     migr[2] := FALSE;
-	     migr[3] := TRUE;
-	     migr[4] := TRUE;
+	     -- migr[1] := FALSE;
+	     -- migr[2] := FALSE;
+	     -- migr[3] := TRUE;
+	     -- migr[4] := TRUE;
 
 
 -- migrate_id[1] = 1 means core1 is requesting
@@ -278,26 +278,18 @@ TRANS (avail[1] = TRUE ) -> next(Task_ID[1]) != Available_ID[2] & next(Task_ID[1
 
  TRANS (avail[3] = TRUE ) -> next(Task_ID[3]) != Available_ID[1] & next(Task_ID[3]) != Available_ID[2] & next(Task_ID[3]) != Available_ID[4];
 
- TRANS (avail[4] = TRUE ) -> next(Task_ID[4]) != Available_ID[1] & next(Task_ID[4]) != Available_ID[2] &  next(Task_ID[4]) != Available_ID[3];
+  TRANS (avail[4] = TRUE ) -> next(Task_ID[4]) != Available_ID[1] & next(Task_ID[4]) != Available_ID[2] &  next(Task_ID[4]) != Available_ID[3];
 
 
 -- trans for swapping ids.
-TRANS (next(Task_ID[1]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[1]; 
-TRANS (next(Task_ID[1]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[1]; 
-TRANS (next(Task_ID[1]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[1];
+TRANS (next(Task_ID[1]) = Task_ID[2]) <-> next(Task_ID[2]) = Task_ID[1]; 
+TRANS (next(Task_ID[1]) = Task_ID[3]) <-> next(Task_ID[3]) = Task_ID[1]; 
+TRANS (next(Task_ID[1]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[1];
  
-TRANS (next(Task_ID[2]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[2];
-TRANS (next(Task_ID[2]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[2];
-TRANS (next(Task_ID[2]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[2];
+TRANS (next(Task_ID[2]) = Task_ID[3]) <-> next(Task_ID[3]) = Task_ID[2];
+TRANS (next(Task_ID[2]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[2];
 
-TRANS (next(Task_ID[3]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[3];
-TRANS (next(Task_ID[3]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[3];
-TRANS (next(Task_ID[3]) = Task_ID[4]) -> next(Task_ID[4]) = Task_ID[3];
-
-TRANS (next(Task_ID[4]) = Task_ID[1]) -> next(Task_ID[1]) = Task_ID[4];
-TRANS (next(Task_ID[4]) = Task_ID[2]) -> next(Task_ID[2]) = Task_ID[4];
-TRANS (next(Task_ID[4]) = Task_ID[3]) -> next(Task_ID[3]) = Task_ID[4];
-
+TRANS (next(Task_ID[3]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[3];
 
 --just some invariants to be checked.	
 INVARSPEC NAME P1 := migr[1] = TRUE & Available_Count >= Migrate_Count & Migrate_Count > 0 -> next(Task_ID[1]) != Task_ID[1];	
