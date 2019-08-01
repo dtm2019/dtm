@@ -85,3 +85,10 @@ ASSIGN next(Task_ID[1]) := case
 -- read_model -i map_enum.smv
 -- go
 -- print_reachable_states
+
+-- commands
+reset
+read_model -i map_enum.smv
+go_msat
+msat_pick_state -v -i 
+msat_simulate -v -i -k 2
