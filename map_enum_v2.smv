@@ -1,0 +1,136 @@
+MODULE main
+
+VAR 
+   Task_ID : array 1..9 of {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; 
+   --Task_ID : array 1..9 of integer; 
+   --Task_ID : array 1..9 of unsigned word[4];
+   migr : array 1..9 of boolean;
+   avail : array 1..9 of boolean;
+
+-- INVAR Task_ID[1] >= 0ud4_0 & Task_ID[1] < 0ud4_10;
+-- INVAR Task_ID[2] >= 0ud4_0 & Task_ID[2] < 0ud4_10;
+-- INVAR Task_ID[3] >= 0ud4_0 & Task_ID[3] < 0ud4_10;
+-- INVAR Task_ID[4] >= 0ud4_0 & Task_ID[4] < 0ud4_10;
+-- INVAR Task_ID[5] >= 0ud4_0 & Task_ID[5] < 0ud4_10;
+-- INVAR Task_ID[6] >= 0ud4_0 & Task_ID[6] < 0ud4_10;
+-- INVAR Task_ID[7] >= 0ud4_0 & Task_ID[7] < 0ud4_10;
+-- INVAR Task_ID[8] >= 0ud4_0 & Task_ID[8] < 0ud4_10;
+-- INVAR Task_ID[9] >= 0ud4_0 & Task_ID[9] < 0ud4_10;
+
+-- INVAR Task_ID[1] >= 0 & Task_ID[1] <= 9;
+-- INVAR Task_ID[2] >= 0 & Task_ID[2] <= 9;
+-- INVAR Task_ID[3] >= 0 & Task_ID[3] <= 9;
+-- INVAR Task_ID[4] >= 0 & Task_ID[4] <= 9;
+-- INVAR Task_ID[5] >= 0 & Task_ID[5] <= 9;
+-- INVAR Task_ID[6] >= 0 & Task_ID[6] <= 9;
+-- INVAR Task_ID[7] >= 0 & Task_ID[7] <= 9;
+-- INVAR Task_ID[8] >= 0 & Task_ID[8] <= 9;
+-- INVAR Task_ID[9] >= 0 & Task_ID[9] <= 9;
+
+
+ASSIGN 
+--init(Task_ID[1]) := 0ud4_1;
+-- init(Task_ID[2]) := 2;
+-- init(Task_ID[3]) := 3;
+-- init(Task_ID[4]) := 4;
+-- init(Task_ID[5]) := 5;
+-- init(Task_ID[6]) := 6;
+-- init(Task_ID[7]) := 7;
+-- init(Task_ID[8]) := 8;
+-- init(Task_ID[9]) := 9; 
+
+init(Task_ID[1]) := 1;
+Task_ID[2] := 2;
+Task_ID[3] := 3;
+Task_ID[4] := 4;
+Task_ID[5] := 5;
+Task_ID[6] := 6;
+Task_ID[7] := 7;
+Task_ID[8] := 8;
+Task_ID[9] := 9; 
+
+-- Task_ID[2] := 0ud4_2;
+-- Task_ID[3] := 0ud4_3;
+-- Task_ID[4] := 0ud4_4;
+-- Task_ID[5] := 0ud4_5;
+-- Task_ID[6] := 0ud4_6;
+-- Task_ID[7] := 0ud4_7;
+-- Task_ID[8] := 0ud4_8;
+-- Task_ID[9] := 0ud4_9; 
+
+ASSIGN 
+migr[1] := TRUE;
+migr[2] := FALSE;
+migr[3] := FALSE;
+migr[4] := FALSE;
+migr[5] := FALSE;
+migr[6] := FALSE;
+migr[7] := FALSE;
+migr[8] := TRUE;
+migr[9] := TRUE; 
+
+avail[1] := FALSE;
+avail[2] := FALSE;
+avail[3] := TRUE;
+avail[4] := TRUE;
+avail[5] := FALSE;
+avail[6] := FALSE;
+avail[7] := TRUE;
+avail[8] := FALSE;
+avail[9] := FALSE;     
+
+--version 1, assign explicit values (integers, within the range declared in enumeration) to task_id, no problem, works fine.  The 'go' command get executed at once with no delay.
+-- ASSIGN next(Task_ID[1]) := case 
+						
+						-- migr[1] = FALSE & avail[1] = FALSE : Task_ID[1];
+                        
+						-- migr[1] = TRUE & avail[1] = FALSE :  {0, 3, 4, 0, 0, 7, 0, 0};
+						
+						-- TRUE : {1, 0, 3, 4, 0, 0, 7, 8, 9};
+						
+						-- esac;
+						
+--version 2, assign values to task_id in simple terms of Task_ID, creates problem, takes a few seconds (not an once) at go, just image how much would it take for the real model.... i think that nuXmv is handling enumeration very poorly.....i have even tried without using arrays.. the behavior where we define Task_ID as type of integer enumeration with some range, it creates problems. if we keep Task_ID  in VAR as simple integer (even if we use invar to restrict values), the go command does not work (due to presence of integers)...
+ -- ASSIGN next(Task_ID[1]) := case 
+						
+						 -- migr[1] = FALSE & avail[1] = FALSE : Task_ID[1];
+                        
+						 -- migr[1] = TRUE & avail[1] = FALSE :  {0 , Task_ID[3], Task_ID[4], 0, 0, Task_ID[7], 0,0};
+						
+						 -- TRUE : {Task_ID[1], 0, Task_ID[3], Task_ID[4], 0, 0, Task_ID[7], Task_ID[8], Task_ID[9]};
+						
+						 -- esac;
+
+
+--version 3, assign values to task_id in terms of Task_ID based on some condition, creates problem similar to version 2, however it just remains stuck, i have waited for more than 30 mins, whereas, in version 2 it gets executed in a few seconfs just image how much would it take for the real model.... i think that nuXmv is handling enumeration very poorly.....i have even tried without using arrays.. the behavior where we we define Task_ID as type of integer enumeration with some range, it creates problems. if we keep Task_ID as simple integer (even if we use invar to restrict values), the go command does not work (due to presence of integers)...
+-- ASSIGN next(Task_ID[1]) := case 
+						                        
+                        -- migr[1] = FALSE & avail[1] = FALSE : Task_ID[1];						
+						
+						-- migr[1] = TRUE & avail[1] = FALSE : {avail[2] ? Task_ID[2] : 0ud4_0, avail[3] ? Task_ID[3] : 0ud4_0, avail[4] ? Task_ID[4] : 0ud4_0, avail[5] ? Task_ID[5] : 0ud4_0, avail[6] ? Task_ID[6] : 0ud4_0, avail[7] ? Task_ID[7] : 0ud4_0, avail[8] ? Task_ID[8] : 0ud4_0, avail[9] ? Task_ID[9] : 0ud4_0};
+														 
+						-- TRUE : {migr[1] | avail[1] ? Task_ID[1] : 0ud4_0, migr[2] | avail[2] ? Task_ID[2] : 0ud4_0, migr[3] | avail[3] ? Task_ID[3] : 0ud4_0, migr[4] | avail[4] ? Task_ID[4] : 0ud4_0, migr[5] | avail[5] ? Task_ID[5] : 0ud4_0, migr[6] | avail[6] ? Task_ID[6] : 0ud4_0, migr[7] | avail[7] ? Task_ID[7] : 0ud4_0, migr[8] | avail[8] ? Task_ID[8] : 0ud4_0, migr[9] | avail[9] ? Task_ID[9] : 0ud4_0};
+						
+						-- esac;
+-- TRANS migr[1] = FALSE & avail[1] = FALSE -> next(Task_ID[1]) = Task_ID[1];
+-- TRANS migr[1] = TRUE & avail[1] = FALSE -> next(Task_ID[1]) = (avail[2] ? Task_ID[2] : 0ud4_0) | next(Task_ID[1]) = (avail[3] ? Task_ID[3] : 0ud4_0) | next(Task_ID[1]) = (avail[4] ? Task_ID[4] : 0ud4_0) | next(Task_ID[1]) = (avail[5] ? Task_ID[5] : 0ud4_0) | next(Task_ID[1]) = (avail[6] ? Task_ID[6] : 0ud4_0) | next(Task_ID[1]) = (avail[7] ? Task_ID[7] : 0ud4_0) | next(Task_ID[1]) = (avail[8] ? Task_ID[8] : 0ud4_0) | next(Task_ID[1]) = (avail[9] ? Task_ID[9] : 0ud4_0);
+-- TRANS migr[1] = FALSE & avail[1] = TRUE -> next(Task_ID[1]) = (migr[1] | avail[1] ? Task_ID[1] : 0ud4_0) | next(Task_ID[1]) = (migr[2] | avail[2] ? Task_ID[2] : 0ud4_0) | next(Task_ID[1]) = (migr[3] | avail[3] ? Task_ID[3] : 0ud4_0) | next(Task_ID[1]) = (migr[4] | avail[4] ? Task_ID[4] : 0ud4_0) | next(Task_ID[1]) = (migr[5] | avail[5] ? Task_ID[5] : 0ud4_0) | next(Task_ID[1]) = (migr[6] | avail[6] ? Task_ID[6] : 0ud4_0) | next(Task_ID[1]) = (migr[7] | avail[7] ? Task_ID[7] : 0ud4_0) | next(Task_ID[1]) = (migr[8] | avail[8] ? Task_ID[8] : 0ud4_0) | next(Task_ID[1]) = (migr[9] | avail[9] ? Task_ID[9] : 0ud4_0); 						
+						
+						
+TRANS migr[1] = FALSE & avail[1] = FALSE -> next(Task_ID[1]) = Task_ID[1];
+TRANS migr[1] = TRUE & avail[1] = FALSE -> next(Task_ID[1]) = (avail[2] ? Task_ID[2] : 0) | next(Task_ID[1]) = (avail[3] ? Task_ID[3] : 0) | next(Task_ID[1]) = (avail[4] ? Task_ID[4] : 0) | next(Task_ID[1]) = (avail[5] ? Task_ID[5] : 0) | next(Task_ID[1]) = (avail[6] ? Task_ID[6] : 0) | next(Task_ID[1]) = (avail[7] ? Task_ID[7] : 0) | next(Task_ID[1]) = (avail[8] ? Task_ID[8] : 0) | next(Task_ID[1]) = (avail[9] ? Task_ID[9] : 0);
+TRANS migr[1] = FALSE & avail[1] = TRUE -> next(Task_ID[1]) = (migr[1] | avail[1] ? Task_ID[1] : 0) | next(Task_ID[1]) = (migr[2] | avail[2] ? Task_ID[2] :0) | next(Task_ID[1]) = (migr[3] | avail[3] ? Task_ID[3] : 0) | next(Task_ID[1]) = (migr[4] | avail[4] ? Task_ID[4] : 0) | next(Task_ID[1]) = (migr[5] | avail[5] ? Task_ID[5] : 0) | next(Task_ID[1]) = (migr[6] | avail[6] ? Task_ID[6] : 0) | next(Task_ID[1]) = (migr[7] | avail[7] ? Task_ID[7] : 0) | next(Task_ID[1]) = (migr[8] | avail[8] ? Task_ID[8] : 0) | next(Task_ID[1]) = (migr[9] | avail[9] ? Task_ID[9] : 0); 
+
+
+-- commands
+-- reset
+-- read_model -i map_enum.smv
+-- go
+-- print_reachable_states
+
+-- commands
+-- reset
+-- read_model -i map_enum.smv
+-- go_msat
+-- msat_pick_state -v -i 
+-- msat_simulate -v -i -k 2
