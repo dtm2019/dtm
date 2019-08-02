@@ -1,0 +1,433 @@
+MODULE main
+
+VAR 
+   Task_ID : array 1..9 of {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+   migr : array 1..9 of boolean;
+   avail : array 1..9 of boolean;
+
+
+-- below is given a sample set of values for mig and avail, comment them to allow non-deterministic assignment.
+-- invariant checking using check_invar does not work on non-deterministic values of migr and avail for both P3 and P4, i.e., it gets stuck. 
+-- invariant checking using check_invar_ic3 for non-deterministic values of migr and avail works fine (though it takes time) for P4, but does not work for P3, i.e, gets stuck. 
+-- for deterministic values as sample given below for migr and avail, check_invar works fine. however, check_invar_ic3 takes a considerable amount of time 2-3 minutes even though there are a few states only ,e.g., 9 states for 2nd sample. 
+
+-- 1st sample set of values for migr and avail
+ASSIGN 
+migr[1] := TRUE;
+migr[2] := FALSE;
+migr[3] := FALSE;
+migr[4] := FALSE;
+migr[5] := FALSE;
+migr[6] := FALSE;
+migr[7] := FALSE;
+migr[8] := TRUE;
+migr[9] := TRUE; 
+
+avail[1] := FALSE;
+avail[2] := FALSE;
+avail[3] := TRUE;
+avail[4] := TRUE;
+avail[5] := FALSE;
+avail[6] := FALSE;
+avail[7] := TRUE;
+avail[8] := FALSE;
+avail[9] := FALSE;  
+
+-- 2nd sample set of values for migr and avail
+-- ASSIGN
+-- migr[1] := TRUE;
+-- migr[2] := FALSE;
+-- migr[3] := FALSE;
+-- migr[4] := FALSE;
+-- migr[5] := FALSE;
+-- migr[6] := FALSE;
+-- migr[7] := FALSE;
+-- migr[8] := FALSE;
+-- migr[9] := FALSE; 
+
+-- avail[1] := FALSE;
+-- avail[2] := TRUE;
+-- avail[3] := TRUE;
+-- avail[4] := TRUE;
+-- avail[5] := TRUE;
+-- avail[6] := TRUE;
+-- avail[7] := TRUE;
+-- avail[8] := TRUE;
+-- avail[9] := TRUE; 
+
+DEFINE Migrate_ID := [0, migr[1] = TRUE ? Task_ID[1] : 0, migr[2] = TRUE ? Task_ID[2] :0, migr[3] = TRUE ? Task_ID[3] : 0, migr[4] = TRUE ? Task_ID[4] : 0, migr[5] = TRUE ? Task_ID[5] : 0, migr[6] = TRUE ? Task_ID[6] :0, migr[7] = TRUE ? Task_ID[7] :0, migr[8] = TRUE ? Task_ID[8] : 0, migr[9] = TRUE ? Task_ID[9] : 0];
+ 
+DEFINE Available_ID := [0, avail[1] = TRUE ? Task_ID[1] : 0, avail[2] = TRUE ? Task_ID[2] : 0, avail[3] = TRUE ? Task_ID[3] : 0, avail[4] = TRUE ? Task_ID[4] : 0, avail[5] = TRUE ? Task_ID[5] : 0, avail[6] = TRUE ? Task_ID[6] :0, avail[7] = TRUE ? Task_ID[7] : 0, avail[8] = TRUE ? Task_ID[8] : 0, avail[9] = TRUE ? Task_ID[9] : 0];
+
+DEFINE Exchange_ID := [0, (avail[1] | migr[1]) = TRUE   ? Task_ID[1] : 0, (avail[2] | migr[2]) = TRUE  ? Task_ID[2] : 0, (avail[3] | migr[3]) = TRUE ? Task_ID[3] : 0, (avail[4] | migr[4]) = TRUE ? Task_ID[4] : 0, (avail[5] | migr[5]) = TRUE ? Task_ID[5] : 0, (avail[6] | migr[6]) = TRUE ? Task_ID[6] : 0, (avail[7] | migr[7]) = TRUE ? Task_ID[7] : 0, (avail[8] | migr[8]) = TRUE ? Task_ID[8] : 0, (avail[9] | migr[9]) = TRUE ? Task_ID[9] : 0];
+
+ DEFINE Migrate_Count := count(migr[1], migr[2], migr[3], migr[4], migr[5], migr[6], migr[7], migr[8], migr[9]);
+ DEFINE Available_Count := count(avail[1], avail[2], avail[3], avail[4], avail[5], avail[6], avail[7], avail[8], avail[9]);
+
+-- INVAR Migrate_Count >= 0 & Migrate_Count < 10;
+-- INVAR Available_Count >= 0 & Available_Count < 10;
+
+
+INVAR Task_ID[1] > 0 & Task_ID[1] <= 9;
+INVAR Task_ID[2] > 0 & Task_ID[2] <= 9;
+INVAR Task_ID[3] > 0 & Task_ID[3] <= 9;
+INVAR Task_ID[4] > 0 & Task_ID[4] <= 9;
+INVAR Task_ID[5] > 0 & Task_ID[5] <= 9;
+INVAR Task_ID[6] > 0 & Task_ID[6] <= 9;
+INVAR Task_ID[7] > 0 & Task_ID[7] <= 9;
+INVAR Task_ID[8] > 0 & Task_ID[8] <= 9;
+INVAR Task_ID[9] > 0 & Task_ID[9] <= 9;
+
+INVAR Task_ID[1] != Task_ID[2] & Task_ID[1] != Task_ID[3] & Task_ID[1] != Task_ID[4] & Task_ID[1] != Task_ID[5] & Task_ID[1] != Task_ID[6] & Task_ID[1] != Task_ID[7] & Task_ID[1] != Task_ID[8] & Task_ID[1] != Task_ID[9];
+
+INVAR Task_ID[2] != Task_ID[3] & Task_ID[2] != Task_ID[4] & Task_ID[2] != Task_ID[5] & Task_ID[2] != Task_ID[6] & Task_ID[2] != Task_ID[7] & Task_ID[2] != Task_ID[8] & Task_ID[2] != Task_ID[9];
+
+INVAR Task_ID[3] != Task_ID[4] & Task_ID[3] != Task_ID[5] & Task_ID[3] != Task_ID[6] & Task_ID[3] != Task_ID[7] & Task_ID[3] != Task_ID[8] & Task_ID[3] != Task_ID[9];
+
+INVAR Task_ID[4] != Task_ID[5] & Task_ID[4] != Task_ID[6] & Task_ID[4] != Task_ID[7] & Task_ID[4] != Task_ID[8] & Task_ID[4] != Task_ID[9];
+
+INVAR Task_ID[5] != Task_ID[6] & Task_ID[5] != Task_ID[7] & Task_ID[5] != Task_ID[8] & Task_ID[5] != Task_ID[9];
+
+INVAR Task_ID[6] != Task_ID[7] & Task_ID[6] != Task_ID[8] & Task_ID[6] != Task_ID[9];
+
+INVAR Task_ID[7] != Task_ID[8] & Task_ID[7] != Task_ID[9];
+
+INVAR Task_ID[8] != Task_ID[9]; 
+
+
+INVAR !(migr[1] & avail[1]);
+INVAR !(migr[2] & avail[2]);
+INVAR !(migr[3] & avail[3]);
+INVAR !(migr[4] & avail[4]);
+INVAR !(migr[5] & avail[5]);
+INVAR !(migr[6] & avail[6]);
+INVAR !(migr[7] & avail[7]);
+INVAR !(migr[8] & avail[8]);
+INVAR !(migr[9] & avail[9]);
+
+INIT Task_ID[1] = 1 & Task_ID[2] = 2 & Task_ID[3] = 3 & Task_ID[4] = 4 & Task_ID[5] = 5 & Task_ID[6] = 6 & Task_ID[7] = 7 & Task_ID[8] = 8 & Task_ID[9] = 9; 
+	
+VAR flag: boolean;
+INIT flag = TRUE;
+ASSIGN next(flag) := FALSE;	
+	
+-- ASSIGN 
+-- init(Task_ID[1]) := 1;
+-- init(Task_ID[2]) := 2;
+-- init(Task_ID[3]) := 3;
+-- init(Task_ID[4]) := 4;
+-- init(Task_ID[5]) := 5;
+-- init(Task_ID[6]) := 6;
+-- init(Task_ID[7]) := 7;
+-- init(Task_ID[8]) := 8;
+-- init(Task_ID[9]) := 9; 
+
+--Task_ID[2] := 2;
+--Task_ID[3] := 3;
+-- Task_ID[4] := 4;
+-- Task_ID[5] := 5;
+-- Task_ID[6] := 6;
+-- Task_ID[7] := 7;
+-- Task_ID[8] := 8;
+-- Task_ID[9] := 9; 
+
+
+TRANS !flag -> next(Task_ID[1])= Task_ID[1] & next(Task_ID[2])= Task_ID[2] & next(Task_ID[3])= Task_ID[3] & next(Task_ID[4])= Task_ID[4] & next(Task_ID[5]) = Task_ID[5] & next(Task_ID[6])= Task_ID[6] & next(Task_ID[7])= Task_ID[7] & next(Task_ID[8])= Task_ID[8] & next(Task_ID[9])= Task_ID[9];
+
+TRANS flag & (migr[1] = FALSE & avail[1] = FALSE) -> next(Task_ID[1]) = Task_ID[1];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[1] = TRUE & avail[1] = FALSE) -> next(Task_ID[1]) = Available_ID[2] | next(Task_ID[1]) =  Available_ID[3] | next(Task_ID[1]) = Available_ID[4] | next(Task_ID[1]) = Available_ID[5]| next(Task_ID[1]) = Available_ID[6] | next(Task_ID[1]) = Available_ID[7] | next(Task_ID[1]) = Available_ID[8] | next(Task_ID[1]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[1] = FALSE & avail[1] = TRUE) -> (next(Task_ID[1]) = Exchange_ID[1]) | (next(Task_ID[1]) = Exchange_ID[2]) | (next(Task_ID[1]) =  Exchange_ID[3]) | (next(Task_ID[1]) = Exchange_ID[4]) | (next(Task_ID[1]) =  Exchange_ID[5]) | (next(Task_ID[1]) = Exchange_ID[6]) | (next(Task_ID[1]) =  Exchange_ID[7]) | (next(Task_ID[1]) =  Exchange_ID[8]) | (next(Task_ID[1]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[1] = FALSE & avail[1] = TRUE) ->  (next(Task_ID[1]) = Migrate_ID[2]) | (next(Task_ID[1]) = Migrate_ID[3]) | (next(Task_ID[1]) = Migrate_ID[4]) | (next(Task_ID[1]) = Migrate_ID[5]) | (next(Task_ID[1]) = Migrate_ID[6]) | (next(Task_ID[1]) =Migrate_ID[7]) | (next(Task_ID[1]) = Migrate_ID[8]) | (next(Task_ID[1]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[1] = TRUE & avail[1] = FALSE) ->  (next(Task_ID[1]) = Exchange_ID[1]) | (next(Task_ID[1]) = Exchange_ID[2]) | (next(Task_ID[1]) =  Exchange_ID[3]) | (next(Task_ID[1]) = Exchange_ID[4]) | (next(Task_ID[1]) =  Exchange_ID[5]) | (next(Task_ID[1]) = Exchange_ID[6]) | (next(Task_ID[1]) =  Exchange_ID[7]) | (next(Task_ID[1]) =  Exchange_ID[8]) | (next(Task_ID[1]) =  Exchange_ID[9]);
+
+--2
+TRANS flag & (migr[2] = FALSE & avail[2] = FALSE) -> next(Task_ID[2]) = Task_ID[2];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[2] = TRUE & avail[2] = FALSE) -> next(Task_ID[2]) = Available_ID[1] | next(Task_ID[2]) =  Available_ID[3] | next(Task_ID[2]) = Available_ID[4] | next(Task_ID[2]) = Available_ID[5]| next(Task_ID[2]) = Available_ID[6] | next(Task_ID[2]) = Available_ID[7] | next(Task_ID[2]) = Available_ID[8] | next(Task_ID[2]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[2] = FALSE & avail[2] = TRUE) -> (next(Task_ID[2]) = Exchange_ID[1]) | (next(Task_ID[2]) = Exchange_ID[2]) | (next(Task_ID[2]) =  Exchange_ID[3]) | (next(Task_ID[2]) = Exchange_ID[4]) | (next(Task_ID[2]) =  Exchange_ID[5]) | (next(Task_ID[2]) = Exchange_ID[6]) | (next(Task_ID[2]) =  Exchange_ID[7]) | (next(Task_ID[2]) =  Exchange_ID[8]) | (next(Task_ID[2]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[2] = FALSE & avail[2] = TRUE) ->  (next(Task_ID[2]) = Migrate_ID[1]) | (next(Task_ID[2]) = Migrate_ID[3]) | (next(Task_ID[2]) = Migrate_ID[4]) | (next(Task_ID[2]) = Migrate_ID[5]) | (next(Task_ID[2]) = Migrate_ID[6]) | (next(Task_ID[2]) =Migrate_ID[7]) | (next(Task_ID[2]) = Migrate_ID[8]) | (next(Task_ID[2]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[2] = TRUE & avail[2] = FALSE) ->  (next(Task_ID[2]) = Exchange_ID[1]) | (next(Task_ID[2]) = Exchange_ID[2]) | (next(Task_ID[2]) =  Exchange_ID[3]) | (next(Task_ID[2]) = Exchange_ID[4]) | (next(Task_ID[2]) =  Exchange_ID[5]) | (next(Task_ID[2]) = Exchange_ID[6]) | (next(Task_ID[2]) =  Exchange_ID[7]) | (next(Task_ID[2]) =  Exchange_ID[8]) | (next(Task_ID[2]) =  Exchange_ID[9]);
+
+--3
+TRANS flag & (migr[3] = FALSE & avail[3] = FALSE) -> next(Task_ID[3]) = Task_ID[3];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[3] = TRUE & avail[3] = FALSE) -> next(Task_ID[3]) = Available_ID[1] | next(Task_ID[3]) =  Available_ID[2] | next(Task_ID[3]) = Available_ID[4] | next(Task_ID[3]) = Available_ID[5]| next(Task_ID[3]) = Available_ID[6] | next(Task_ID[3]) = Available_ID[7] | next(Task_ID[3]) = Available_ID[8] | next(Task_ID[3]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[3] = FALSE & avail[3] = TRUE) -> (next(Task_ID[3]) = Exchange_ID[1]) | (next(Task_ID[3]) = Exchange_ID[2]) | (next(Task_ID[3]) =  Exchange_ID[3]) | (next(Task_ID[3]) = Exchange_ID[4]) | (next(Task_ID[3]) =  Exchange_ID[5]) | (next(Task_ID[3]) = Exchange_ID[6]) | (next(Task_ID[3]) =  Exchange_ID[7]) | (next(Task_ID[3]) =  Exchange_ID[8]) | (next(Task_ID[3]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[3] = FALSE & avail[3] = TRUE) ->  (next(Task_ID[3]) = Migrate_ID[1]) | (next(Task_ID[3]) = Migrate_ID[2]) | (next(Task_ID[3]) = Migrate_ID[4]) | (next(Task_ID[3]) = Migrate_ID[5]) | (next(Task_ID[3]) = Migrate_ID[6]) | (next(Task_ID[3]) =Migrate_ID[7]) | (next(Task_ID[3]) = Migrate_ID[8]) | (next(Task_ID[3]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[3] = TRUE & avail[3] = FALSE) ->  (next(Task_ID[3]) = Exchange_ID[1]) | (next(Task_ID[3]) = Exchange_ID[2]) | (next(Task_ID[3]) =  Exchange_ID[3]) | (next(Task_ID[3]) = Exchange_ID[4]) | (next(Task_ID[3]) =  Exchange_ID[5]) | (next(Task_ID[3]) = Exchange_ID[6]) | (next(Task_ID[3]) =  Exchange_ID[7]) | (next(Task_ID[3]) =  Exchange_ID[8]) | (next(Task_ID[3]) =  Exchange_ID[9]);
+
+--4
+TRANS flag & (migr[4] = FALSE & avail[4] = FALSE) -> next(Task_ID[4]) = Task_ID[4];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[4] = TRUE & avail[4] = FALSE) -> next(Task_ID[4]) = Available_ID[1] | next(Task_ID[4]) =  Available_ID[2] | next(Task_ID[4]) = Available_ID[3] | next(Task_ID[4]) = Available_ID[5]| next(Task_ID[4]) = Available_ID[6] | next(Task_ID[4]) = Available_ID[7] | next(Task_ID[4]) = Available_ID[8] | next(Task_ID[4]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[4] = FALSE & avail[4] = TRUE) -> (next(Task_ID[4]) = Exchange_ID[1]) | (next(Task_ID[4]) = Exchange_ID[2]) | (next(Task_ID[4]) =  Exchange_ID[3]) | (next(Task_ID[4]) = Exchange_ID[4]) | (next(Task_ID[4]) =  Exchange_ID[5]) | (next(Task_ID[4]) = Exchange_ID[6]) | (next(Task_ID[4]) =  Exchange_ID[7]) | (next(Task_ID[4]) =  Exchange_ID[8]) | (next(Task_ID[4]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[4] = FALSE & avail[4] = TRUE) ->  (next(Task_ID[4]) = Migrate_ID[1]) | (next(Task_ID[4]) = Migrate_ID[2]) | (next(Task_ID[4]) = Migrate_ID[3]) | (next(Task_ID[4]) = Migrate_ID[5]) | (next(Task_ID[4]) = Migrate_ID[6]) | (next(Task_ID[4]) =Migrate_ID[7]) | (next(Task_ID[4]) = Migrate_ID[8]) | (next(Task_ID[4]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[4] = TRUE & avail[4] = FALSE) ->  (next(Task_ID[4]) = Exchange_ID[1]) | (next(Task_ID[4]) = Exchange_ID[2]) | (next(Task_ID[4]) =  Exchange_ID[3]) | (next(Task_ID[4]) = Exchange_ID[4]) | (next(Task_ID[4]) =  Exchange_ID[5]) | (next(Task_ID[4]) = Exchange_ID[6]) | (next(Task_ID[4]) =  Exchange_ID[7]) | (next(Task_ID[4]) =  Exchange_ID[8]) | (next(Task_ID[4]) =  Exchange_ID[9]);
+
+--5
+TRANS flag & (migr[5] = FALSE & avail[5] = FALSE) -> next(Task_ID[5]) = Task_ID[5];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[5] = TRUE & avail[5] = FALSE) -> next(Task_ID[5]) = Available_ID[1] | next(Task_ID[5]) =  Available_ID[2] | next(Task_ID[5]) = Available_ID[3] | next(Task_ID[5]) = Available_ID[4]| next(Task_ID[5]) = Available_ID[6] | next(Task_ID[5]) = Available_ID[7] | next(Task_ID[5]) = Available_ID[8] | next(Task_ID[5]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[5] = FALSE & avail[5] = TRUE) -> (next(Task_ID[5]) = Exchange_ID[1]) | (next(Task_ID[5]) = Exchange_ID[2]) | (next(Task_ID[5]) =  Exchange_ID[3]) | (next(Task_ID[5]) = Exchange_ID[4]) | (next(Task_ID[5]) =  Exchange_ID[5]) | (next(Task_ID[5]) = Exchange_ID[6]) | (next(Task_ID[5]) =  Exchange_ID[7]) | (next(Task_ID[5]) =  Exchange_ID[8]) | (next(Task_ID[5]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[5] = FALSE & avail[5] = TRUE) ->  (next(Task_ID[5]) = Migrate_ID[1]) | (next(Task_ID[5]) = Migrate_ID[2]) | (next(Task_ID[5]) = Migrate_ID[3]) | (next(Task_ID[5]) = Migrate_ID[4]) | (next(Task_ID[5]) = Migrate_ID[6]) | (next(Task_ID[5]) =Migrate_ID[7]) | (next(Task_ID[5]) = Migrate_ID[8]) | (next(Task_ID[5]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[5] = TRUE & avail[5] = FALSE) ->  (next(Task_ID[5]) = Exchange_ID[1]) | (next(Task_ID[5]) = Exchange_ID[2]) | (next(Task_ID[5]) =  Exchange_ID[3]) | (next(Task_ID[5]) = Exchange_ID[4]) | (next(Task_ID[5]) =  Exchange_ID[5]) | (next(Task_ID[5]) = Exchange_ID[6]) | (next(Task_ID[5]) =  Exchange_ID[7]) | (next(Task_ID[5]) =  Exchange_ID[8]) | (next(Task_ID[5]) =  Exchange_ID[9]);
+
+--6
+TRANS flag & (migr[6] = FALSE & avail[6] = FALSE) -> next(Task_ID[6]) = Task_ID[6];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[6] = TRUE & avail[6] = FALSE) -> next(Task_ID[6]) = Available_ID[1] | next(Task_ID[6]) =  Available_ID[2] | next(Task_ID[6]) = Available_ID[3] | next(Task_ID[6]) = Available_ID[4]| next(Task_ID[6]) = Available_ID[5] | next(Task_ID[6]) = Available_ID[7] | next(Task_ID[6]) = Available_ID[8] | next(Task_ID[6]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[6] = FALSE & avail[6] = TRUE) -> (next(Task_ID[6]) = Exchange_ID[1]) | (next(Task_ID[6]) = Exchange_ID[2]) | (next(Task_ID[6]) =  Exchange_ID[3]) | (next(Task_ID[6]) = Exchange_ID[4]) | (next(Task_ID[6]) =  Exchange_ID[5]) | (next(Task_ID[6]) = Exchange_ID[6]) | (next(Task_ID[6]) =  Exchange_ID[7]) | (next(Task_ID[6]) =  Exchange_ID[8]) | (next(Task_ID[6]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[6] = FALSE & avail[6] = TRUE) ->  (next(Task_ID[6]) = Migrate_ID[1]) | (next(Task_ID[6]) = Migrate_ID[2]) | (next(Task_ID[6]) = Migrate_ID[3]) | (next(Task_ID[6]) = Migrate_ID[4]) | (next(Task_ID[6]) = Migrate_ID[5]) | (next(Task_ID[6]) =Migrate_ID[7]) | (next(Task_ID[6]) = Migrate_ID[8]) | (next(Task_ID[6]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[6] = TRUE & avail[6] = FALSE) ->  (next(Task_ID[6]) = Exchange_ID[1]) | (next(Task_ID[6]) = Exchange_ID[2]) | (next(Task_ID[6]) =  Exchange_ID[3]) | (next(Task_ID[6]) = Exchange_ID[4]) | (next(Task_ID[6]) =  Exchange_ID[5]) | (next(Task_ID[6]) = Exchange_ID[6]) | (next(Task_ID[6]) =  Exchange_ID[7]) | (next(Task_ID[6]) =  Exchange_ID[8]) | (next(Task_ID[6]) =  Exchange_ID[9]);
+
+--7
+TRANS flag & (migr[7] = FALSE & avail[7] = FALSE) -> next(Task_ID[7]) = Task_ID[7];
+TRANS (Migrate_Count <= Available_Count) & (migr[7] = TRUE & avail[7] = FALSE) -> next(Task_ID[7]) = Available_ID[1] | next(Task_ID[7]) =  Available_ID[2] | next(Task_ID[7]) = Available_ID[3] | next(Task_ID[7]) = Available_ID[4]| next(Task_ID[7]) = Available_ID[5] | next(Task_ID[7]) = Available_ID[6] | next(Task_ID[7]) = Available_ID[8] | next(Task_ID[7]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[7] = FALSE & avail[7] = TRUE) -> (next(Task_ID[7]) = Exchange_ID[1]) | (next(Task_ID[7]) = Exchange_ID[2]) | (next(Task_ID[7]) =  Exchange_ID[3]) | (next(Task_ID[7]) = Exchange_ID[4]) | (next(Task_ID[7]) =  Exchange_ID[5]) | (next(Task_ID[7]) = Exchange_ID[6]) | (next(Task_ID[7]) =  Exchange_ID[7]) | (next(Task_ID[7]) =  Exchange_ID[8]) | (next(Task_ID[7]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[7] = FALSE & avail[7] = TRUE) ->  (next(Task_ID[7]) = Migrate_ID[1]) | (next(Task_ID[7]) = Migrate_ID[2]) | (next(Task_ID[7]) = Migrate_ID[3]) | (next(Task_ID[7]) = Migrate_ID[4]) | (next(Task_ID[7]) = Migrate_ID[5]) | (next(Task_ID[7]) =Migrate_ID[6]) | (next(Task_ID[7]) = Migrate_ID[8]) | (next(Task_ID[7]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[7] = TRUE & avail[7] = FALSE) ->  (next(Task_ID[7]) = Exchange_ID[1]) | (next(Task_ID[7]) = Exchange_ID[2]) | (next(Task_ID[7]) =  Exchange_ID[3]) | (next(Task_ID[7]) = Exchange_ID[4]) | (next(Task_ID[7]) =  Exchange_ID[5]) | (next(Task_ID[7]) = Exchange_ID[6]) | (next(Task_ID[7]) =  Exchange_ID[7]) | (next(Task_ID[7]) =  Exchange_ID[8]) | (next(Task_ID[7]) =  Exchange_ID[9]);
+
+--8
+TRANS flag & (migr[8] = FALSE & avail[8] = FALSE) -> next(Task_ID[8]) = Task_ID[8];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[8] = TRUE & avail[8] = FALSE) -> next(Task_ID[8]) = Available_ID[1] | next(Task_ID[8]) =  Available_ID[2] | next(Task_ID[8]) = Available_ID[3] | next(Task_ID[8]) = Available_ID[4]| next(Task_ID[8]) = Available_ID[5] | next(Task_ID[8]) = Available_ID[6] | next(Task_ID[8]) = Available_ID[7] | next(Task_ID[8]) =Available_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[8] = FALSE & avail[8] = TRUE) -> (next(Task_ID[8]) = Exchange_ID[1]) | (next(Task_ID[8]) = Exchange_ID[2]) | (next(Task_ID[8]) =  Exchange_ID[3]) | (next(Task_ID[8]) = Exchange_ID[4]) | (next(Task_ID[8]) =  Exchange_ID[5]) | (next(Task_ID[8]) = Exchange_ID[6]) | (next(Task_ID[8]) =  Exchange_ID[7]) | (next(Task_ID[8]) =  Exchange_ID[8]) | (next(Task_ID[8]) =  Exchange_ID[9]);
+
+TRANS flag & (Migrate_Count > Available_Count) & (migr[8] = FALSE & avail[8] = TRUE) ->  (next(Task_ID[8]) = Migrate_ID[1]) | (next(Task_ID[8]) = Migrate_ID[2]) | (next(Task_ID[8]) = Migrate_ID[3]) | (next(Task_ID[8]) = Migrate_ID[4]) | (next(Task_ID[8]) = Migrate_ID[5]) | (next(Task_ID[8]) =Migrate_ID[6]) | (next(Task_ID[8]) = Migrate_ID[7]) | (next(Task_ID[8]) =Migrate_ID[9]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[8] = TRUE & avail[8] = FALSE) ->  (next(Task_ID[8]) = Exchange_ID[1]) | (next(Task_ID[8]) = Exchange_ID[2]) | (next(Task_ID[8]) =  Exchange_ID[3]) | (next(Task_ID[8]) = Exchange_ID[4]) | (next(Task_ID[8]) =  Exchange_ID[5]) | (next(Task_ID[8]) = Exchange_ID[6]) | (next(Task_ID[8]) =  Exchange_ID[7]) | (next(Task_ID[8]) =  Exchange_ID[8]) | (next(Task_ID[8]) =  Exchange_ID[9]);
+
+--9
+TRANS flag & (migr[9] = FALSE & avail[9] = FALSE) -> next(Task_ID[9]) = Task_ID[9];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[9] = TRUE & avail[9] = FALSE) -> next(Task_ID[9]) = Available_ID[1] | next(Task_ID[9]) =  Available_ID[2] | next(Task_ID[9]) = Available_ID[3] | next(Task_ID[9]) = Available_ID[4]| next(Task_ID[9]) = Available_ID[5] | next(Task_ID[9]) = Available_ID[6] | next(Task_ID[9]) = Available_ID[7] | next(Task_ID[9]) =Available_ID[8];
+TRANS flag & (Migrate_Count <= Available_Count) & (migr[9] = FALSE & avail[9] = TRUE) -> (next(Task_ID[9]) = Exchange_ID[1]) | (next(Task_ID[9]) = Exchange_ID[2]) | (next(Task_ID[9]) =  Exchange_ID[3]) | (next(Task_ID[9]) = Exchange_ID[4]) | (next(Task_ID[9]) =  Exchange_ID[5]) | (next(Task_ID[9]) = Exchange_ID[6]) | (next(Task_ID[9]) =  Exchange_ID[7]) | (next(Task_ID[9]) =  Exchange_ID[8]) | (next(Task_ID[9]) =  Exchange_ID[9]);
+
+TRANS flag &(Migrate_Count > Available_Count) & (migr[9] = FALSE & avail[9] = TRUE) ->  (next(Task_ID[9]) = Migrate_ID[1]) | (next(Task_ID[9]) = Migrate_ID[2]) | (next(Task_ID[9]) = Migrate_ID[3]) | (next(Task_ID[9]) = Migrate_ID[4]) | (next(Task_ID[9]) = Migrate_ID[5]) | (next(Task_ID[9]) =Migrate_ID[6]) | (next(Task_ID[9]) = Migrate_ID[7]) | (next(Task_ID[9]) =Migrate_ID[8]);
+TRANS flag & (Migrate_Count > Available_Count) & (migr[9] = TRUE & avail[9] = FALSE) ->  (next(Task_ID[9]) = Exchange_ID[1]) | (next(Task_ID[9]) = Exchange_ID[2]) | (next(Task_ID[9]) =  Exchange_ID[3]) | (next(Task_ID[9]) = Exchange_ID[4]) | (next(Task_ID[9]) =  Exchange_ID[5]) | (next(Task_ID[9]) = Exchange_ID[6]) | (next(Task_ID[9]) =  Exchange_ID[7]) | (next(Task_ID[9]) =  Exchange_ID[8]) | (next(Task_ID[9]) =  Exchange_ID[9]);
+
+-- trans constraining that the core with migr equal to true cannot exchange tasks with some other cores whp also have their respective migr equal to true. prevents unnessary/non-required migration of tasks.
+ TRANS flag & (migr[1] = TRUE ) -> next(Task_ID[1]) != Migrate_ID[2] & next(Task_ID[1]) != Migrate_ID[3] & next(Task_ID[1]) != Migrate_ID[4] & next(Task_ID[1]) != Migrate_ID[5] & next(Task_ID[1]) != Migrate_ID[6] & next(Task_ID[1]) != Migrate_ID[7] & next(Task_ID[1]) != Migrate_ID[8] & next(Task_ID[1]) != Migrate_ID[9]; 
+
+ TRANS flag & (migr[2] = TRUE ) -> next(Task_ID[2]) != Migrate_ID[1] & next(Task_ID[2]) != Migrate_ID[3] & next(Task_ID[2]) != Migrate_ID[4] & next(Task_ID[2]) != Migrate_ID[5] & next(Task_ID[2]) != Migrate_ID[6] & next(Task_ID[2]) != Migrate_ID[7] & next(Task_ID[2]) != Migrate_ID[8] & next(Task_ID[2]) != Migrate_ID[9];
+
+ TRANS flag & (migr[3] = TRUE ) -> next(Task_ID[3]) != Migrate_ID[1] & next(Task_ID[3]) != Migrate_ID[2] & next(Task_ID[3]) != Migrate_ID[4] & next(Task_ID[3]) != Migrate_ID[5] & next(Task_ID[3]) != Migrate_ID[6] & next(Task_ID[3]) != Migrate_ID[7] & next(Task_ID[3]) != Migrate_ID[8] & next(Task_ID[3]) != Migrate_ID[9];
+
+ TRANS flag & (migr[4] = TRUE ) -> next(Task_ID[4]) != Migrate_ID[1] & next(Task_ID[4]) != Migrate_ID[2] &  next(Task_ID[4]) != Migrate_ID[3] & next(Task_ID[4]) != Migrate_ID[5] & next(Task_ID[4]) != Migrate_ID[6] & next(Task_ID[4]) != Migrate_ID[7] & next(Task_ID[4]) != Migrate_ID[8] & next(Task_ID[4]) != Migrate_ID[9];
+
+ TRANS flag & (migr[5] = TRUE ) -> next(Task_ID[5]) != Migrate_ID[1] & next(Task_ID[5]) != Migrate_ID[2] &  next(Task_ID[5]) != Migrate_ID[3] & next(Task_ID[5]) != Migrate_ID[4] & next(Task_ID[5]) != Migrate_ID[6] & next(Task_ID[5]) != Migrate_ID[7] & next(Task_ID[5]) != Migrate_ID[8] & next(Task_ID[5]) != Migrate_ID[9];
+
+ TRANS flag & (migr[6] = TRUE ) -> next(Task_ID[6]) != Migrate_ID[1] & next(Task_ID[6]) != Migrate_ID[2] &  next(Task_ID[6]) != Migrate_ID[3] & next(Task_ID[6]) != Migrate_ID[4] & next(Task_ID[6]) != Migrate_ID[5] & next(Task_ID[6]) != Migrate_ID[7] & next(Task_ID[6]) != Migrate_ID[8] & next(Task_ID[6]) != Migrate_ID[9];
+
+ TRANS (migr[7] = TRUE ) -> next(Task_ID[7]) != Migrate_ID[1] & next(Task_ID[7]) != Migrate_ID[2] &  next(Task_ID[7]) != Migrate_ID[3] & next(Task_ID[7]) != Migrate_ID[4] & next(Task_ID[7]) != Migrate_ID[5] & next(Task_ID[7]) != Migrate_ID[6] & next(Task_ID[7]) != Migrate_ID[8] & next(Task_ID[7]) != Migrate_ID[9];
+
+TRANS flag & (migr[8] = TRUE ) -> next(Task_ID[8]) != Migrate_ID[1] & next(Task_ID[8]) != Migrate_ID[2] &  next(Task_ID[8]) != Migrate_ID[3] & next(Task_ID[8]) != Migrate_ID[4] & next(Task_ID[8]) != Migrate_ID[5] & next(Task_ID[8]) != Migrate_ID[6] & next(Task_ID[8]) != Migrate_ID[7] & next(Task_ID[8]) != Migrate_ID[9];
+
+TRANS flag & (migr[9] = TRUE ) -> next(Task_ID[9]) != Migrate_ID[1] & next(Task_ID[9]) != Migrate_ID[2] &  next(Task_ID[9]) != Migrate_ID[3] & next(Task_ID[9]) != Migrate_ID[4] & next(Task_ID[9]) != Migrate_ID[5] & next(Task_ID[9]) != Migrate_ID[6] & next(Task_ID[9]) != Migrate_ID[7] & next(Task_ID[9]) != Migrate_ID[8];
+
+-- trans constraining that the core with avail equal to true cannot exchange tasks with some other cores whp also have their respective avail equal to true. prevents unnessary/non-required migration of tasks.
+ TRANS flag & (avail[1] = TRUE ) -> next(Task_ID[1]) != Available_ID[2] & next(Task_ID[1]) != Available_ID[3] & next(Task_ID[1]) != Available_ID[4] & next(Task_ID[1]) != Available_ID[5] & next(Task_ID[1]) != Available_ID[6] & next(Task_ID[1]) != Available_ID[7] & next(Task_ID[1]) != Available_ID[8] & next(Task_ID[1]) != Available_ID[9]; 
+
+ TRANS flag & (avail[2] = TRUE ) -> next(Task_ID[2]) != Available_ID[1] & next(Task_ID[2]) != Available_ID[3] & next(Task_ID[2]) != Available_ID[4] & next(Task_ID[2]) != Available_ID[5] & next(Task_ID[2]) != Available_ID[6] & next(Task_ID[2]) != Available_ID[7] & next(Task_ID[2]) != Available_ID[8] & next(Task_ID[2]) != Available_ID[9];
+
+ TRANS flag & (avail[3] = TRUE ) -> next(Task_ID[3]) != Available_ID[1] & next(Task_ID[3]) != Available_ID[2] & next(Task_ID[3]) != Available_ID[4] & next(Task_ID[3]) != Available_ID[5] & next(Task_ID[3]) != Available_ID[6] & next(Task_ID[3]) != Available_ID[7] & next(Task_ID[3]) != Available_ID[8] & next(Task_ID[3]) != Available_ID[9];
+
+ TRANS (avail[4] = TRUE ) -> next(Task_ID[4]) != Available_ID[1] & next(Task_ID[4]) != Available_ID[2] &  next(Task_ID[4]) != Available_ID[3] & next(Task_ID[4]) != Available_ID[5] & next(Task_ID[4]) != Available_ID[6] & next(Task_ID[4]) != Available_ID[7] & next(Task_ID[4]) != Available_ID[8] & next(Task_ID[4]) != Available_ID[9];
+
+ TRANS flag & (avail[5] = TRUE ) -> next(Task_ID[5]) != Available_ID[1] & next(Task_ID[5]) != Available_ID[2] &  next(Task_ID[5]) != Available_ID[3] & next(Task_ID[5]) != Available_ID[4] & next(Task_ID[5]) != Available_ID[6] & next(Task_ID[5]) != Available_ID[7] & next(Task_ID[5]) != Available_ID[8] & next(Task_ID[5]) != Available_ID[9];
+
+ TRANS flag & (avail[6] = TRUE ) -> next(Task_ID[6]) != Available_ID[1] & next(Task_ID[6]) != Available_ID[2] &  next(Task_ID[6]) != Available_ID[3] & next(Task_ID[6]) != Available_ID[4] & next(Task_ID[6]) != Available_ID[5] & next(Task_ID[6]) != Available_ID[7] & next(Task_ID[6]) != Available_ID[8] & next(Task_ID[6]) != Available_ID[9];
+
+ TRANS flag & (avail[7] = TRUE ) -> next(Task_ID[7]) != Available_ID[1] & next(Task_ID[7]) != Available_ID[2] &  next(Task_ID[7]) != Available_ID[3] & next(Task_ID[7]) != Available_ID[4] & next(Task_ID[7]) != Available_ID[5] & next(Task_ID[7]) != Available_ID[6] & next(Task_ID[7]) != Available_ID[8] & next(Task_ID[7]) != Available_ID[9];
+
+TRANS flag & (avail[8] = TRUE ) -> next(Task_ID[8]) != Available_ID[1] & next(Task_ID[8]) != Available_ID[2] &  next(Task_ID[8]) != Available_ID[3] & next(Task_ID[8]) != Available_ID[4] & next(Task_ID[8]) != Available_ID[5] & next(Task_ID[8]) != Available_ID[6] & next(Task_ID[8]) != Available_ID[7] & next(Task_ID[8]) != Available_ID[9];
+
+TRANS flag & (avail[9] = TRUE ) -> next(Task_ID[9]) != Available_ID[1] & next(Task_ID[9]) != Available_ID[2] &  next(Task_ID[9]) != Available_ID[3] & next(Task_ID[9]) != Available_ID[4] & next(Task_ID[9]) != Available_ID[5] & next(Task_ID[9]) != Available_ID[6] & next(Task_ID[9]) != Available_ID[7] & next(Task_ID[9]) != Available_ID[8];
+
+-- the code below is for assigning the tasks in descending order..... it works fine for 4 cores, but gets stuck for 9, so i am commenting it. So what I want is that out of several possible next states, there is only one state that which has the following feature that the cores that are migrating always pick the first core in the list.
+
+--this is version 2 of the code. uses defines instead of VAR.
+-- Exchanging_A shows the cores that are available for migration (avail = TRUE) and in the next transition they are going to swap tasks with some core whose migr is TRUE.
+-- DEFINE Exchanging_A := [0, avail[1] = TRUE & next(Task_ID[1]) != Task_ID[1] ? next(Task_ID[1]) : 0,                       	  avail[2] = TRUE & next(Task_ID[2]) != Task_ID[2] ? next(Task_ID[2]) : 0,                       	 avail[3] = TRUE & next(Task_ID[3]) != Task_ID[3] ? next(Task_ID[3]) : 0,                    		avail[4] = TRUE & next(Task_ID[4]) != Task_ID[4] ? next(Task_ID[4]) : 0,                       	   avail[5] = TRUE & next(Task_ID[5]) != Task_ID[5] ? next(Task_ID[5]) : 0,                       	  avail[6] = TRUE & next(Task_ID[6]) != Task_ID[6] ? next(Task_ID[6]) : 0,                			 avail[7] = TRUE & next(Task_ID[7]) != Task_ID[7] ? next(Task_ID[7]) : 0,                       	avail[8] = TRUE & next(Task_ID[8]) != Task_ID[8] ? next(Task_ID[8]) : 0,                  		   avail[9] = TRUE & next(Task_ID[9]) != Task_ID[9] ? next(Task_ID[9]) : 0];
+--Similarly for Exchanging_M, M for migration.
+-- DEFINE Exchanging_M := [0, migr[1] = TRUE & next(Task_ID[1]) != Task_ID[1] ? next(Task_ID[1]) : 0,                       	  migr[2] = TRUE & next(Task_ID[2]) != Task_ID[2] ? next(Task_ID[2]) : 0,                       	 migr[3] = TRUE & next(Task_ID[3]) != Task_ID[3] ? next(Task_ID[3]) : 0,                    		migr[4] = TRUE & next(Task_ID[4]) != Task_ID[4] ? next(Task_ID[4]) : 0,                       	   migr[5] = TRUE & next(Task_ID[5]) != Task_ID[5] ? next(Task_ID[5]) : 0,                       	  migr[6] = TRUE & next(Task_ID[6]) != Task_ID[6] ? next(Task_ID[6]) : 0,                			 migr[7] = TRUE & next(Task_ID[7]) != Task_ID[7] ? next(Task_ID[7]) : 0,                       	migr[8] = TRUE & next(Task_ID[8]) != Task_ID[8] ? next(Task_ID[8]) : 0,                  		   migr[9] = TRUE & next(Task_ID[9]) != Task_ID[9] ? next(Task_ID[9]) : 0];
+
+--ignore this.
+-- TRANS Migrate_Count > 0 & Available_Count > 0 & Migrate_Count <= Available_Count -> Exchanging_M[1] <= Exchanging_M[2] & Exchanging_M[2] <= Exchanging_M[3] & Exchanging_M[3] <= Exchanging_M[4] & Exchanging_M[4] <= Exchanging_M[5] & Exchanging_M[5] <= Exchanging_M[6] & Exchanging_M[6] <= Exchanging_M[7] & Exchanging_M[7] <= Exchanging_M[8] & Exchanging_M[8] <= Exchanging_M[9];
+
+-- if total number of cores that want to migrate are less than available cores, then the avaialable cores should get the migration cores in ascending order. 
+-- TRANS Migrate_Count > 0 & Available_Count > 0 & Migrate_Count <= Available_Count -> (Exchanging_A[1] = 0 | Exchanging_A[1] < Exchanging_A[2] | Exchanging_A[2] = 0) & (Exchanging_A[2] = 0 | Exchanging_A[2] < Exchanging_A[3] | Exchanging_A[3] = 0) & (Exchanging_A[3] = 0 | Exchanging_A[3] < Exchanging_A[4] | Exchanging_A[4] = 0) & (Exchanging_A[4] = 0 | Exchanging_A[4] < Exchanging_A[5] | Exchanging_A[5] = 0) & (Exchanging_A[5] = 0 | Exchanging_A[5] < Exchanging_A[6] | Exchanging_A[6] = 0) & (Exchanging_A[6] = 0 | Exchanging_A[6] < Exchanging_A[7] | Exchanging_A[7] = 0) & (Exchanging_A[7] = 0 | Exchanging_A[7] < Exchanging_A[8] | Exchanging_A[8] = 0) & (Exchanging_A[8] = 0 | Exchanging_A[8] < Exchanging_A[9] | Exchanging_A[9] = 0);
+
+-- if total number of cores that want to migrate are more than available cores, then the migrate cores should get the migration cores in ascending order. 
+-- TRANS Migrate_Count > 0 & Available_Count > 0 & Migrate_Count > Available_Count -> (next(Exchanging_M[1]) = 0 | next(Exchanging_M[1]) < next(Exchanging_M[2]) | next(Exchanging_M[2]) = 0) & (next(Exchanging_M[2]) = 0 | next(Exchanging_M[2]) < next(Exchanging_M[3]) | next(Exchanging_M[3]) = 0) & (next(Exchanging_M[3]) = 0 | next(Exchanging_M[3]) < next(Exchanging_M[4]) | next(Exchanging_M[4]) = 0) & (next(Exchanging_M[4]) = 0 | next(Exchanging_M[4]) < next(Exchanging_M[5]) | next(Exchanging_M[5]) = 0) & (next(Exchanging_M[5]) = 0 | next(Exchanging_M[5]) < next(Exchanging_M[6]) | next(Exchanging_M[6]) = 0) & (next(Exchanging_M[6]) = 0 | next(Exchanging_M[6]) < next(Exchanging_M[7]) | next(Exchanging_M[7]) = 0) & (next(Exchanging_M[7]) = 0 | next(Exchanging_M[7]) < next(Exchanging_M[8]) | next(Exchanging_M[8]) = 0) & (next(Exchanging_M[8]) = 0 | next(Exchanging_M[8]) < next(Exchanging_M[9]) | next(Exchanging_M[9]) = 0);
+
+
+-- version 1 of the same code, i have tested it on 4 cores, works great, but gets stuck on 9 cores.   
+
+ -- VAR Exchanging_A : array 1..9 of {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  -- VAR Exchanging_M : array 1..9 of {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+ 
+ -- INIT Exchanging_A = CONSTARRAY(typeof(Exchanging_A), 0);
+  -- INIT Exchanging_M = CONSTARRAY(typeof(Exchanging_M), 0);
+ 
+ 
+-- INIT  Exchanging_A[1] = 0 & Exchanging_A[2] = 0 & Exchanging_A[3] = 0 & Exchanging_A[4] = 0 & Exchanging_A[5] = 0 & Exchanging_A[6] = 0 & Exchanging_A[7] = 0 & Exchanging_A[8] = 0 & Exchanging_A[9] = 0;
+
+-- INIT  Exchanging_M[1] = 0 & Exchanging_M[2] = 0 & Exchanging_M[3] = 0 & Exchanging_M[4] = 0 & Exchanging_M[5] = 0 & Exchanging_M[6] = 0 & Exchanging_M[7] = 0 & Exchanging_M[8] = 0 & Exchanging_M[9] = 0;
+ 
+ 
+-- ASSIGN 	init(Exchanging_A[1]) := 0;
+		-- init(Exchanging_A[2]) := 0;
+		-- init(Exchanging_A[3]) := 0;
+		-- init(Exchanging_A[4]) := 0;
+		-- init(Exchanging_A[5]) := 0;
+		-- init(Exchanging_A[6]) := 0;
+		-- init(Exchanging_A[7]) := 0;
+		-- init(Exchanging_A[8]) := 0;
+		-- init(Exchanging_A[9]) := 0;
+		
+		-- init(Exchanging_M[1]) := 0;
+		-- init(Exchanging_M[2]) := 0;
+		-- init(Exchanging_M[3]) := 0;
+		-- init(Exchanging_M[4]) := 0;
+		-- init(Exchanging_M[5]) := 0;
+		-- init(Exchanging_M[6]) := 0;
+		-- init(Exchanging_M[7]) := 0;
+		-- init(Exchanging_M[8]) := 0;
+		-- init(Exchanging_M[9]) := 0;
+
+ 
+
+ -- TRANS (avail[1] & (next(Task_ID[1]) != Task_ID[1])) -> next(Exchanging_A[1]) = next(Task_ID[1]);
+ -- TRANS (avail[2] & (next(Task_ID[2]) != Task_ID[2])) -> next(Exchanging_A[2]) = next(Task_ID[2]);
+ -- TRANS (avail[3] & (next(Task_ID[3]) != Task_ID[3])) -> next(Exchanging_A[3]) = next(Task_ID[3]);
+ -- TRANS (avail[4] & (next(Task_ID[4]) != Task_ID[4])) -> next(Exchanging_A[4]) = next(Task_ID[4]);
+ -- TRANS (avail[5] & (next(Task_ID[5]) != Task_ID[5])) -> next(Exchanging_A[5]) = next(Task_ID[5]);
+ -- TRANS (avail[6] & (next(Task_ID[6]) != Task_ID[6])) -> next(Exchanging_A[6]) = next(Task_ID[6]);
+ -- TRANS (avail[7] & (next(Task_ID[7]) != Task_ID[7])) -> next(Exchanging_A[7]) = next(Task_ID[7]);
+ -- TRANS (avail[8] & (next(Task_ID[8]) != Task_ID[8])) -> next(Exchanging_A[8]) = next(Task_ID[8]);
+ -- TRANS (avail[9] & (next(Task_ID[9]) != Task_ID[9])) -> next(Exchanging_A[9]) = next(Task_ID[9]);
+ 
+ -- TRANS avail[1] = TRUE & next(Task_ID[1]) = Task_ID[1] -> next(Exchanging_A[1]) = 0;
+ -- TRANS avail[2] = TRUE & next(Task_ID[2]) = Task_ID[2] -> next(Exchanging_A[2]) = 0;
+ -- TRANS avail[3] = TRUE & next(Task_ID[3]) = Task_ID[3] -> next(Exchanging_A[3]) = 0;
+ -- TRANS avail[4] = TRUE & next(Task_ID[4]) = Task_ID[4] -> next(Exchanging_A[4]) = 0;
+ -- TRANS avail[5] = TRUE & next(Task_ID[5]) = Task_ID[5] -> next(Exchanging_A[5]) = 0;
+ -- TRANS avail[6] = TRUE & next(Task_ID[6]) = Task_ID[6] -> next(Exchanging_A[6]) = 0;
+ -- TRANS avail[7] = TRUE & next(Task_ID[7]) = Task_ID[7] -> next(Exchanging_A[7]) = 0;
+ -- TRANS avail[8] = TRUE & next(Task_ID[8]) = Task_ID[8] -> next(Exchanging_A[8]) = 0;
+ -- TRANS avail[9] = TRUE & next(Task_ID[9]) = Task_ID[9] -> next(Exchanging_A[9]) = 0;
+ 
+ -- TRANS migr[1] = TRUE & next(Task_ID[1]) != Task_ID[1] -> next(Exchanging_M[1]) = next(Task_ID[1]);
+ -- TRANS migr[2] = TRUE & next(Task_ID[2]) != Task_ID[2] -> next(Exchanging_M[2]) = next(Task_ID[2]);
+ -- TRANS migr[3] = TRUE & next(Task_ID[3]) != Task_ID[3] -> next(Exchanging_M[3]) = next(Task_ID[3]);
+ -- TRANS migr[4] = TRUE & next(Task_ID[4]) != Task_ID[4] -> next(Exchanging_M[4]) = next(Task_ID[4]);
+ -- TRANS migr[5] = TRUE & next(Task_ID[5]) != Task_ID[5] -> next(Exchanging_M[5]) = next(Task_ID[5]);
+ -- TRANS migr[6] = TRUE & next(Task_ID[6]) != Task_ID[6] -> next(Exchanging_M[6]) = next(Task_ID[6]);
+ -- TRANS migr[7] = TRUE & next(Task_ID[7]) != Task_ID[7] -> next(Exchanging_M[7]) = next(Task_ID[7]);
+ -- TRANS migr[8] = TRUE & next(Task_ID[8]) != Task_ID[8] -> next(Exchanging_M[8]) = next(Task_ID[8]);
+ -- TRANS migr[9] = TRUE & next(Task_ID[9]) != Task_ID[9] -> next(Exchanging_M[9]) = next(Task_ID[9]);
+	   
+ -- TRANS migr[1] = TRUE & next(Task_ID[1]) = Task_ID[1] -> next(Exchanging_M[1]) = 0;
+ -- TRANS migr[2] = TRUE & next(Task_ID[2]) = Task_ID[2] -> next(Exchanging_M[2]) = 0;
+ -- TRANS migr[3] = TRUE & next(Task_ID[3]) = Task_ID[3] -> next(Exchanging_M[3]) = 0;
+ -- TRANS migr[4] = TRUE & next(Task_ID[4]) = Task_ID[4] -> next(Exchanging_M[4]) = 0;
+ -- TRANS migr[5] = TRUE & next(Task_ID[5]) = Task_ID[5] -> next(Exchanging_M[5]) = 0;
+ -- TRANS migr[6] = TRUE & next(Task_ID[6]) = Task_ID[6] -> next(Exchanging_M[6]) = 0;
+ -- TRANS migr[7] = TRUE & next(Task_ID[7]) = Task_ID[7] -> next(Exchanging_M[7]) = 0;
+ -- TRANS migr[8] = TRUE & next(Task_ID[8]) = Task_ID[8] -> next(Exchanging_M[8]) = 0;
+ -- TRANS migr[9] = TRUE & next(Task_ID[9]) = Task_ID[9] -> next(Exchanging_M[9]) = 0;
+ 
+ 
+ -- ASSIGN 
+ -- next(Exchanging_A[1]) := avail[1] = TRUE & next(Task_ID[1]) != Task_ID[1] ? next(Task_ID[1]) : 0;
+ -- next(Exchanging_A[2]) := avail[2] = TRUE & next(Task_ID[2]) != Task_ID[2] ? next(Task_ID[2]) : 0;
+ -- next(Exchanging_A[3]) := avail[3] = TRUE & next(Task_ID[3]) != Task_ID[3] ? next(Task_ID[3]) : 0;
+ -- next(Exchanging_A[4]) := avail[4] = TRUE & next(Task_ID[4]) != Task_ID[4] ? next(Task_ID[4]) : 0;
+ -- next(Exchanging_A[5]) := avail[5] = TRUE & next(Task_ID[5]) != Task_ID[5] ? next(Task_ID[5]) : 0;
+ -- next(Exchanging_A[6]) := avail[6] = TRUE & next(Task_ID[6]) != Task_ID[6] ? next(Task_ID[6]) : 0;
+ -- next(Exchanging_A[7]) := avail[7] = TRUE & next(Task_ID[7]) != Task_ID[7] ? next(Task_ID[7]) : 0;
+ -- next(Exchanging_A[8]) := avail[8] = TRUE & next(Task_ID[8]) != Task_ID[8] ? next(Task_ID[8]) : 0;
+ -- next(Exchanging_A[9]) := avail[9] = TRUE & next(Task_ID[9]) != Task_ID[9] ? next(Task_ID[9]) : 0;
+ 
+ 
+ -- next(Exchanging_M[1]) := migr[1] = TRUE & next(Task_ID[1]) != Task_ID[1] ? next(Task_ID[1]) : 0;
+ -- next(Exchanging_M[2]) := migr[2] = TRUE & next(Task_ID[2]) != Task_ID[2] ? next(Task_ID[2]) : 0;
+ -- next(Exchanging_M[3]) := migr[3] = TRUE & next(Task_ID[3]) != Task_ID[3] ? next(Task_ID[3]) : 0;
+ -- next(Exchanging_M[4]) := migr[4] = TRUE & next(Task_ID[4]) != Task_ID[4] ? next(Task_ID[4]) : 0;
+ -- next(Exchanging_M[5]) := migr[5] = TRUE & next(Task_ID[5]) != Task_ID[5] ? next(Task_ID[5]) : 0;
+ -- next(Exchanging_M[6]) := migr[6] = TRUE & next(Task_ID[6]) != Task_ID[6] ? next(Task_ID[6]) : 0;
+ -- next(Exchanging_M[7]) := migr[7] = TRUE & next(Task_ID[7]) != Task_ID[7] ? next(Task_ID[7]) : 0;
+ -- next(Exchanging_M[8]) := migr[8] = TRUE & next(Task_ID[8]) != Task_ID[8] ? next(Task_ID[8]) : 0;
+ -- next(Exchanging_M[9]) := migr[9] = TRUE & next(Task_ID[9]) != Task_ID[9] ? next(Task_ID[9]) : 0;
+
+-- TRANS Migrate_Count > 0 & Available_Count > 0 & Migrate_Count <= Available_Count -> (next(Exchanging_A[1]) = 0 | next(Exchanging_A[1]) < next(Exchanging_A[2]) | next(Exchanging_A[2]) = 0) & (next(Exchanging_A[2]) = 0 | next(Exchanging_A[2]) < next(Exchanging_A[3]) | next(Exchanging_A[3]) = 0) & (next(Exchanging_A[3]) = 0 | next(Exchanging_A[3]) < next(Exchanging_A[4]) | next(Exchanging_A[4]) = 0) & (next(Exchanging_A[4]) = 0 | next(Exchanging_A[4]) < next(Exchanging_A[5]) | next(Exchanging_A[5]) = 0) & (next(Exchanging_A[5]) = 0 | next(Exchanging_A[5]) < next(Exchanging_A[6]) | next(Exchanging_A[6]) = 0) & (next(Exchanging_A[6]) = 0 | next(Exchanging_A[6]) < next(Exchanging_A[7]) | next(Exchanging_A[7]) = 0) & (next(Exchanging_A[7]) = 0 | next(Exchanging_A[7]) < next(Exchanging_A[8]) | next(Exchanging_A[8]) = 0) & (next(Exchanging_A[8]) = 0 | next(Exchanging_A[8]) < next(Exchanging_A[9]) | next(Exchanging_A[9]) = 0);
+
+-- TRANS Migrate_Count > 0 & Available_Count > 0 & Migrate_Count > Available_Count -> (next(Exchanging_M[1]) = 0 | next(Exchanging_M[1]) < next(Exchanging_M[2]) | next(Exchanging_M[2]) = 0) & (next(Exchanging_M[2]) = 0 | next(Exchanging_M[2]) < next(Exchanging_M[3]) | next(Exchanging_M[3]) = 0) & (next(Exchanging_M[3]) = 0 | next(Exchanging_M[3]) < next(Exchanging_M[4]) | next(Exchanging_M[4]) = 0) & (next(Exchanging_M[4]) = 0 | next(Exchanging_M[4]) < next(Exchanging_M[5]) | next(Exchanging_M[5]) = 0) & (next(Exchanging_M[5]) = 0 | next(Exchanging_M[5]) < next(Exchanging_M[6]) | next(Exchanging_M[6]) = 0) & (next(Exchanging_M[6]) = 0 | next(Exchanging_M[6]) < next(Exchanging_M[7]) | next(Exchanging_M[7]) = 0) & (next(Exchanging_M[7]) = 0 | next(Exchanging_M[7]) < next(Exchanging_M[8]) | next(Exchanging_M[8]) = 0) & (next(Exchanging_M[8]) = 0 | next(Exchanging_M[8]) < next(Exchanging_M[9]) | next(Exchanging_M[9]) = 0);
+
+TRANS flag & (next(Task_ID[1]) = Task_ID[2]) <-> next(Task_ID[2]) = Task_ID[1] ;
+TRANS flag & (next(Task_ID[1]) = Task_ID[3]) <-> next(Task_ID[3]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[5]) <-> next(Task_ID[5]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[6]) <-> next(Task_ID[6]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[1] ;
+TRANS flag &(next(Task_ID[1]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[1] ;
+																		
+TRANS flag &(next(Task_ID[2]) = Task_ID[3]) <-> next(Task_ID[3]) = Task_ID[2] ; 
+TRANS flag &(next(Task_ID[2]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[2] ;
+TRANS flag &(next(Task_ID[2]) = Task_ID[5]) <-> next(Task_ID[5]) = Task_ID[2] ; 
+TRANS flag &(next(Task_ID[2]) = Task_ID[6]) <-> next(Task_ID[6]) = Task_ID[2] ; 
+TRANS flag &(next(Task_ID[2]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[2] ;
+TRANS flag &(next(Task_ID[2]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[2] ; 
+TRANS flag &(next(Task_ID[2]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[2] ; 
+																	
+TRANS flag &(next(Task_ID[3]) = Task_ID[4]) <-> next(Task_ID[4]) = Task_ID[3] ;
+TRANS flag &(next(Task_ID[3]) = Task_ID[5]) <-> next(Task_ID[5]) = Task_ID[3] ; 
+TRANS flag &(next(Task_ID[3]) = Task_ID[6]) <-> next(Task_ID[6]) = Task_ID[3] ; 
+TRANS flag &(next(Task_ID[3]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[3] ;
+TRANS flag &(next(Task_ID[3]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[3] ; 
+TRANS flag &(next(Task_ID[3]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[3] ; 
+																		
+TRANS flag &(next(Task_ID[4]) = Task_ID[5]) <-> next(Task_ID[5]) = Task_ID[4] ; 
+TRANS flag &(next(Task_ID[4]) = Task_ID[6]) <-> next(Task_ID[6]) = Task_ID[4] ; 
+TRANS flag &(next(Task_ID[4]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[4] ;
+TRANS flag &(next(Task_ID[4]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[4] ; 
+TRANS flag &(next(Task_ID[4]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[4] ; 
+																	
+TRANS flag &(next(Task_ID[5]) = Task_ID[6]) <-> next(Task_ID[6]) = Task_ID[5] ; 
+TRANS flag &(next(Task_ID[5]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[5] ;
+TRANS flag &(next(Task_ID[5]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[5] ; 
+TRANS flag &(next(Task_ID[5]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[5] ; 
+																	
+TRANS flag &(next(Task_ID[6]) = Task_ID[7]) <-> next(Task_ID[7]) = Task_ID[6] ;
+TRANS flag &(next(Task_ID[6]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[6] ; 
+TRANS flag &(next(Task_ID[6]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[6] ; 
+																		
+TRANS flag &(next(Task_ID[7]) = Task_ID[8]) <-> next(Task_ID[8]) = Task_ID[7] ; 
+TRANS flag &(next(Task_ID[7]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[7] ; 
+																
+TRANS flag &(next(Task_ID[8]) = Task_ID[9]) <-> next(Task_ID[9]) = Task_ID[8] ;
+																		
+DEFINE Actual_Exchange_Count := count(next(Task_ID[1]) != Task_ID[1], next(Task_ID[2]) != Task_ID[2], next(Task_ID[3]) != Task_ID[3], next(Task_ID[4]) != Task_ID[4], next(Task_ID[5]) != Task_ID[5], next(Task_ID[6]) != Task_ID[6],next(Task_ID[7]) != Task_ID[7], next(Task_ID[8]) != Task_ID[8], next(Task_ID[9]) != Task_ID[9]);
+
+
+INVARSPEC NAME P3 := flag & ((Migrate_Count > 0) & (Available_Count > 0)) -> Actual_Exchange_Count = 2 * min(Migrate_Count, Available_Count);
+
+INVARSPEC NAME P4 := flag & (Migrate_Count = 0 | Available_Count = 0) -> Actual_Exchange_Count = 0;
+
+
+	   
+/--ENDMODULE--/	   
+
+-- commands
+-- read_model -i map9_v5.smv
+-- reset
+-- go
+-- print_reachable_states
+-- check_invar
+
+-- reset
+-- read_model -i map9_v5.smv
+-- go_msat
+-- build_boolean_model
+-- check_invar_ic3
